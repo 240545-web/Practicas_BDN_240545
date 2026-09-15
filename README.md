@@ -8,3 +8,5 @@ Periodo: Septiembre - Diciembre 2026
 | ID | Numero de Práctica | Nombre de la Práctica | Potenciador | Estatus |
 |---|---|---|---|---|
 | 1. | Práctica 02 | Conexión Remota en MySQL | 42 | 🟡 En desarrollo |
+| 2. | Practica 03 | Respaldo de Base de Datos|.   | 🟠 En desarrollo |
+ 
