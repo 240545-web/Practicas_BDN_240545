@@ -6,15 +6,16 @@
 -- Profe Admin: Marco - ID 1
 -- ============================================================
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
-SET UNIQUE_CHECKS = 0;
-
 CREATE DATABASE IF NOT EXISTS `db_test`
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
 USE `db_test`;
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+SET UNIQUE_CHECKS = 0;
+
 
 DROP TRIGGER IF EXISTS `trg_products_after_delete`;
 DROP TRIGGER IF EXISTS `trg_products_after_update`;
