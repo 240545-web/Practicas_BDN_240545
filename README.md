@@ -9,7 +9,7 @@ Periodo: Septiembre - Diciembre 2026
 |---|---|---|---|---|
 <<<<<<< HEAD
 | 1. | Metodologias de Evaluacion de la Materia | Transcribir la libreta y comprender la metodologia y fechas de evaluacion de la asignatura | 5 | 🟢 concluida |
-| 2. | Conexiones Remotas para Bases de Datos SQL | Crear y administrar usuarios y privilegios para conexiones desde el internet en redes locales| ??| 🟡 En progreso| 
+| 2. | Conexiones Remotas para Bases de Datos SQL | Crear y administrar usuarios y privilegios para conexiones desde el internet en redes locales| ??| 🟡 concluido| 
 =======
 | 1. | Práctica 02 | Conexión Remota en MySQL | 42 | 🟡 En desarrollo |
 | 2. | Practica 03 | Respaldo de Base de Datos|.   | 🟠 En desarrollo |
