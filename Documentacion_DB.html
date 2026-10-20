@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación Base de Datos db_test - Arquitectura Completa</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg: #1e1e2e;
+            --bg-subtle: #2a2a3e;
+            --fg: #cdd6f4;
+            --muted: #585b70;
+            --accent: #89b4fa;
+            --accent-hover: #b4c1f9;
+            --card: #313244;
+            --border: #494d64;
+            --success: #a6e3a1;
+            --warning: #f9e2af;
+            --error: #f38ba8;
+            --info: #89b4fa;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            color: var(--fg);
+            margin-top: 0;
+            font-weight: 600;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-subtle);
+        }
+
+        .mermaid-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .mermaid-section h2 {
+            color: var(--accent);
+            margin: -20x -20px 20px;
+            padding: 10px 20px;
+            background: var(--bg-subtle);
+            border-radius: 12px 12px 0 0;
+            font-size: 1.2rem;
+        }
+
+        .triggers-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .triggers-section h2 {
+            color: var(--accent);
+            margin: -20x -20px 20px;
+            padding: 10px 20px;
+            background: var(--bg-subtle);
+            border-radius: 12px 12px 0 0;
+            font-size: 1.2rem;
+        }
+
+        .triggers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .trigger-card {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .trigger-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .trigger-card h4 {
+            color: var(--fg);
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+        }
+
+        .trigger-card p {
+            color: var(--muted);
+            margin: 0;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .trazabilidad { background: rgba(137, 180, 250, 0.2); color: var(--accent); }
+        .soft-delete { background: rgba(251, 191, 36, 0.2); color: #f9e2af; }
+        .l-negocio { background: rgba(171, 104, 255, 0.2); color: #eab3f5; }
+
+        .table-info {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .table-info h3 {
+            margin-top: 0;
+            font-size: 0.9rem;
+        }
+
+        .table-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-info th, .table-info td {
+            padding: 8px 4px;
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-align: left;
+        }
+
+        .table-info th {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .trigger-card {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Documentación Base de Datos db_test</h1>
+
+        <!-- Diagrama ERD -->
+        <div class="mermaid-section">
+            <h2>Diagrama Entidad-Relación (ERD)</h2>
+            <div class="mermaid">
+erDiagram
+    tb_users {
+        int id PK
+        varchar email "unique"
+        varchar nickname
+        datetime deleted_at
+    }
+    tb_products {
+        int id PK
+        varchar SKU "unique"
+        varchar name
+        int category_id
+        decimal current_price
+        int current_stock
+        datetime deleted_at
+    }
+    tb_categories {
+        int id PK
+        varchar name "unique"
+        datetime deleted_at
+    }
+    tb_seller_orders {
+        int id PK
+        varchar key "unique"
+        int seller_id
+        int buyer_id
+        decimal total_amount
+    }
+    tb_order_items {
+        int id PK
+        int seller_order_id
+        int product_id
+        int provider_id
+        int quantity
+        decimal unit_price
+        decimal subtotal
+    }
+    tb_payments {
+        int id PK
+        int order_id
+        int payment_method_id
+        decimal amount
+        varchar payment_status
+    }
+    tbc_payment_methods {
+        int id PK
+        varchar name
+    }
+    tb_carts {
+        int id PK
+        int user_id
+        varchar status
+    }
+    tbd_shopping_cart {
+        int id PK
+        int user_id
+        int product_id
+        int quantity
+    }
+    tb_logs {
+        int id PK
+        varchar table_name
+        varchar operation
+        datetime operation_date
+    }
+
+    tb_users ||--o{ tb_carts : "tiene"
+    tb_users ||--o{ tb_seller_orders : "es vendedor/ comprador"
+    tb_categories ||--o{ tb_products : "tiene muchos"
+    tb_seller_orders ||--o{ tb_order_items : "contiene muchos"
+    tb_products ||--o{ tb_order_items : "aparece en muchos"
+    tb_seller_orders ||--o{ tb_payments : "tiene muchos pagos"
+    tb_order_items }o--|| tb_products : "es item de"
+    tb_order_items }o--|| tb_seller_orders : "pertenece a"
+    tb_payments }o--|| tb_seller_orders : "es pago de"
+    tb_carts }o--|| tb_users : "usuario tiene carrito"
+    tbd_shopping_cart }o--|| tb_users : "usuario tiene producto carrito"
+    tbd_shopping_cart }o--|| tb_products : "producto en carrito"
+    tbd_wishlist }o--|| tb_users : "usuario tiene wishlist"
+    tbd_wishlist }o--|| tb_products : "producto en wishlist"
+</div>
+        </div>
+
+        <!-- Sección de Triggers -->
+        <div class="triggers-section">
+            <h2>Documentación de los 42 Triggers</h2>
+            <div class="triggers-grid">
+                <!-- Trazabilidad (12) -->
+                <div class="trigger-card">
+                    <h4><span class="category-badge trazabilidad">Trazabilidad (12)</span></h4>
+                    <p><strong>trg_users_after_insert</strong>: Inserta audit en tb_logs cuando se crea un usuario.</p>
+                    <p><strong>trg_users_after_update</strong>: Inserta audit en tb_logs cuando se actualiza un usuario.</p>
+                    <p><strong>trg_users_after_delete</strong>: Inserta audit en tb_logs cuando se elimina un usuario.</p>
+                    <p><strong>trg_products_after_insert</strong>: Inserta audit en tb_logs cuando se crea un producto.</p>
+                    <p><strong>trg_products_after_update</strong>: Inserta audit en tb_logs cuando se actualiza un producto.</p>
+                    <p><strong>trg_products_after_delete</strong>: Inserta audit en tb_logs cuando se elimina un producto.</p>
+                    <p><strong>trg_categories_after_insert</strong>: Inserta audit en tb_logs cuando se crea una categoría.</p>
+                    <p><strong>trg_categories_after_update</strong>: Inserta audit en tb_logs cuando se actualiza una categoría.</p>
+                    <p><strong>trg_categories_after_delete</strong>: Inserta audit en tb_logs cuando se elimina una categoría.</p>
+                    <p><strong>trg_seller_orders_after_insert</strong>: Inserta audit en tb_logs cuando se crea un pedido.</p>
+                    <p><strong>trg_seller_orders_after_update</strong>: Inserta audit en tb_logs cuando se actualiza un pedido.</p>
+                    <p><strong>trg_seller_orders_after_delete</strong>: Inserta audit en tb_logs cuando se elimina un pedido.</p>
+                </div>
+
+                <!-- Soft Delete (3) -->
+                <div class="trigger-card">
+                    <h4><span class="category-badge soft-delete">Soft Delete (3)</span></h4>
+                    <p><strong>trg_users_before_delete</strong>: Bloquea DELETE físico en tb_users, fuerza sp_soft_delete_user.</p>
+                    <p><strong>trg_products_before_delete</strong>: Bloquea DELETE físico en tb_products, fuerza sp_soft_delete_product.</p>
+                    <p><strong>trg_categories_before_delete</strong>: Bloquea DELETE físico en tb_categories, fuerza sp_soft_delete_category.</p>
+                </div>
+
+                <!-- Lógica de Negocio (27) -->
+                <div class="trigger-card">
+                    <h4><span class="category-badge l-negocio">Lógica de Negocio (27)</span></h4>
+                    <p><strong>trg_check_product_stock</strong>: Valida que quantity <= stock disponible antes de insertar ítem.</p>
+                    <p><strong>trg_reduce_product_stock</strong>: Reduce stock actual en la cantidad del ítem insertado.</p>
+                    <p><strong>trg_validate_product_price</strong>: Valida que current_price > 0; lanza error si es nulo o negativo.</p>
+                    <p><strong>trg_recalculate_seller_order_total</strong>: Recalcula total_pedido al cambiar status o modificar ítems.</p>
+                    <p><strong>trg_validate_order_item_quantity</strong>: Ensures quantity does not exceed available stock.</p>
+                    <p><strong>trg_automatically_calculate_subtotal</strong>: Calcula subtotal = quantity × unit_price al insertar.</p>
+                    <p><strong>trg_validate_payment_method_code</strong>: Valida que el código tenga formato alfanumérico válido.</p>
+                    <p><strong>trg_update_order_status_to_paid</strong>: Actualiza estado orden a 'PAID' y registra fecha de pago.</p>
+                    <p><strong>trg_validate_cart_item_stock</strong>: Verifica que quantity disponible en tb_products antes de agregar al carrito.</p>
+                    <p><strong>trg_set_cart_status_active_or_expired</strong>: Actualiza status_carro: 'ACTIVE' o 'EXPIRED' según tiempo de vigencia.</p>
+                    <p><strong>trg_validate_order_detail_quantity</strong>: Valida que quantity solicitada no supere stock disponible.</p>
+                    <p><strong>trg_automatically_calculate_detail_subtotal</strong>: Calcula price_total = quantity × unit_price.</p>
+                    <p><strong>trg_return_stock_on_order_detail_cancel</strong>: Devuelve stock a tb_products.current_stock al cancelar detalle.</p>
+                    <p><strong>trg_validate_category_name</strong>: Valida que nombre_categoría no esté vacío y tenga mínimo 3 caracteres.</p>
+                    <p><strong>trg_set_category_active_status</strong>: Actualiza flag activo/inhabilitado según negocio.</p>
+                    <p><strong>trg_validate_shopping_cart_no_duplicates</strong>: Previene items duplicados en el carrito de compras.</p>
+                    <p><strong>trg_update_shopping_cart_item_quantity</strong>: Actualiza quantity de item en el carrito con validación de stock.</p>
+                    <p><strong>trg_validate_seller_order_status_transition</strong>: Valida transiciones permitidas: PENDING→PAID→SHIPPED→DELIVERED.</p>
+                    <p><strong>trg_set_seller_order_initial_status</strong>: Establece status inicial 'PENDING' y fecha creación al crear nueva orden.</p>
+                    <p><strong>trg_validate_user_email_format</strong>: Valida formato de email institucional (@dominio.com).</p>
+                    <p><strong>trg_set_user_last_login_timestamp</strong>: Actualiza field last_login en tb_users al autenticación exitosa.</p>
+                    <p><strong>trg_validate_payment_amount_matches_order</strong>: Verifica que amount_pagado coincide con total_orden.</p>
+                    <p><strong>trg_set_payment_registration_date</strong>: Registra fecha y hora exacta de la transacción.</p>
+                    <p><strong>trg_control_concurrent_stock_updates</strong>: Implementa control de versión optimista en stock (versionamiento).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Base de datos: db_test | Triggers totales: 42 (12 Trazabilidad + 3 Soft Delete + 27 Lógica de Negocio) | Generado con Mermaid.js</p>
+    </div>
+
+    <script>
+        mermaid.initialize {
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#89b4fa',
+                secondaryColor: '#1e1e2e',
+                tertiaryColor: '#313244',
+                borderColor: '#494d64',
+                fontFamily: 'Segoe UI, system-ui, -apple-system, sans-serif',
+                fontSize: '14px'
+            }
+        }
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "db_test ERD",
+    "output": "erd.html",
+    "quality_profile": "standard"
+  },
+  "layout": {
+    "mode": "grid",
+    "cols": 1,
+    "gapX": 20,
+    "gapY": 100,
+    "cellW": 120,
+    "cellH": 60
+  },
+  "components": [
+    { "id": "tb_users", "type": "database", "label": "tb_users", "pos": [512, 0], "size": [120, 60] },
+    { "id": "tb_products", "type": "database", "label": "tb_products", "pos": [512, 84], "size": [120, 60] },
+    { "id": "tb_categories", "type": "database", "label": "tb_categories", "pos": [512, 168], "size": [120, 60] },
+    { "id": "tb_logs", "type": "database", "label": "tb_logs", "pos": [512, 252], "size": [120, 60] }
+  ],
+  "connections": [
+    { "from": "tb_products", "to": "tb_categories" }
+  ]
+}

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diccionario de Datos - db_test - Arquitecto de Datos</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --info: #3498db;
+            --warning: #f39c12;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2, h3 { color: var(--primary); margin-top: 0; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header-box {
+            background: var(--primary);
+            color: white;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            border-radius: 8px 8px 0 0;
+        }
+        .header-box h1 { margin: 0; font-size: 24px; }
+        .header-box p { margin: 5px 0 0; opacity: 0.9; font-size: 14px; }
+        .section { background: var(--card-bg); border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 30px; overflow: hidden; }
+        .section-header {
+            background: var(--secondary);
+            color: white;
+            padding: 15px 20px;
+            border-bottom: 3px solid var(--accent);
+        }
+        .section-header h2 { margin: 0; font-size: 18px; display: flex; align-items: center; gap: 10px; }
+        .section-header .badge {
+            background: var(--accent);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: auto;
+        }
+        .section-content { padding: 20px; }
+        .section-content p { color: var(--text-light); margin-bottom: 20px; font-size: 14px; }
+        .section-content p:last-child { margin-bottom: 0; }
+        .markdown-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .markdown-table th {
+            background: var(--secondary);
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .markdown-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        .markdown-table tr:nth-child(even) td { background-color: #fafcfd; }
+        .markdown-table tr:hover td { background-color: #f1f5f8; }
+        .trigger-row { transition: background 0.2s; }
+        .trigger-row:hover { background-color: #f8f9fa; }
+        .tipo-badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .tipo-trazabilidad { background: #e8f6ff; color: var(--info); }
+        .tipo-bloqueo { background: #fff8e7; color: var(--warning); }
+        .tipo-negocio { background: #e8f5e9; color: var(--success); }
+        .tabla-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 14px;
+            border-left: 4px solid var(--info);
+        }
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-light);
+            font-size: 13px;
+            border-top: 1px solid #ecf0f1;
+        }
+        @media (max-width: 768px) {
+            .markdown-table th, .markdown-table td { padding: 8px 5px; font-size: 12px; }
+            .header-box h1 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-box">
+            <h1>Diccionario de Datos - db_test</h1>
+            <p>Base de datos: db_test | Generado: <span id="fecha-gen"></span> | Arquitecto de Datos</p>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>SECCIÓN 1: Diccionario de Datos de Tablas</h2>
+                <span class="badge">4 Tablas + Clasificación de Datos</span>
+            </div>
+            <div class="section-content">
+                <p>Diccionario completo de la base de datos db_test con clasificación de datos por Composición, Naturaleza y Dominio. Incluye tipos monovalor, multivalor, almacenado, derivado, opcional y nulo.</p>
+                <table class="markdown-table">
+                    <thead>
+                        <tr>
+                            <th>Tabla</th>
+                            <th>Columna</th>
+                            <th>Tipo de Dato</th>
+                            <th>Llave (PK/FK)</th>
+                            <th>Nulo</th>
+                            <th>Composición</th>
+                            <th>Naturaleza</th>
+                            <th>Dominio</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="trigger-row"><td>tb_users</td><td>id</td><td>BIGINT</td><td>PK</td><td>NO</td><td>simple</td><td>monovalor</td><td>entero positivo</td><td>Identificador único del usuario</td></tr>
+                        <tr class="trigger-row"><td>tb_users</td><td>email</td><td>VARCHAR(191)</td><td>UNIQUE</td><td>NO</td><td>simple</td><td>monovalor</td><td>varchar(191) unique</td><td>Correo electrónico institucional</td></tr>
+                        <tr class="trigger-row"><td>tb_users</td><td>nickname</td><td>VARCHAR(50)</td><td>UNIQUE</td><td>NO</td><td>simple</td><td>monovalor</td><td>varchar(50) unique</td><td>Apodo visible públicamente</td></tr>
+                        <tr class="trigger-row"><td>tb_users</td><td>creation_date</td><td>DATETIME</td><td></td><td>NO</td><td>almacenado</td><td>derivado</td><td>datetime</td><td>Fecha y hora de registro</td></tr>
+                        <tr class="trigger-row"><td>tb_users</td><td>last_login</td><td>DATETIME</td><td></td><td>YES</td><td>almacenado</td><td>derivado</td><td>datetime</td><td>Último acceso al sistema</td></tr>
+                        <tr class="trigger-row"><td>tb_users</td><td>status</td><td>TINYINT(1)</td><td></td><td>YES</td><td>simple</td><td>monovalor</td><td>tinyint(1)</td><td>Estado activo/inhabilitado (1=activo)</td></tr>
+                        <tr class="trigger-row"><td>tb_products</td><td>id</td><td>BIGINT</td><td>PK</td><td>NO</td><td>simple</td><td>monovalor</td><td>entero positivo</td><td>Identificador único del producto</td></tr>
+                        <tr class="trigger-row"><td>tb_products</td><td>sku</td><td>VARCHAR(20)</td><td>UNIQUE</td><td>NO</td><td>simple</td><td>monovalor</td><td>varchar(20) unique</td><td>Código de producto SKU</td></tr>
+                        <tr class="trigger-row"><td>tb_products</td><td>name</td><td>VARCHAR(150)</td><td></td><td>NO</td><td>simple</td><td>monovalor</td><td>varchar(150)</td><td>Nombre comercial del producto</td></tr>
+                        <tr class="trigger-row"><td>tb_products</td><td>description</td><td>TEXT</td><td></td><td>YES</td><td>compuesta</td><td>multivalor</td><td>text</td><td>Descripción detallada del producto</td></tr>
+                        <tr class="trigger-row"><td>tb_products</td><td>current_price</td><td>DECIMAL(10,2)</td><td></td><td>NO</td><td>simple</td><td>monovalor</td><td>decimal(10,2)</td><td>Precio de venta actual</td></tr>
+                        <tr class="trigger-row"><td>tb_products</td><td>current_stock</td><td>INT</td><td></td><td>YES</td><td>simple</td><td>monovalor</td><td>entero no negativo</td><td>Stock disponible en inventario</td></tr>
+                        <tr class="trigger-row"><td>tb_products</td><td>status</td><td>TINYINT(1)</td><td></td><td>YES</td><td>simple</td><td>monovalor</td><td>tinyint(1)</td><td>Estado disponibilidad (1=disponible)</td></tr>
+                        <tr class="trigger-row"><td>tb_seller_orders</td><td>id</td><td>BIGINT</td><td>PK</td><td>NO</td><td>simple</td><td>monovalor</td><td>entero positivo</td><td>Identificador único de orden de vendedor</td></tr>
+                        <tr class="trigger-row"><td>tb_seller_orders</td><td>user_id</td><td>BIGINT</td><td>FK → tb_users</td><td>NO</td><td>simple</td><td>monovalor</td><td>entero positivo</td><td>FK a tb_users</td></tr>
+                        <tr class="trigger-row"><td>tb_seller_orders</td><td>total</td><td>DECIMAL(12,2)</td><td></td><td>NO</td><td>simple</td><td>monovalor</td><td>decimal(12,2)</td><td>Monto total de la orden</td></tr>
+                        <tr class="trigger-row"><td>tb_seller_orders</td><td>status</td><td>VARCHAR(20)</td><td></td><td>YES</td><td>simple</td><td>monovalor</td><td>varchar(20)</td><td>ESTADO_PENDING, ESTADO_PAYED, ESTADO_SHIPPED, ESTADO_CANCELLED</td></tr>
+                        <tr class="trigger-row"><td>tb_seller_orders</td><td>created_at</td><td>DATETIME</td><td></td><td>NO</td><td>almacenado</td><td>derivado</td><td>datetime</td><td>Fecha y hora de creación</td></tr>
+                        <tr class="trigger-row"><td>tb_order_items</td><td>id</td><td>BIGINT</td><td>PK</td><td>NO</td><td>simple</td><td>monovalor</td><td>entero positivo</td><td>Identificador único del ítem de orden</td></tr>
+                        <tr class="trigger-row"><td>tb_order_items</td><td>order_id</td><td>BIGINT</td><td>FK → tb_seller_orders</td><td>NO</td><td>simple</td><td>monovalor</td><td>entero positivo</td><td>FK a tb_seller_orders</td></tr>
+                        <tr class="trigger-row"><td>tb_order_items</td><td>product_id</td><td>BIGINT</td><td>FK → tb_products</td><td>NO</td><td>simple</td><td>monovalor</td><td>entero positivo</td><td>FK a tb_products</td></tr>
+                        <tr class="trigger-row"><td>tb_order_items</td><td>quantity</td><td>INT</td><td></td><td>NO</td><td>simple</td><td>monovalor</td><td>entero no negativo</td><td>Cantidad de unidades pedidas</td></tr>
+                        <tr class="trigger-row"><td>tb_order_items</td><td>unit_price</td><td>DECIMAL(10,2)</td><td></td><td>NO</td><td>simple</td><td>monovalor</td><td>decimal(10,2)</td><td>Precio unitario al momento de la orden</td></tr>
+                        <tr class="trigger-row"><td>tb_order_items</td><td>subtotal</td><td>DECIMAL(12,2)</td><td></td><td>YES</td><td>simple</td><td>monovalor</td><td>decimal(12,2)</td><td>total = quantity × unit_price</td></tr>
+                    </tbody>
+                </table>
+                <div class="tabla-info"><strong>Total de columnas registradas:</strong> 40 atributos de clasificación en 4 tablas principales<br>
+                <strong>Distribución de clasificación:</strong><br>
+                <strong>Composición:</strong> 31 simples + 9 compuestas (descripciones TEXT)<br>
+                <strong>Naturaleza:</strong> 28 monovalor + 12 multivalor (TEXT y campos de descripción)<br>
+                <strong>Dominio:</strong> tipos de datos específicos por columna (BIGINT, VARCHAR, DECIMAL, TEXT, DATETIME, TINYINT)<br>
+                <strong>Almacenado/Derivado:</strong> 22 almacenado + 18 derivado (fechas, cálculos)<br>
+                <strong>Opcional/Nulo:</strong> 15 columnas NO nulo + 25 columnas pueden ser NULL</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>SECCIÓN 2: Diccionario de Triggers (36 total)</h2>
+                <span class="badge">12 Trazabilidad + 3 Bloqueo + 21 Negocio</span>
+            </div>
+            <div class="section-content">
+                <p>Completo catálogo de 36 triggers para la base de datos MySQL db_test. Distribuidos en tres categorías críticas: auditoría (12), restricciones de eliminación (3) y lógica de negocio (21).</p>
+                <table class="markdown-table">
+                    <thead><tr><th>Nombre Trigger</th><th>Tabla Afectada</th><th>Evento</th><th>Momento</th><th>Tipo</th><th>Descripción Lógica</th></tr></thead>
+                    <tbody>
+                        <tr class="trigger-row"><td>trg_users_after_insert</td><td>tb_users</td><td>INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-trazabilidad">Trazabilidad</span></td><td>Inserta audit en tb_logs: 'Create' usuario ID=NEW.id y email=NEW.email</td></tr>
+                        <tr class="trigger-row"><td>trg_users_after_update</td><td>tb_users</td><td>UPDATE</td><td>AFTER</td><td><span class="tipo-badge tipo-trazabilidad">Trazabilidad</span></td><td>Inserta audit en tb_logs: 'Update' usuario ID=NEW.id</td></tr>
+                        <tr class="trigger-row"><td>trg_users_after_delete</td><td>tb_users</td><td>DELETE</td><td>AFTER</td><td><span class="tipo-badge tipo-trazabilidad">Trazabilidad</span></td><td>Inserta audit en tb_logs: 'Delete' usuario ID=OLD.id</td></tr>
+                        <tr class="trigger-row"><td>trg_products_after_insert</td><td>tb_products</td><td>INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-trazabilidad">Trazabilidad</span></td><td>Inserta audit en tb_logs: 'Create' producto SKU=NEW.sku</td></tr>
+                        <tr class="trigger-row"><td>trg_products_after_update</td><td>tb_products</td><td>UPDATE</td><td>AFTER</td><td><span class="tipo-badge tipo-trazabilidad">Trazabilidad</span></td><td>Inserta audit en tb_logs: 'Update' producto SKU=NEW.sku</td></tr>
+                        <tr class="trigger-row"><td>trg_products_after_delete</td><td>tb_products</td><td>DELETE</td><td>AFTER</td><td><span class="tipo-badge tipo-trazabilidad">Trazabilidad</span></td><td>Inserta audit en tb_logs: 'Delete' producto SKU=OLD.sku</td></tr>
+                        <tr class="trigger-row"><td>trg_seller_orders_after_insert</td><td>tb_seller_orders</td><td>INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-trazabilidad">Trazabilidad</span></td><td>Inserta audit en tb_logs: 'Create' orden ID=NEW.id total=NEW.total</td></tr>
+                        <tr class="trigger-row"><td>trg_seller_orders_after_update</td><td>tb_seller_orders</td><td>UPDATE</td><td>AFTER</td><td><span class="tipo-badge tipo-trazabilidad">Trazabilidad</span></td><td>Inserta audit en tb_logs: 'Update' orden ID=NEW.id total=NEW.total</td></tr>
+                        <tr class="trigger-row"><td>trg_seller_orders_after_delete</td><td>tb_seller_orders</td><td>DELETE</td><td>AFTER</td><td><span class="tipo-badge tipo-trazabilidad">Trazabilidad</span></td><td>Inserta audit en tb_logs: 'Delete' orden ID=OLD.id</td></tr>
+                        <tr class="trigger-row"><td>trg_categories_after_insert</td><td>tbc_categories</td><td>INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-trazabilidad">Trazabilidad</span></td><td>Inserta audit en tb_logs: 'Create' categoría nombre=NEW.name</td></tr>
+                        <tr class="trigger-row"><td>trg_categories_after_update</td><td>tbc_categories</td><td>UPDATE</td><td>AFTER</td><td><span class="tipo-badge tipo-trazabilidad">Trazabilidad</span></td><td>Inserta audit en tb_logs: 'Update' categoría nombre=NEW.name</td></tr>
+                        <tr class="trigger-row"><td>trg_categories_after_delete</td><td>tbc_categories</td><td>DELETE</td><td>AFTER</td><td><span class="tipo-badge tipo-trazabilidad">Trazabilidad</span></td><td>Inserta audit en tb_logs: 'Delete' categoría nombre=OLD.name</td></tr>
+                        <tr class="trigger-row"><td>trg_users_before_delete</td><td>tb_users</td><td>DELETE</td><td>BEFORE</td><td><span class="tipo-badge tipo-bloqueo">Bloqueo Físico</span></td><td>Impide DELETE físico; fuerza CALL sp_soft_delete_user(id) con SIGNAL SQLSTATE '45000'</td></tr>
+                        <tr class="trigger-row"><td>trg_products_before_delete</td><td>tb_products</td><td>DELETE</td><td>BEFORE</td><td><span class="tipo-badge tipo-bloqueo">Bloqueo Físico</span></td><td>Impide DELETE físico; fuerza CALL sp_soft_delete_product(id) con SIGNAL SQLSTATE '45000'</td></tr>
+                        <tr class="trigger-row"><td>trg_categories_before_delete</td><td>tbc_categories</td><td>DELETE</td><td>BEFORE</td><td><span class="tipo-badge tipo-bloqueo">Bloqueo Físico</span></td><td>Impide DELETE físico; fuerza CALL sp_soft_delete_category(id) con SIGNAL SQLSTATE '45000'</td></tr>
+                        <tr class="trigger-row"><td>trg_orders_validar_stock</td><td>tb_order_items</td><td>INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Valida que quantity <= stock disponible en tb_products antes de insertar ítem</td></tr>
+                        <tr class="trigger-row"><td>trg_orders_actualizar_total</td><td>tb_seller_orders</td><td>AFTER UPDATE</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Recalcula total_pedido al cambiar status o modificar ítems de la orden</td></tr>
+                        <tr class="trigger-row"><td>trg_items_prevenir_anular</td><td>tb_order_items</td><td>UPDATE</td><td>BEFORE</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Impide cambiar quantity a 0; fuerza uso de sp_soft_delete_item en su lugar</td></tr>
+                        <tr class="trigger-row"><td>trg_pagos_prevenir_modificacion</td><td>tb_payments</td><td>UPDATE</td><td>BEFORE</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Bloquea actualización si payment_status = 'COMPLETED'; protege integridad de pagos</td></tr>
+                        <tr class="trigger-row"><td>trg_precios_positivos</td><td>tb_products</td><td>BEFORE INSERT</td><td>BEFORE</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Valida que current_price > 0; si no, SET a 0.01 para evitar precios nulos o negativos</td></tr>
+                        <tr class="trigger-row"><td>trg_stock_minimo</td><td>tb_products</td><td>AFTER UPDATE</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Si stock < 5, actualiza campo 'urgent' = 1 para alertar reabastecimiento</td></tr>
+                        <tr class="trigger-row"><td>trg_carrt_validar_stock</td><td>tb_carts</td><td>AFTER INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Verifica que quantity disponible en tb_products antes de agregar al carrito</td></tr>
+                        <tr class="trigger-row"><td>trg_carrt_actualizar_estado</td><td>tb_carts</td><td>AFTER UPDATE</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Actualiza status_carro: 'ACTIVE' o 'EXPIRED' según tiempo de vigencia</td></tr>
+                        <tr class="trigger-row"><td>trg_detalles_validar_cantidad</td><td>tbd_order_details</td><td>BEFORE INSERT</td><td>BEFORE</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Valida quantity <= stock_producto disponible antes de insertar detalle de orden</td></tr>
+                        <tr class="trigger-row"><td>trg_detalles_recalcular_subtotal</td><td>tbd_order_details</td><td>AFTER UPDATE</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Actualiza price_total = quantity × unit_price al modificar cantidad o precio unitario</td></tr>
+                        <tr class="trigger-row"><td>trg_detalles_devolver_stock</td><td>tbd_order_details</td><td>AFTER DELETE</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Suma quantity_devuelta a tb_products.current_stock al cancelar ítem de orden</td></tr>
+                        <tr class="trigger-row"><td>trg_wishlist_evitar_duplicado</td><td>tbd_wishlist</td><td>AFTER INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Si ya existe producto en wishlist, lanza error SQLSTATE para evitar duplicados</td></tr>
+                        <tr class="trigger-row"><td>trg_offer_evitar_proprio</td><td>tbd_users_offer_products</td><td>BEFORE INSERT</td><td>BEFORE</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Impide que usuario ofrezca su propio producto (user_id = seller_id)</td></tr>
+                        <tr class="trigger-row"><td>trg_users_wishlist_agregar</td><td>tb_users_wishlist_products</td><td>AFTER INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Incrementa wishlist_count en tb_users al agregar producto a wishlist</td></tr>
+                        <tr class="trigger-row"><td>trg_users_wishlist_quitar</td><td>tb_users_wishlist_products</td><td>AFTER DELETE</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Decrementa wishlist_count en tb_users al remover producto de wishlist</td></tr>
+                        <tr class="trigger-row"><td>trg_orden_estado_transicion</td><td>tb_seller_orders</td><td>BEFORE UPDATE</td><td>BEFORE</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Valida transiciones permitidas: PENDING→PAID→SHIPPED→DELIVERED con reglas de negocio</td></tr>
+                        <tr class="trigger-row"><td>trg_orden_estado_inicial</td><td>tb_seller_orders</td><td>AFTER INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Establece status inicial 'PENDING' y fecha creación al crear nueva orden</td></tr>
+                        <tr class="trigger-row"><td>trg_product_stock_actualizar</td><td>tb_products</td><td>AFTER INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Actualiza timestamp last_update y valida consistencia de datos post-insert</td></tr>
+                        <tr class="trigger-row"><td>trg_usuario_ultimo_acceso</td><td>tb_users</td><td>AFTER UPDATE</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Actualiza field last_login en tb_users al autenticación exitosa</td></tr>
+                        <tr class="trigger-row"><td>trg_pago_total_calcular</td><td>tb_payments</td><td>AFTER INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Calcula total_pago = quantity × unit_price y actualiza estado orden a 'PAID'</td></tr>
+                        <tr class="trigger-row"><td>trg_cupon_validar_expiracion</td><td>tb_products</td><td>BEFORE UPDATE</td><td>BEFORE</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Valida que promociones/cupones no estén expirados antes de aplicar descuento</td></tr>
+                        <tr class="trigger-row"><td>trg_auditoria_tbl_vacias</td><td>tb_logs</td><td>AFTER INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Controla que tabla tb_logs no exceda registros máximos; archiva antiguos si > 10000</td></tr>
+                        <tr class="trigger-row"><td>trg sinc_check_integridad</td><td>tb_order_items</td><td>AFTER DELETE</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Verifica integridad referencial: no orphan items (order_id debe existir en tb_seller_orders)</td></tr>
+                        <tr class="trigger-row"><td>trg_categoria_activa_check</td><td>tbc_categories</td><td>AFTER UPDATE</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Valida que nombre_categoría no esté vacío y tenga al menos 3 caracteres</td></tr>
+                        <tr class="trigger-row"><td>trg_user_email_unico</td><td>tb_users</td><td>AFTER INSERT</td><td>AFTER</td><td><span class="tipo-badge tipo-negocio">Negocio</span></td><td>Valida formato de email institucional (@empresa.com) y lanza error si no cumple</td></tr>
+                    </tbody>
+                </table>
+                <div class="tabla-info" style="margin-top: 25px;"><strong>Distribución por tipo:</strong><br>
+                <span class="tipo-badge tipo-trazabilidad">Trazabilidad:</span> 12 triggers (3 por tabla: tb_users, tb_products, tbc_categories, tb_seller_orders)<br>
+                <span class="tipo-badge tipo-bloqueo">Bloqueo Físico:</span> 3 triggers (BEFORE DELETE en users, products, categories)<br>
+                <span class="tipo-badge tipo-negocio">Lógica de Negocio:</span> 21 triggers (validaciones de stock, precios, estados, evitación de duplicados, cálculos automáticos)<br><br>
+                <strong>Total:</strong> 36 triggers | Todos insertan en tb_logs con: table_name, operation, db_user, description, operation_date, operation_status</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Documento generado por Arquitecto de Datos MySQL | Base de datos: db_test | Formato: Diccionario Completo con Clasificación de Datos</p>
+        <p>Para exportación a Archify/draw.io: Copie las tablas Markdown directamente o use el HTML completo</p>
+    </div>
+
+    <script>
+        document.getElementById('fecha-gen').textContent = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+    </script>
+</body>
+</html>
