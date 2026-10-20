@@ -1,0 +1,41 @@
+name: Publicar diccionario de datos
+
+on:
+  push:
+    branches: [Practica03]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener repositorio
+        uses: actions/checkout@v4
+      - name: Preparar GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Preparar archivos públicos
+        run: |
+          mkdir -p _site
+          cp docs/index.html docs/modelo-relacional.html docs/.nojekyll _site/
+      - name: Cargar sitio
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v4
