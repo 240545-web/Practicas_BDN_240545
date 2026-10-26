@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: postgres_practica03
+    environment:
+      POSTGRES_DB: practica03_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_pass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Ejecuta el script de inicialización de roles
+      - ./init.sql:/docker-entrypoint-initdb.d/00_init.sql
+    ports:
+      # Usamos el puerto 40545 de tu Mac
+      - "40545:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - postgrest-network
+
+  postgrest:
+    image: postgrest/postgrest:v12.2.3
+    container_name: postgrest_practica03
+    ports:
+      - "3000:3000"
+    environment:
+      # PostgREST se conecta usando el rol 'authenticator'
+      PGRST_DB_URI: postgresql://authenticator:auth_pass@db:5432/practica03_db
+      PGRST_DB_SCHEMAS: api
+      PGRST_DB_ANON_ROLE: web_anon
+      PGRST_JWT_SECRET: "super-secret-jwt-key-with-at-least-32-characters!!"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - postgrest-network
+
+networks:
+  postgrest-network:
+    driver: bridge
+
+volumes:
+  pgdata:
