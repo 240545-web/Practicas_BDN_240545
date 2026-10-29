@@ -1,0 +1,70 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: postgres_practica03
+    environment:
+      POSTGRES_DB: practica03_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_pass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/00_init.sql
+    ports:
+      - "40545:5432" # PUERTO DE TU MATRÍCULA
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - postgrest-network
+
+  mysql_db:
+    image: mysql:8.0
+    container_name: mysql_practica03
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: practica03_mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "40546:3306" # PUERTO MATRÍCULA + 1
+    networks:
+      - postgrest-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_practica03
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - postgrest-network
+
+  postgrest:
+    image: postgrest/postgrest:v12.2.3
+    container_name: postgrest_practica03
+    ports:
+      - "3000:3000"
+    environment:
+      PGRST_DB_URI: postgresql://authenticator:auth_pass@db:5432/practica03_db
+      PGRST_DB_SCHEMAS: api
+      PGRST_DB_ANON_ROLE: web_anon
+      PGRST_JWT_SECRET: "super-secret-jwt-key-with-at-least-32-characters!!"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - postgrest-network
+
+networks:
+  postgrest-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+  mysql_data:

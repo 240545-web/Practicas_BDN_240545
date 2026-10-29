@@ -3,7 +3,7 @@
 -- Práctica 03 - Emigdio Aguirre 240545
 -- ============================================================
 
-USE db_test;
+
 
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -13,22 +13,22 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS tb_orders;
 
 CREATE TABLE tb_orders (
-    ID INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `key` VARCHAR(40) NOT NULL,
+    ID INT UNSIGNED NOT NULL SERIAL,
+    "key" VARCHAR(40) NOT NULL,
     user_ID INT NOT NULL,
     total_products INT UNSIGNED NOT NULL DEFAULT 0,
     total_cost DECIMAL(10,3) NOT NULL DEFAULT 0.000,
     status_string VARCHAR(50) NOT NULL,
-    status BIT(1) NOT NULL DEFAULT b'1',
+    status BIT(1) NOT NULL DEFAULT b"1",
     creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (ID),
-    UNIQUE KEY uk_orders_key (`key`),
+    UNIQUE KEY uk_orders_key ("key"),
     KEY fk_orders_user (user_ID),
     CONSTRAINT fk_orders_user
         FOREIGN KEY (user_ID) REFERENCES tb_users (ID)
         ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)  COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
 -- 2. tb_carts (CARRITOS)
@@ -36,9 +36,9 @@ CREATE TABLE tb_orders (
 DROP TABLE IF EXISTS tb_carts;
 
 CREATE TABLE tb_carts (
-    ID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    ID INT UNSIGNED NOT NULL SERIAL,
     user_ID INT NOT NULL,
-    status BIT(1) NOT NULL DEFAULT b'1',
+    status BIT(1) NOT NULL DEFAULT b "1",
     creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (ID),
@@ -46,7 +46,7 @@ CREATE TABLE tb_carts (
     CONSTRAINT fk_carts_user
         FOREIGN KEY (user_ID) REFERENCES tb_users (ID)
         ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)  COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
 -- 3. tbc_payment_methods (MÉTODOS DE PAGO)
@@ -54,14 +54,14 @@ CREATE TABLE tb_carts (
 DROP TABLE IF EXISTS tbc_payment_methods;
 
 CREATE TABLE tbc_payment_methods (
-    ID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    ID INT UNSIGNED NOT NULL SERIAL,
     name VARCHAR(100) NOT NULL,
     description TEXT NULL,
-    status BIT(1) NOT NULL DEFAULT b'1',
+    status BIT(1) NOT NULL DEFAULT b "1",
     creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (ID),
     UNIQUE KEY uk_payment_methods_name (name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)  COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
 -- 4. tb_payments (PAGOS)
@@ -69,11 +69,11 @@ CREATE TABLE tbc_payment_methods (
 DROP TABLE IF EXISTS tb_payments;
 
 CREATE TABLE tb_payments (
-    ID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    ID INT UNSIGNED NOT NULL SERIAL,
     order_ID INT UNSIGNED NOT NULL,
     payment_method_ID INT UNSIGNED NOT NULL,
     amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    payment_status ENUM('Pending','Completed','Failed','Refunded') NOT NULL DEFAULT 'Pending',
+    payment_status ENUM("Pending","Completed","Failed","Refunded") NOT NULL DEFAULT "Pending",
     transaction_reference VARCHAR(150) NULL,
     payment_date DATETIME NULL,
     PRIMARY KEY (ID),
@@ -85,7 +85,7 @@ CREATE TABLE tb_payments (
     CONSTRAINT fk_payments_method
         FOREIGN KEY (payment_method_ID) REFERENCES tbc_payment_methods (ID)
         ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)  COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
 -- 5. tbd_order_details (DETALLES DE PEDIDO)
@@ -93,7 +93,7 @@ CREATE TABLE tb_payments (
 DROP TABLE IF EXISTS tbd_order_details;
 
 CREATE TABLE tbd_order_details (
-    ID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    ID INT UNSIGNED NOT NULL SERIAL,
     order_ID INT UNSIGNED NOT NULL,
     product_ID INT UNSIGNED NOT NULL,
     quantity INT UNSIGNED NOT NULL DEFAULT 1,
@@ -109,7 +109,7 @@ CREATE TABLE tbd_order_details (
     CONSTRAINT fk_order_details_product
         FOREIGN KEY (product_ID) REFERENCES tb_products (ID)
         ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)  COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
 -- 6. tbd_shopping_cart (ITEMS DEL CARRITO)
@@ -117,7 +117,7 @@ CREATE TABLE tbd_order_details (
 DROP TABLE IF EXISTS tbd_shopping_cart;
 
 CREATE TABLE tbd_shopping_cart (
-    ID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    ID INT UNSIGNED NOT NULL SERIAL,
     user_ID INT NOT NULL,
     offer_ID INT UNSIGNED NULL,
     product_ID INT UNSIGNED NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE tbd_shopping_cart (
     CONSTRAINT fk_shopping_cart_product
         FOREIGN KEY (product_ID) REFERENCES tb_products (ID)
         ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)  COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
 -- 7. tb_products_categories (RELACIÓN PRODUCTO-CATEGORÍA)
@@ -143,7 +143,7 @@ DROP TABLE IF EXISTS tb_products_categories;
 CREATE TABLE tb_products_categories (
     category_ID INT UNSIGNED NOT NULL,
     product_ID INT UNSIGNED NOT NULL,
-    status BIT(1) NOT NULL DEFAULT b'1',
+    status BIT(1) NOT NULL DEFAULT b"1",
     creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (category_ID, product_ID),
@@ -154,7 +154,7 @@ CREATE TABLE tb_products_categories (
     CONSTRAINT fk_pc_product
         FOREIGN KEY (product_ID) REFERENCES tb_products (ID)
         ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)  COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
 -- 8. tbd_users_offer_products (OFERTAS DE USUARIOS)
@@ -162,11 +162,11 @@ CREATE TABLE tb_products_categories (
 DROP TABLE IF EXISTS tbd_users_offer_products;
 
 CREATE TABLE tbd_users_offer_products (
-    ID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    ID INT UNSIGNED NOT NULL SERIAL,
     user_ID INT NOT NULL,
     product_ID INT UNSIGNED NOT NULL,
     available_stock INT UNSIGNED NOT NULL DEFAULT 0,
-    status BIT(1) NOT NULL DEFAULT b'1',
+    status BIT(1) NOT NULL DEFAULT b"1",
     creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     available_date DATETIME NOT NULL,
     last_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -179,7 +179,7 @@ CREATE TABLE tbd_users_offer_products (
     CONSTRAINT fk_offer_product
         FOREIGN KEY (product_ID) REFERENCES tb_products (ID)
         ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)  COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
 -- 9. tbd_wishlist (LISTA DE DESEOS)
@@ -187,7 +187,7 @@ CREATE TABLE tbd_users_offer_products (
 DROP TABLE IF EXISTS tbd_wishlist;
 
 CREATE TABLE tbd_wishlist (
-    ID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    ID INT UNSIGNED NOT NULL SERIAL,
     user_ID INT NOT NULL,
     product_ID INT UNSIGNED NOT NULL,
     creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -200,7 +200,7 @@ CREATE TABLE tbd_wishlist (
     CONSTRAINT fk_wishlist_product
         FOREIGN KEY (product_ID) REFERENCES tb_products (ID)
         ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)  COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
 -- 10. tbd_users_wishlist_products (RELACIÓN USERS-WISHLIST)
@@ -210,7 +210,7 @@ DROP TABLE IF EXISTS tbd_users_wishlist_products;
 CREATE TABLE tbd_users_wishlist_products (
     user_ID INT NOT NULL,
     product_ID INT UNSIGNED NOT NULL,
-    status BIT(1) NOT NULL DEFAULT b'1',
+    status BIT(1) NOT NULL DEFAULT b"1",
     creation_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (user_ID, product_ID),
@@ -221,25 +221,25 @@ CREATE TABLE tbd_users_wishlist_products (
     CONSTRAINT fk_uwp_product
         FOREIGN KEY (product_ID) REFERENCES tb_products (ID)
         ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+)  COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- ============================================================
 -- VERIFICACIÓN
 -- ============================================================
-SELECT '========== TODAS LAS TABLAS ==========' AS seccion;
+SELECT "========== TODAS LAS TABLAS ==========" AS seccion;
 
 SELECT
     TABLE_NAME AS Tabla,
     TABLE_ROWS AS Filas,
     CREATE_TIME AS Creada
 FROM information_schema.TABLES
-WHERE TABLE_SCHEMA = 'db_test'
-  AND TABLE_TYPE = 'BASE TABLE'
+WHERE TABLE_SCHEMA = "db_test"
+  AND TABLE_TYPE = "BASE TABLE"
 ORDER BY TABLE_NAME;
 
-SELECT '========== LLAVES FORÁNEAS ==========' AS seccion;
+SELECT "========== LLAVES FORÁNEAS ==========" AS seccion;
 
 SELECT
     TABLE_NAME AS Tabla,
@@ -248,15 +248,15 @@ SELECT
     REFERENCED_TABLE_NAME AS Referencia,
     REFERENCED_COLUMN_NAME AS Col_Ref
 FROM information_schema.KEY_COLUMN_USAGE
-WHERE TABLE_SCHEMA = 'db_test'
+WHERE TABLE_SCHEMA = "db_test"
   AND REFERENCED_TABLE_NAME IS NOT NULL
 ORDER BY TABLE_NAME, CONSTRAINT_NAME;
 
-SELECT '========== RESUMEN ==========' AS seccion;
+SELECT "========== RESUMEN ==========" AS seccion;
 
 SELECT
     COUNT(DISTINCT TABLE_NAME) AS Total_Tablas,
     (SELECT COUNT(*) FROM information_schema.KEY_COLUMN_USAGE
-     WHERE TABLE_SCHEMA = 'db_test' AND REFERENCED_TABLE_NAME IS NOT NULL) AS Total_FKs
+     WHERE TABLE_SCHEMA = "db_test" AND REFERENCED_TABLE_NAME IS NOT NULL) AS Total_FKs
 FROM information_schema.TABLES
-WHERE TABLE_SCHEMA = 'db_test' AND TABLE_TYPE = 'BASE TABLE';
+WHERE TABLE_SCHEMA = "db_test" AND TABLE_TYPE = "BASE TABLE";
