@@ -1,0 +1,896 @@
+{
+  "tables": {
+    "tb_users": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "email",
+          "VARCHAR(254) NOT NULL UNIQUE"
+        ],
+        [
+          "nickname",
+          "VARCHAR(100) NOT NULL UNIQUE"
+        ],
+        [
+          "password",
+          "VARCHAR(255) NOT NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "updated_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "deleted_at",
+          "TS NULL"
+        ]
+      ],
+      "cons": [],
+      "soft": true
+    },
+    "tb_roles": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "name",
+          "VARCHAR(80) NOT NULL UNIQUE"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [],
+      "soft": false
+    },
+    "tb_user_roles": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "user_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "role_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [
+        "UNIQUE (user_id, role_id)",
+        "FOREIGN KEY (user_id) REFERENCES tb_users (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (role_id) REFERENCES tb_roles (id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": false
+    },
+    "tb_permissions": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "code",
+          "VARCHAR(100) NOT NULL UNIQUE"
+        ],
+        [
+          "description",
+          "TEXT NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [],
+      "soft": false
+    },
+    "tb_role_permissions": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "role_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "permission_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [
+        "UNIQUE (role_id, permission_id)",
+        "FOREIGN KEY (role_id) REFERENCES tb_roles (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (permission_id) REFERENCES tb_permissions (id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": false
+    },
+    "tb_categories": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "name",
+          "VARCHAR(150) NOT NULL UNIQUE"
+        ],
+        [
+          "description",
+          "TEXT NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "updated_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "deleted_at",
+          "TS NULL"
+        ]
+      ],
+      "cons": [],
+      "soft": true
+    },
+    "tb_products": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "SKU",
+          "VARCHAR(50) NOT NULL UNIQUE"
+        ],
+        [
+          "name",
+          "VARCHAR(250) NOT NULL"
+        ],
+        [
+          "description",
+          "TEXT NULL"
+        ],
+        [
+          "current_price",
+          "DECIMAL(12,2) NOT NULL CHECK (current_price > 0)"
+        ],
+        [
+          "current_stock",
+          "INT NOT NULL DEFAULT 0 CHECK (current_stock >= 0)"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "updated_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "deleted_at",
+          "TS NULL"
+        ]
+      ],
+      "cons": [],
+      "soft": true
+    },
+    "tb_product_categories": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "product_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "category_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [
+        "UNIQUE (product_id, category_id)",
+        "FOREIGN KEY (product_id) REFERENCES tb_products (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (category_id) REFERENCES tb_categories (id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": false
+    },
+    "tb_tags": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "name",
+          "VARCHAR(80) NOT NULL UNIQUE"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [],
+      "soft": false
+    },
+    "tb_product_tags": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "product_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "tag_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [
+        "UNIQUE (product_id, tag_id)",
+        "FOREIGN KEY (product_id) REFERENCES tb_products (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (tag_id) REFERENCES tb_tags (id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": false
+    },
+    "tb_reviews": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "user_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "product_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "rating",
+          "INT NOT NULL CHECK (rating BETWEEN 1 AND 5)"
+        ],
+        [
+          "comment",
+          "TEXT NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "updated_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "deleted_at",
+          "TS NULL"
+        ]
+      ],
+      "cons": [
+        "UNIQUE (user_id, product_id)",
+        "FOREIGN KEY (user_id) REFERENCES tb_users (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (product_id) REFERENCES tb_products (id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": true
+    },
+    "tbc_countries": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "code",
+          "CHAR(2) NOT NULL UNIQUE"
+        ],
+        [
+          "name",
+          "VARCHAR(100) NOT NULL UNIQUE"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [],
+      "soft": false
+    },
+    "tbc_states": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "country_code",
+          "CHAR(2) NOT NULL"
+        ],
+        [
+          "name",
+          "VARCHAR(100) NOT NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [
+        "UNIQUE (country_code, name)",
+        "UNIQUE (id, country_code)",
+        "FOREIGN KEY (country_code) REFERENCES tbc_countries (code) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": false
+    },
+    "tb_people": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "user_id",
+          "BIGINT NOT NULL UNIQUE"
+        ],
+        [
+          "given_names",
+          "VARCHAR(150) NOT NULL"
+        ],
+        [
+          "family_names",
+          "VARCHAR(150) NOT NULL"
+        ],
+        [
+          "birth_date",
+          "DATE NOT NULL"
+        ],
+        [
+          "country_code",
+          "CHAR(2) NOT NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "updated_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "deleted_at",
+          "TS NULL"
+        ]
+      ],
+      "cons": [
+        "FOREIGN KEY (user_id) REFERENCES tb_users (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (country_code) REFERENCES tbc_countries (code) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": true
+    },
+    "tb_addresses": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "user_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "country_code",
+          "CHAR(2) NOT NULL"
+        ],
+        [
+          "state_id",
+          "BIGINT NULL"
+        ],
+        [
+          "city",
+          "VARCHAR(120) NOT NULL"
+        ],
+        [
+          "street",
+          "VARCHAR(250) NOT NULL"
+        ],
+        [
+          "postal_code",
+          "VARCHAR(20) NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "updated_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "deleted_at",
+          "TS NULL"
+        ]
+      ],
+      "cons": [
+        "FOREIGN KEY (user_id) REFERENCES tb_users (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (country_code) REFERENCES tbc_countries (code) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (state_id, country_code) REFERENCES tbc_states (id, country_code) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": true
+    },
+    "tb_carts": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "user_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "status",
+          "VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active','checked_out','abandoned'))"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "updated_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "deleted_at",
+          "TS NULL"
+        ]
+      ],
+      "cons": [
+        "UNIQUE (id, user_id)",
+        "FOREIGN KEY (user_id) REFERENCES tb_users (id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": true
+    },
+    "tbd_shopping_cart": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "cart_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "user_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "product_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "quantity",
+          "INT NOT NULL CHECK (quantity > 0)"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [
+        "UNIQUE (cart_id, product_id)",
+        "FOREIGN KEY (cart_id, user_id) REFERENCES tb_carts (id, user_id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (user_id) REFERENCES tb_users (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (product_id) REFERENCES tb_products (id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": false
+    },
+    "tb_orders": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "user_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "cart_id",
+          "BIGINT NULL UNIQUE"
+        ],
+        [
+          "status",
+          "VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','paid','cancelled','shipped','delivered'))"
+        ],
+        [
+          "total_amount",
+          "DECIMAL(12,2) NOT NULL CHECK (total_amount > 0)"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "updated_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "deleted_at",
+          "TS NULL"
+        ]
+      ],
+      "cons": [
+        "UNIQUE (id, user_id)",
+        "FOREIGN KEY (user_id) REFERENCES tb_users (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (cart_id, user_id) REFERENCES tb_carts (id, user_id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": true
+    },
+    "tb_order_items": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "order_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "product_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "product_name",
+          "VARCHAR(250) NOT NULL"
+        ],
+        [
+          "quantity",
+          "INT NOT NULL CHECK (quantity > 0)"
+        ],
+        [
+          "unit_price",
+          "DECIMAL(12,2) NOT NULL CHECK (unit_price > 0)"
+        ],
+        [
+          "subtotal",
+          "DECIMAL(12,2) GENERATED ALWAYS AS (quantity * unit_price) STORED"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [
+        "UNIQUE (order_id, product_id)",
+        "FOREIGN KEY (order_id) REFERENCES tb_orders (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (product_id) REFERENCES tb_products (id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": false
+    },
+    "tb_wishlists": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "user_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "product_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "updated_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "deleted_at",
+          "TS NULL"
+        ]
+      ],
+      "cons": [
+        "UNIQUE (user_id, product_id)",
+        "FOREIGN KEY (user_id) REFERENCES tb_users (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (product_id) REFERENCES tb_products (id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": true
+    },
+    "tbc_payment_methods": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "code",
+          "VARCHAR(40) NOT NULL UNIQUE"
+        ],
+        [
+          "name",
+          "VARCHAR(100) NOT NULL UNIQUE"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [],
+      "soft": false
+    },
+    "tb_payments": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "order_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "payment_method_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "amount",
+          "DECIMAL(12,2) NOT NULL CHECK (amount > 0)"
+        ],
+        [
+          "payment_status",
+          "VARCHAR(20) NOT NULL DEFAULT 'Pending' CHECK (payment_status IN ('Pending','Completed','Failed','Refunded'))"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "updated_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "deleted_at",
+          "TS NULL"
+        ]
+      ],
+      "cons": [
+        "FOREIGN KEY (order_id) REFERENCES tb_orders (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (payment_method_id) REFERENCES tbc_payment_methods (id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": true
+    },
+    "tb_carriers": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "name",
+          "VARCHAR(150) NOT NULL UNIQUE"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [],
+      "soft": false
+    },
+    "tb_shipments": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "order_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "carrier_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "address_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "tracking_code",
+          "VARCHAR(150) NOT NULL UNIQUE"
+        ],
+        [
+          "status",
+          "VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','in_transit','delivered','returned'))"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "updated_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "deleted_at",
+          "TS NULL"
+        ]
+      ],
+      "cons": [
+        "FOREIGN KEY (order_id) REFERENCES tb_orders (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (carrier_id) REFERENCES tb_carriers (id) ON DELETE RESTRICT ON UPDATE CASCADE",
+        "FOREIGN KEY (address_id) REFERENCES tb_addresses (id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": true
+    },
+    "tb_invoices": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "order_id",
+          "BIGINT NOT NULL UNIQUE"
+        ],
+        [
+          "invoice_number",
+          "VARCHAR(80) NOT NULL UNIQUE"
+        ],
+        [
+          "total_amount",
+          "DECIMAL(12,2) NOT NULL CHECK (total_amount > 0)"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "updated_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ],
+        [
+          "deleted_at",
+          "TS NULL"
+        ]
+      ],
+      "cons": [
+        "FOREIGN KEY (order_id) REFERENCES tb_orders (id) ON DELETE RESTRICT ON UPDATE CASCADE"
+      ],
+      "soft": true
+    },
+    "tb_logs": {
+      "cols": [
+        [
+          "id",
+          "ID"
+        ],
+        [
+          "table_name",
+          "VARCHAR(100) NOT NULL"
+        ],
+        [
+          "entity_id",
+          "BIGINT NOT NULL"
+        ],
+        [
+          "operation",
+          "VARCHAR(10) NOT NULL CHECK (operation IN ('INSERT','UPDATE','DELETE'))"
+        ],
+        [
+          "db_actor",
+          "VARCHAR(288) NOT NULL"
+        ],
+        [
+          "old_data",
+          "DOC NULL"
+        ],
+        [
+          "new_data",
+          "DOC NULL"
+        ],
+        [
+          "created_at",
+          "TS NOT NULL DEFAULT CURRENT_TIMESTAMP"
+        ]
+      ],
+      "cons": [],
+      "soft": false
+    }
+  },
+  "main_tables": [
+    "tb_users",
+    "tb_categories",
+    "tb_products",
+    "tb_reviews",
+    "tb_people",
+    "tb_addresses",
+    "tb_carts",
+    "tb_orders",
+    "tb_wishlists",
+    "tb_payments",
+    "tb_shipments",
+    "tb_invoices"
+  ],
+  "modules": {
+    "Seguridad": [
+      "tb_users",
+      "tb_roles",
+      "tb_user_roles",
+      "tb_permissions",
+      "tb_role_permissions",
+      "tb_logs"
+    ],
+    "Catálogo": [
+      "tb_products",
+      "tb_categories",
+      "tb_product_categories",
+      "tb_tags",
+      "tb_product_tags",
+      "tb_reviews"
+    ],
+    "Clientes y ubicación": [
+      "tb_people",
+      "tb_addresses",
+      "tbc_countries",
+      "tbc_states"
+    ],
+    "Compras": [
+      "tb_carts",
+      "tbd_shopping_cart",
+      "tb_orders",
+      "tb_order_items",
+      "tb_wishlists"
+    ],
+    "Pagos y envíos": [
+      "tb_payments",
+      "tbc_payment_methods",
+      "tb_shipments",
+      "tb_carriers",
+      "tb_invoices"
+    ]
+  }
+}

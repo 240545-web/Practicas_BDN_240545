@@ -8,16 +8,40 @@ services:
       POSTGRES_PASSWORD: postgres_pass
     volumes:
       - pgdata:/var/lib/postgresql/data
-      # Ejecuta el script de inicialización de roles
       - ./init.sql:/docker-entrypoint-initdb.d/00_init.sql
     ports:
-      # Usamos el puerto 40545 de tu Mac
-      - "40545:5432"
+      - "40545:5432" # PUERTO DE TU MATRÍCULA
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - postgrest-network
+
+  mysql_db:
+    image: mysql:8.0
+    container_name: mysql_practica03
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: practica03_mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "40546:3306" # PUERTO MATRÍCULA + 1
+    networks:
+      - postgrest-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_practica03
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
     networks:
       - postgrest-network
 
@@ -27,7 +51,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      # PostgREST se conecta usando el rol 'authenticator'
       PGRST_DB_URI: postgresql://authenticator:auth_pass@db:5432/practica03_db
       PGRST_DB_SCHEMAS: api
       PGRST_DB_ANON_ROLE: web_anon
@@ -44,3 +67,4 @@ networks:
 
 volumes:
   pgdata:
+  mysql_data:
