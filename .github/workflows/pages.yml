@@ -2,7 +2,7 @@ name: Publicar diccionario de datos
 
 on:
   push:
-    branches: [Practica03]
+    branches: [main]
     paths:
       - 'docs/**'
       - '.github/workflows/pages.yml'
@@ -31,7 +31,8 @@ jobs:
       - name: Preparar archivos públicos
         run: |
           mkdir -p _site
-          cp docs/index.html docs/modelo-relacional.html docs/.nojekyll _site/
+          cp docs/index.html docs/diccionario_interactivo.html docs/modelo-relacional.html docs/.nojekyll _site/
+          cp docs/diccionario_interactivo.html _site/index.html
       - name: Cargar sitio
         uses: actions/upload-pages-artifact@v3
         with:
