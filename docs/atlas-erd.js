@@ -4,13 +4,9 @@ function enhanceAtlasERD({svg,data,tables,colors,setZoom,getScale}) {
  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const entities=new Map(), nodeList=[...svg.querySelectorAll('g.node, g[id^="entity-"]')];
  for(const table of tables){
-  const node=nodeList.find(n=>n.id.includes('entity-'+table.name+'-') || [...n.querySelectorAll('text,tspan,.nodeLabel')].some(t=>t.textContent.trim()===table.name));
+  const node=nodeList.find(n=>n.dataset.table===table.name);
   if(!node)throw new Error('Tabla ausente del SVG: '+table.name);
-  entities.set(table.name,node);node.dataset.table=table.name;node.setAttribute('tabindex','0');node.setAttribute('role','button');node.setAttribute('aria-label','Ver campos y totales de '+table.name);
-  const color=colors[data.modules.indexOf(table.module)];
-  node.querySelectorAll('path').forEach(p=>{if(p.getAttribute('fill')&&p.getAttribute('fill')!=='none')p.style.fill=p.closest('.row-rect-odd')?'#28283b':'#232335';if(p.getAttribute('stroke')!=='none')p.style.stroke=color;});
-  node.querySelectorAll('.attribute-type').forEach((label,i)=>{const text=label.querySelector('.nodeLabel p')||label.querySelector('.nodeLabel');if(text&&table.fields[i])text.textContent=table.fields[i].type;});
-  node.querySelectorAll('rect').forEach((r,i)=>{r.style.stroke=color;r.style.fill=i%2?'#28283b':'#232335';});node.querySelectorAll('text,tspan,.nodeLabel,.nodeLabel p,.nodeLabel span').forEach(t=>{t.style.fill='#e8e6f5';});
+  entities.set(table.name,node);node.setAttribute('tabindex','0');node.setAttribute('role','button');node.setAttribute('aria-label','Ver campos y totales de '+table.name);
  }
  const paths=[...svg.querySelectorAll('path.relationshipLine, .edgePaths path')];
  // Match the renderer's endpoint IDs, never assume path order equals SQL order.
@@ -25,15 +21,18 @@ function enhanceAtlasERD({svg,data,tables,colors,setZoom,getScale}) {
  function highlight(names=new Set(),edge=null){
   const linked=new Set(names);edges.forEach(e=>{if(names.has(e.source)||names.has(e.target)){linked.add(e.source);linked.add(e.target);}});
   entities.forEach((n,name)=>{n.classList.toggle('erd-muted',names.size>0&&!linked.has(name));n.classList.toggle('erd-active',names.has(name));});
-  edges.forEach(e=>{const active=edge?e===edge:names.has(e.source)||names.has(e.target);e.path.classList.toggle('erd-muted',names.size>0&&!active);e.path.classList.toggle('erd-edge-active',active);});
+  edges.forEach(e=>{const active=edge?e===edge:names.has(e.source)||names.has(e.target);e.path.classList.toggle('erd-muted',names.size>0&&!active);e.path.classList.toggle('erd-edge-active',active);const label=svg.querySelector('[data-edge-label="'+e.path.dataset.relation+'"]');if(label)label.setAttribute('visibility',active?'visible':'hidden');});
  }
  const panel=document.createElement('aside');panel.id='erdDetail';panel.className='erd-detail';panel.hidden=true;panel.setAttribute('aria-label','Detalle de tabla');document.body.append(panel);
  function close(){panel.hidden=true;if(selected)entities.get(selected)?.focus({preventScroll:true});selected=null;highlight();}
- function show(name){
+ function show(name,category){
   const t=tables.find(t=>t.name===name);selected=name;const stats=t.stats;
-  panel.innerHTML=`<button class="small-btn erd-close" aria-label="Cerrar detalle">Cerrar ×</button><h3 tabindex="-1">${esc(name)}</h3><p>${esc(t.description)}</p><div class="erd-totals"><span>Campos <b>${stats.fields}</b></span><span>Registros <b>No disponible</b></span><span>PK (campos) <b>${stats.pk}</b></span><span>FK (campos) <b>${stats.fk}</b></span><span>NOT NULL <b>${stats.notNull}</b></span></div><p class="small">Registros: no hay un conteo verificado en los archivos. FK cuenta columnas, incluidas las claves compuestas.</p><div class="table-scroll"><table class="data-table"><thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Nulo</th><th>Descripción</th></tr></thead><tbody>${t.fields.map(f=>`<tr><td><code>${esc(f.name)}</code></td><td><code>${esc(f.type)}</code></td><td>${esc(f.key)}</td><td>${esc(f.nullable)}</td><td>${esc(f.description)}</td></tr>`).join('')}</tbody></table></div>`;
-  panel.hidden=false;panel.querySelector('button').onclick=close;panel.querySelector('h3').focus({preventScroll:true});highlight(new Set([name]));
+  panel.innerHTML=`<button class="small-btn erd-close" aria-label="Cerrar detalle">Cerrar ×</button><h3 tabindex="-1">${esc(name)}</h3><p>${esc(t.description)}</p><div class="erd-totals"><span>Campos <b>${stats.fields}</b></span><span>Filas del respaldo <b>${window.ATLAS_SNAPSHOT.tables[name].total==null?"Sin snapshot":window.ATLAS_SNAPSHOT.tables[name].total.toLocaleString("es-MX")}</b></span><span>PK (campos) <b>${stats.pk}</b></span><span>FK (campos) <b>${stats.fk}</b></span><span>NOT NULL <b>${stats.notNull}</b></span></div><p class="small">Totales estructurales del Atlas. Filas y datos del respaldo histórico; las columnas pueden ser distintas. FK cuenta columnas, incluidas las claves compuestas.</p><div class="table-scroll"><table class="data-table"><thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Nulo</th><th>Descripción</th></tr></thead><tbody>${t.fields.map(f=>`<tr><td><code>${esc(f.name)}</code></td><td><code>${esc(f.type)}</code></td><td>${esc(f.key)}</td><td>${esc(f.nullable)}</td><td>${esc(f.description)}</td></tr>`).join('')}</tbody></table></div>`;
+  window.ATLAS_DATA_UI.mount(panel,name,category);
+  const structure=panel.querySelector('.table-scroll'),fold=document.createElement('details'),summary=document.createElement('summary');fold.className='source-details';summary.textContent=`Ver los ${t.fields.length} campos del diccionario`;structure.replaceWith(fold);fold.append(summary,structure);panel.insertBefore(panel.querySelector('.atlas-rows'),fold);
+  panel.hidden=false;panel.scrollTop=0;panel.querySelector('button').onclick=close;panel.querySelector('h3').focus({preventScroll:true});highlight(new Set([name]));
  }
+ window.addEventListener('atlas:open-table',e=>{$('erdModule').value='';$('erdSearch').value=e.detail.table;filter(true);show(e.detail.table,e.detail.category);});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden)close();});
  entities.forEach((node,name)=>{
   node.addEventListener('pointerenter',()=>highlight(new Set([name])));node.addEventListener('pointerleave',()=>highlight(selected?new Set([selected]):new Set()));
@@ -67,8 +66,8 @@ function enhanceAtlasERD({svg,data,tables,colors,setZoom,getScale}) {
  function filter(recenter=false){
   query=$('erdSearch').value.toLowerCase().trim();const module=$('erdModule').value;
   const matches=tables.filter(t=>(!module||t.module===module)&&(!query||t.name.toLowerCase().includes(query)||t.fields.some(f=>f.name.toLowerCase().includes(query))));const names=new Set(matches.map(t=>t.name));
-  entities.forEach((n,name)=>{n.style.opacity=names.has(name)?'':'0.12';n.style.visibility=mode==='relations'?'hidden':'';n.querySelectorAll('text,tspan,.nodeLabel,.nodeLabel p,.nodeLabel span').forEach(el=>{const f=tables.find(t=>t.name===name).fields.find(f=>f.name===el.textContent.trim());el.classList.toggle('erd-key',!!f&&!!keyMode&&f.key.includes(keyMode));});});
-  edges.forEach(e=>{e.path.style.opacity=names.has(e.source)&&names.has(e.target)?'':'0.08';e.path.style.visibility=mode==='tables'?'hidden':'';});
+  entities.forEach((n,name)=>{n.style.opacity=names.has(name)?'':'0.8';n.style.visibility=mode==='relations'?'hidden':'';n.querySelectorAll('[data-key]').forEach(el=>{el.classList.toggle('erd-key',!!keyMode&&el.dataset.key.includes(keyMode));});});
+  edges.forEach(e=>{e.path.style.opacity=names.has(e.source)&&names.has(e.target)?'':'0.8';e.path.style.visibility=mode==='tables'?'hidden':'';});
   svg.querySelectorAll('.edgeLabels,.relationshipLabel').forEach(el=>el.style.visibility=mode==='tables'?'hidden':'');
   $('erdCount').textContent=`${matches.length} de ${tables.length} tablas`;
   if(query)highlight(names);else highlight(selected?new Set([selected]):new Set());
@@ -77,6 +76,6 @@ function enhanceAtlasERD({svg,data,tables,colors,setZoom,getScale}) {
  $('erdSearch').addEventListener('input',()=>filter(true));$('erdModule').addEventListener('change',()=>filter());
  document.querySelectorAll('[data-erd-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.erdMode;document.querySelectorAll('[data-erd-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));filter();}));
  document.querySelectorAll('[data-erd-key]').forEach(b=>b.addEventListener('click',()=>{keyMode=keyMode===b.dataset.erdKey?'':b.dataset.erdKey;document.querySelectorAll('[data-erd-key]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.erdKey===keyMode)));filter();}));
- $('resetDiagram').addEventListener('click',()=>{setZoom(.85);viewport.scrollLeft=0;viewport.scrollTop=0;$('erdSearch').value='';$('erdModule').value='';mode='all';keyMode='';panel.hidden=true;selected=null;document.querySelectorAll('[data-erd-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.erdMode==='all')));document.querySelectorAll('[data-erd-key]').forEach(b=>b.setAttribute('aria-pressed','false'));filter();});
+ $('resetDiagram').addEventListener('click',()=>{setZoom(1);viewport.scrollLeft=0;viewport.scrollTop=0;$('erdSearch').value='';$('erdModule').value='';mode='all';keyMode='';panel.hidden=true;selected=null;document.querySelectorAll('[data-erd-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.erdMode==='all')));document.querySelectorAll('[data-erd-key]').forEach(b=>b.setAttribute('aria-pressed','false'));filter();});
  filter();svg.setAttribute('aria-label',`ERD interactivo: ${tables.length} tablas. Arrastra para moverte, usa la rueda para zoom y pulsa una tabla para ver sus campos.`);svg.dataset.erdTables=entities.size;svg.dataset.erdRelationships=edges.length;
 }

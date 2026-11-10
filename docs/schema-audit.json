@@ -196,5 +196,6 @@
       "records": null
     }
   },
-  "recordsNote": "No hay un snapshot de filas verificado; init.sql configura permisos y no proporciona conteos. No se suman INSERT de scripts de versiones diferentes."
+  "recordsNote": "La estructura actual no tiene un snapshot propio. El visor ofrece por separado las filas del respaldo histórico del 21/10/2026, de otro esquema.",
+  "historicalSnapshot": "docs/data-verification.json"
 }

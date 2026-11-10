@@ -7,7 +7,8 @@ on:
       - 'index.html'
       - 'docs/**'
       - 'Practica03/ecosistema_v2/02_mysql.sql'
-      - 'tools/verify_atlas.py'
+      - 'tools/**'
+      - 'Practica03/backups/respaldo_final_240545.sql'
   workflow_dispatch:
 
 permissions:
@@ -19,4 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Comparar Atlas con el SQL confirmado
-        run: python3 tools/verify_atlas.py
+        run: |
+          python3 tools/verify_atlas.py
+          python3 tools/verify_atlas_data.py
