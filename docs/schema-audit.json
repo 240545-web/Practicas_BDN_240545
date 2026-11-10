@@ -1,0 +1,15 @@
+{
+  "source": "Practica03/ecosistema_v2/02_mysql.sql",
+  "tables": 26,
+  "fields": 156,
+  "triggers": 72,
+  "relationships": 32,
+  "modules": {
+    "Seguridad": 6,
+    "Catálogo": 6,
+    "Clientes y ubicación": 4,
+    "Compras": 5,
+    "Pagos y envíos": 5
+  },
+  "liveDatabaseVerified": false
+}

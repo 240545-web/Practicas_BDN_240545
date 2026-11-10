@@ -14,7 +14,7 @@ Periodo: Septiembre - Diciembre 2026
 
 ## Diccionario de datos
 
-El diccionario detallado de `db_test` se publica desde [`docs/`](docs/), con catálogo de tablas y columnas, claves, nulabilidad, valores por omisión, reglas y un diagrama interactivo de relaciones generado con Archify. URL esperada de GitHub Pages: <https://240545-web.github.io/Practicas_BDN_240545/>.
+El diccionario detallado de `db_test` se publica desde [`docs/`](docs/), con catálogo de tablas y columnas, claves, nulabilidad, valores por omisión, reglas y un diagrama interactivo de relaciones generado con Archify. URL esperada de GitHub Pages: <https://240545-web.github.io/Practicas_BDN_240545/#/erd>.
 
 Prompt utilizado: “Realiza un diccionario de datos detallado para el modelo `db_test` de este repositorio. Revisa los scripts SQL como fuente de verdad, documenta tablas, columnas, tipos, nulabilidad, valores predeterminados, claves, restricciones, relaciones y discrepancias entre variantes. Genera un diagrama de relaciones con Archify y prepara el sitio estático para publicarlo en GitHub Pages.”
 

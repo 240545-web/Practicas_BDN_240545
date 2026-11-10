@@ -24,6 +24,8 @@
 @media(max-width:880px){.sidebar{display:none}.workspace{margin-left:0}.topbar{height:58px}.content{padding:28px 22px}.top-live{display:none}.overview-grid{grid-template-columns:1fr 1fr}.chart-body{gap:20px;flex-direction:column;min-height:0}.chart-legend{width:100%;gap:12px}.modules-list{padding-top:28px;gap:28px}.module-bar-row{grid-template-columns:1fr 18px}.module-track{grid-column:1/-1;grid-row:auto}.module-bar-row b{grid-column:2;grid-row:1}.module-bar-row{position:relative;display:flex;flex-wrap:wrap;gap:10px}.module-bar-row>span{flex:1}.module-track{order:3;flex:0 0 100%}.toast{left:50%}.hero p{max-width:650px}}
 @media(max-width:580px){.content{padding:25px 15px}.topbar{padding:0 16px}.breadcrumb{font-size:10px;gap:9px}.version{display:none}h1{font-size:33px;letter-spacing:-1.3px}.hero{margin-bottom:25px}.hero p{font-size:11px}.stats{grid-template-columns:repeat(2,1fr);gap:10px}.stat-value{font-size:32px}.stat-type{font-size:7px}.overview-grid{grid-template-columns:1fr;gap:12px}.chart-body{flex-direction:row;gap:24px;padding:20px}.donut-wrap{height:140px;width:140px}.modules-list{gap:15px;padding-top:20px}.module-bar-row{display:grid;grid-template-columns:120px 1fr 20px;gap:10px}.module-track{order:initial;grid-column:auto;grid-row:auto}.module-bar-row b{grid-column:auto;grid-row:auto}.section-head{align-items:flex-start}.section-note{display:none}h2{font-size:16px}.section{margin-bottom:28px}.summary-meta .field-count{display:none}.entity-title strong{font-size:10px}.table-detail summary{gap:9px;padding:14px 11px}.summary-meta{gap:4px}.badge{font-size:8px;padding:3px 5px}.entity-icon{width:28px;height:28px;font-size:10px}.search-row{flex-wrap:wrap}.search-box{flex-basis:100%}.result-count{margin-left:0;width:100%}.diagram-toolbar .caption{font-size:8px;gap:5px}.diagram-viewport{height:350px}.tools .small-btn{font-size:0;gap:0;padding:7px 9px}.tools .small-btn i{font-size:10px}.segmented{width:100%;justify-content:space-between}.segmented button{font-size:9px;padding:7px 8px}.trigger-controls .result-count{width:auto;margin-left:auto}.data-table th{padding:9px 12px}.data-table td{padding:10px 12px}.footer{font-size:8px}.table-footer{flex-wrap:wrap}.info-note{font-size:9px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.diagram-inner{justify-content:flex-start;align-items:flex-start}.diagram-inner .node{cursor:grab;touch-action:none}.diagram-inner .node:focus{outline:none;filter:drop-shadow(0 0 5px var(--cyan))}.diagram-inner .erd-muted{opacity:.16}.diagram-inner .erd-active{filter:drop-shadow(0 0 4px var(--cyan))}#erdModule option{background:var(--surface);color:var(--ink)}
 </style>
 </head>
 <body>
@@ -40,12 +42,12 @@
  <main class="content" id="main">
   <div class="hero reveal"><div><div class="eyebrow">El mapa de tu base de datos</div><h1>Todo conectado.<br><span>Todo documentado.</span></h1><p>Explora las entidades, relaciones y reglas que dan vida a <code>db_test</code>.<br>Un atlas interactivo del ecosistema de e-commerce.</p></div><div class="hero-icon" aria-hidden="true"><i class="fa-solid fa-database"></i><span class="hero-node"></span><span class="hero-node"></span></div></div>
   <section class="section reveal delay-1" id="overview" aria-labelledby="overviewTitle">
-   <div class="section-head"><div class="title-group"><span class="section-number">01 /</span><h2 id="overviewTitle">El ecosistema, en cifras</h2></div><span class="section-note"><i class="fa-regular fa-circle-dot" aria-hidden="true"></i> Estructura del modelo · Volúmenes de ejemplo</span></div>
+   <div class="section-head"><div class="title-group"><span class="section-number">01 /</span><h2 id="overviewTitle">El ecosistema, en cifras</h2></div><span class="section-note"><i class="fa-regular fa-circle-dot" aria-hidden="true"></i> Estructura del modelo · Fuente: SQL confirmado</span></div>
    <div class="stats">
     <article class="stat" style="--accent:var(--purple)"><div class="stat-top"><span class="stat-icon"><i class="fa-solid fa-table-cells-large" aria-hidden="true"></i></span><span class="stat-type">Esquema</span></div><div class="stat-value" data-counter="tables">26</div><div class="stat-label">Tablas relacionadas</div><div class="stat-foot"><i class="fa-solid fa-circle" aria-hidden="true"></i>Distribuidas en 5 módulos</div></article>
     <article class="stat" style="--accent:var(--cyan)"><div class="stat-top"><span class="stat-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span><span class="stat-type">Automatización</span></div><div class="stat-value" data-counter="triggers">72</div><div class="stat-label">Triggers definidos</div><div class="stat-foot"><i class="fa-solid fa-circle" aria-hidden="true"></i>6 por cada tabla principal</div></article>
-    <article class="stat" style="--accent:var(--green)"><div class="stat-top"><span class="stat-icon"><i class="fa-solid fa-box-open" aria-hidden="true"></i></span><span class="stat-type">Dato de prueba</span></div><div class="stat-value" data-counter="products">5.000</div><div class="stat-label">Productos en catálogo</div><div class="stat-foot"><i class="fa-solid fa-flask" aria-hidden="true"></i>Valor ilustrativo · editable</div></article>
-    <article class="stat" style="--accent:var(--orange)"><div class="stat-top"><span class="stat-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></span><span class="stat-type">Dato de prueba</span></div><div class="stat-value" data-counter="users">10.222</div><div class="stat-label">Personas / usuarios</div><div class="stat-foot"><i class="fa-solid fa-flask" aria-hidden="true"></i>Valor ilustrativo · editable</div></article>
+    <article class="stat" style="--accent:var(--green)"><div class="stat-top"><span class="stat-icon"><i class="fa-solid fa-box-open" aria-hidden="true"></i></span><span class="stat-type">Esquema</span></div><div class="stat-value" data-counter="fields">156</div><div class="stat-label">Campos documentados</div><div class="stat-foot"><i class="fa-solid fa-flask" aria-hidden="true"></i>Derivado del esquema SQL</div></article>
+    <article class="stat" style="--accent:var(--orange)"><div class="stat-top"><span class="stat-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></span><span class="stat-type">Esquema</span></div><div class="stat-value" data-counter="relations">32</div><div class="stat-label">Relaciones declaradas</div><div class="stat-foot"><i class="fa-solid fa-flask" aria-hidden="true"></i>Derivado del esquema SQL</div></article>
    </div>
    <div class="overview-grid">
     <article class="panel"><div class="panel-heading"><h3>Distribución de triggers</h3><small>72 en total</small></div><div class="chart-body"><div class="donut-wrap"><div class="donut-fallback" id="donutFallback" aria-hidden="true"></div><canvas id="triggerChart" role="img" aria-label="Triggers: 36 de auditoría, 24 de validación y 12 de bloqueo Soft Delete"></canvas><div class="chart-center" aria-hidden="true"><b>72</b><span>Triggers</span></div></div><div class="chart-legend"><button class="legend-btn" data-type="audit"><span class="dot" style="--accent:var(--purple)"></span>Auditoría<strong>36</strong><small>50 %</small></button><button class="legend-btn" data-type="validation"><span class="dot" style="--accent:var(--cyan)"></span>Validación<strong>24</strong><small>33 %</small></button><button class="legend-btn" data-type="soft"><span class="dot" style="--accent:var(--orange)"></span>Soft Delete<strong>12</strong><small>17 %</small></button></div></div></article>
@@ -54,6 +56,7 @@
   </section>
   <section class="section reveal delay-2" id="erd" aria-labelledby="erdTitle"><div class="section-head"><div class="title-group"><span class="section-number">02 /</span><h2 id="erdTitle">Cada relación tiene una historia</h2></div><span class="badge cyan"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i> ER DIAGRAM</span></div>
    <div class="panel diagram-panel" id="diagramPanel"><div class="diagram-toolbar"><div class="caption"><i class="fa-solid fa-circle-nodes" aria-hidden="true"></i>db_test <span style="color:var(--dim)">/ esquema relacional</span></div><div class="tools"><button class="icon-btn" id="zoomOut" aria-label="Reducir diagrama" disabled><i class="fa-solid fa-minus" aria-hidden="true"></i></button><output class="zoom-value" id="zoomLabel">—</output><button class="icon-btn" id="zoomIn" aria-label="Ampliar diagrama" disabled><i class="fa-solid fa-plus" aria-hidden="true"></i></button><button class="small-btn" id="fitDiagram" disabled><i class="fa-solid fa-expand" aria-hidden="true"></i>Ajustar</button><button class="icon-btn" id="fullscreenDiagram" aria-label="Pantalla completa"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i></button></div></div>
+    <div class="diagram-toolbar"><input class="small-btn" id="erdSearch" type="search" placeholder="Buscar tabla…" aria-label="Buscar tabla en el diagrama"><select class="small-btn" id="erdModule" aria-label="Filtrar módulo del diagrama"><option value="">Todos los módulos</option></select><span id="erdCount" class="section-note" role="status"></span></div>
     <div class="diagram-viewport" id="diagramViewport" tabindex="0" role="region" aria-label="Diagrama ER con desplazamiento horizontal y vertical"><div class="diagram-inner" id="diagram"><div class="diagram-message" role="status"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i>Preparando las conexiones del modelo…</div></div></div>
     <div class="diagram-footer"><span><code>PK</code> Primaria &nbsp;·&nbsp; <code>FK</code> Foránea &nbsp;·&nbsp; <code>||</code> Uno &nbsp;·&nbsp; <code>o{</code> Cero o muchos</span><button class="small-btn" id="copyMermaid"><i class="fa-regular fa-copy" aria-hidden="true"></i>Copiar Mermaid</button></div><details class="source-details"><summary>Ver el código fuente del diagrama</summary><pre id="mermaidSource"></pre></details>
    </div>
@@ -75,8 +78,8 @@
 <!-- DATOS EDITABLES. featuredTables: cinco ejemplos explícitos completos.
      additionalTables: las otras 21 fichas completas. demo: cifras ilustrativas.
      No se realizan consultas a una base de datos ni se incluyen credenciales. -->
-<script id="dictionaryData" type="application/json">
-{
+<script src="atlas-erd.js"></script>
+<script id="dictionaryData" type="application/json">{
   "featuredTables": [
     {
       "name": "tb_users",
@@ -114,21 +117,21 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         },
         {
           "name": "updated_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
         },
         {
           "name": "deleted_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
@@ -185,21 +188,21 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         },
         {
           "name": "updated_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
         },
         {
           "name": "deleted_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
@@ -249,21 +252,21 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         },
         {
           "name": "updated_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
         },
         {
           "name": "deleted_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
@@ -313,21 +316,21 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         },
         {
           "name": "updated_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
         },
         {
           "name": "deleted_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
@@ -384,21 +387,21 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         },
         {
           "name": "updated_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
         },
         {
           "name": "deleted_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
@@ -429,7 +432,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -465,7 +468,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -501,7 +504,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -537,7 +540,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -573,21 +576,21 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         },
         {
           "name": "updated_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
         },
         {
           "name": "deleted_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
@@ -623,7 +626,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -652,7 +655,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -688,7 +691,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -738,21 +741,21 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         },
         {
           "name": "updated_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
         },
         {
           "name": "deleted_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
@@ -788,7 +791,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -824,7 +827,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -888,21 +891,21 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         },
         {
           "name": "updated_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
         },
         {
           "name": "deleted_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
@@ -938,21 +941,21 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         },
         {
           "name": "updated_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
         },
         {
           "name": "deleted_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
@@ -1002,7 +1005,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -1066,7 +1069,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -1102,21 +1105,21 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         },
         {
           "name": "updated_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
         },
         {
           "name": "deleted_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
@@ -1152,7 +1155,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -1181,7 +1184,7 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -1238,21 +1241,21 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         },
         {
           "name": "updated_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
         },
         {
           "name": "deleted_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
@@ -1295,21 +1298,21 @@
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         },
         {
           "name": "updated_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
         },
         {
           "name": "deleted_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
@@ -1359,21 +1362,21 @@
         },
         {
           "name": "old_data",
-          "type": "JSON / JSONB",
+          "type": "JSON",
           "key": "—",
           "nullable": "SI",
           "description": "Imagen JSON previa, sin password. NULL para un INSERT."
         },
         {
           "name": "new_data",
-          "type": "JSON / JSONB",
+          "type": "JSON",
           "key": "—",
           "nullable": "SI",
           "description": "Imagen JSON nueva, sin password. NULL para un DELETE."
         },
         {
           "name": "created_at",
-          "type": "DATETIME / TIMESTAMP",
+          "type": "DATETIME",
           "key": "—",
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
@@ -1388,7 +1391,7 @@
       "event": "INSERT",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password. "
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_users', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'email', NEW.`email`, 'nickname', NEW.`nickname`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_users_au",
@@ -1396,7 +1399,7 @@
       "event": "UPDATE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password. "
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_users', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'email', OLD.`email`, 'nickname', OLD.`nickname`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'email', NEW.`email`, 'nickname', NEW.`nickname`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_users_ad",
@@ -1404,7 +1407,7 @@
       "event": "DELETE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal."
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_users', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'email', OLD.`email`, 'nickname', OLD.`nickname`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
     },
     {
       "name": "trg_tb_users_bi",
@@ -1412,7 +1415,7 @@
       "event": "INSERT",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Email inválido; Nickname vacío; Hash de contraseña inválido. Campos: email, nickname, password."
+      "logic": "Rechaza la operación ante: Email inválido; Nickname vacío; Hash de contraseña inválido. Campos: email, nickname, password. SQL: BEGIN\n    IF NEW.email NOT REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+[.][A-Za-z]{2,}$' THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Email inválido';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.nickname)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nickname vacío';\n    END IF;\n    IF CHAR_LENGTH(NEW.password) < 32 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Hash de contraseña inválido';\n    END IF;END"
     },
     {
       "name": "trg_tb_users_bu",
@@ -1420,7 +1423,7 @@
       "event": "UPDATE",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Email inválido; Nickname vacío; Hash de contraseña inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: email, nickname, password."
+      "logic": "Rechaza la operación ante: Email inválido; Nickname vacío; Hash de contraseña inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: email, nickname, password. SQL: BEGIN\n    IF NEW.email NOT REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+[.][A-Za-z]{2,}$' THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Email inválido';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.nickname)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nickname vacío';\n    END IF;\n    IF CHAR_LENGTH(NEW.password) < 32 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Hash de contraseña inválido';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
     },
     {
       "name": "trg_tb_users_bd",
@@ -1428,7 +1431,7 @@
       "event": "DELETE",
       "timing": "BEFORE",
       "type": "soft",
-      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE."
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_users; use deleted_at.';END"
     },
     {
       "name": "trg_tb_categories_ai",
@@ -1436,7 +1439,7 @@
       "event": "INSERT",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password. "
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_categories', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'name', NEW.`name`, 'description', NEW.`description`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_categories_au",
@@ -1444,7 +1447,7 @@
       "event": "UPDATE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password. "
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_categories', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'name', OLD.`name`, 'description', OLD.`description`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'name', NEW.`name`, 'description', NEW.`description`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_categories_ad",
@@ -1452,7 +1455,7 @@
       "event": "DELETE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal."
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_categories', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'name', OLD.`name`, 'description', OLD.`description`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
     },
     {
       "name": "trg_tb_categories_bi",
@@ -1460,7 +1463,7 @@
       "event": "INSERT",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Categoría sin nombre. Campos: name."
+      "logic": "Rechaza la operación ante: Categoría sin nombre. Campos: name. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.name)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Categoría sin nombre';\n    END IF;END"
     },
     {
       "name": "trg_tb_categories_bu",
@@ -1468,7 +1471,7 @@
       "event": "UPDATE",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Categoría sin nombre. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: name."
+      "logic": "Rechaza la operación ante: Categoría sin nombre. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: name. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.name)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Categoría sin nombre';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
     },
     {
       "name": "trg_tb_categories_bd",
@@ -1476,7 +1479,7 @@
       "event": "DELETE",
       "timing": "BEFORE",
       "type": "soft",
-      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE."
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_categories; use deleted_at.';END"
     },
     {
       "name": "trg_tb_products_ai",
@@ -1484,7 +1487,7 @@
       "event": "INSERT",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password. "
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_products', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'SKU', NEW.`SKU`, 'name', NEW.`name`, 'description', NEW.`description`, 'current_price', NEW.`current_price`, 'current_stock', NEW.`current_stock`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_products_au",
@@ -1492,7 +1495,7 @@
       "event": "UPDATE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password. "
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_products', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'SKU', OLD.`SKU`, 'name', OLD.`name`, 'description', OLD.`description`, 'current_price', OLD.`current_price`, 'current_stock', OLD.`current_stock`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'SKU', NEW.`SKU`, 'name', NEW.`name`, 'description', NEW.`description`, 'current_price', NEW.`current_price`, 'current_stock', NEW.`current_stock`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_products_ad",
@@ -1500,7 +1503,7 @@
       "event": "DELETE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal."
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_products', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'SKU', OLD.`SKU`, 'name', OLD.`name`, 'description', OLD.`description`, 'current_price', OLD.`current_price`, 'current_stock', OLD.`current_stock`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
     },
     {
       "name": "trg_tb_products_bi",
@@ -1508,7 +1511,7 @@
       "event": "INSERT",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Precio debe ser positivo; Stock negativo; Producto sin nombre; SKU vacío. Campos: SKU, current_price, current_stock, name."
+      "logic": "Rechaza la operación ante: Precio debe ser positivo; Stock negativo; Producto sin nombre; SKU vacío. Campos: SKU, current_price, current_stock, name. SQL: BEGIN\n    IF NEW.current_price <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Precio debe ser positivo';\n    END IF;\n    IF NEW.current_stock < 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stock negativo';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.name)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Producto sin nombre';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.SKU)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'SKU vacío';\n    END IF;END"
     },
     {
       "name": "trg_tb_products_bu",
@@ -1516,7 +1519,7 @@
       "event": "UPDATE",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Precio debe ser positivo; Stock negativo; Producto sin nombre; SKU vacío. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: SKU, current_price, current_stock, name."
+      "logic": "Rechaza la operación ante: Precio debe ser positivo; Stock negativo; Producto sin nombre; SKU vacío. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: SKU, current_price, current_stock, name. SQL: BEGIN\n    IF NEW.current_price <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Precio debe ser positivo';\n    END IF;\n    IF NEW.current_stock < 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stock negativo';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.name)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Producto sin nombre';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.SKU)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'SKU vacío';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
     },
     {
       "name": "trg_tb_products_bd",
@@ -1524,7 +1527,7 @@
       "event": "DELETE",
       "timing": "BEFORE",
       "type": "soft",
-      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE."
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_products; use deleted_at.';END"
     },
     {
       "name": "trg_tb_reviews_ai",
@@ -1532,7 +1535,7 @@
       "event": "INSERT",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password. "
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_reviews', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'product_id', NEW.`product_id`, 'rating', NEW.`rating`, 'comment', NEW.`comment`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_reviews_au",
@@ -1540,7 +1543,7 @@
       "event": "UPDATE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password. "
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_reviews', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'product_id', OLD.`product_id`, 'rating', OLD.`rating`, 'comment', OLD.`comment`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'product_id', NEW.`product_id`, 'rating', NEW.`rating`, 'comment', NEW.`comment`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_reviews_ad",
@@ -1548,7 +1551,7 @@
       "event": "DELETE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal."
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_reviews', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'product_id', OLD.`product_id`, 'rating', OLD.`rating`, 'comment', OLD.`comment`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
     },
     {
       "name": "trg_tb_reviews_bi",
@@ -1556,7 +1559,7 @@
       "event": "INSERT",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Rating fuera de rango. Campos: rating."
+      "logic": "Rechaza la operación ante: Rating fuera de rango. Campos: rating. SQL: BEGIN\n    IF NEW.rating < 1 OR NEW.rating > 5 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Rating fuera de rango';\n    END IF;END"
     },
     {
       "name": "trg_tb_reviews_bu",
@@ -1564,7 +1567,7 @@
       "event": "UPDATE",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Rating fuera de rango. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: rating."
+      "logic": "Rechaza la operación ante: Rating fuera de rango. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: rating. SQL: BEGIN\n    IF NEW.rating < 1 OR NEW.rating > 5 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Rating fuera de rango';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
     },
     {
       "name": "trg_tb_reviews_bd",
@@ -1572,7 +1575,7 @@
       "event": "DELETE",
       "timing": "BEFORE",
       "type": "soft",
-      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE."
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_reviews; use deleted_at.';END"
     },
     {
       "name": "trg_tb_people_ai",
@@ -1580,7 +1583,7 @@
       "event": "INSERT",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password. "
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_people', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'given_names', NEW.`given_names`, 'family_names', NEW.`family_names`, 'birth_date', NEW.`birth_date`, 'country_code', NEW.`country_code`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_people_au",
@@ -1588,7 +1591,7 @@
       "event": "UPDATE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password. "
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_people', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'given_names', OLD.`given_names`, 'family_names', OLD.`family_names`, 'birth_date', OLD.`birth_date`, 'country_code', OLD.`country_code`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'given_names', NEW.`given_names`, 'family_names', NEW.`family_names`, 'birth_date', NEW.`birth_date`, 'country_code', NEW.`country_code`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_people_ad",
@@ -1596,7 +1599,7 @@
       "event": "DELETE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal."
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_people', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'given_names', OLD.`given_names`, 'family_names', OLD.`family_names`, 'birth_date', OLD.`birth_date`, 'country_code', OLD.`country_code`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
     },
     {
       "name": "trg_tb_people_bi",
@@ -1604,7 +1607,7 @@
       "event": "INSERT",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Nombre personal vacío; Nacimiento futuro. Campos: birth_date, family_names, given_names."
+      "logic": "Rechaza la operación ante: Nombre personal vacío; Nacimiento futuro. Campos: birth_date, family_names, given_names. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.given_names)) = 0 OR CHAR_LENGTH(TRIM(NEW.family_names)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nombre personal vacío';\n    END IF;\n    IF NEW.birth_date > CURRENT_DATE THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nacimiento futuro';\n    END IF;END"
     },
     {
       "name": "trg_tb_people_bu",
@@ -1612,7 +1615,7 @@
       "event": "UPDATE",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Nombre personal vacío; Nacimiento futuro. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: birth_date, family_names, given_names."
+      "logic": "Rechaza la operación ante: Nombre personal vacío; Nacimiento futuro. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: birth_date, family_names, given_names. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.given_names)) = 0 OR CHAR_LENGTH(TRIM(NEW.family_names)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nombre personal vacío';\n    END IF;\n    IF NEW.birth_date > CURRENT_DATE THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nacimiento futuro';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
     },
     {
       "name": "trg_tb_people_bd",
@@ -1620,7 +1623,7 @@
       "event": "DELETE",
       "timing": "BEFORE",
       "type": "soft",
-      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE."
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_people; use deleted_at.';END"
     },
     {
       "name": "trg_tb_addresses_ai",
@@ -1628,7 +1631,7 @@
       "event": "INSERT",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password. "
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_addresses', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'country_code', NEW.`country_code`, 'state_id', NEW.`state_id`, 'city', NEW.`city`, 'street', NEW.`street`, 'postal_code', NEW.`postal_code`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_addresses_au",
@@ -1636,7 +1639,7 @@
       "event": "UPDATE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password. "
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_addresses', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'country_code', OLD.`country_code`, 'state_id', OLD.`state_id`, 'city', OLD.`city`, 'street', OLD.`street`, 'postal_code', OLD.`postal_code`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'country_code', NEW.`country_code`, 'state_id', NEW.`state_id`, 'city', NEW.`city`, 'street', NEW.`street`, 'postal_code', NEW.`postal_code`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_addresses_ad",
@@ -1644,7 +1647,7 @@
       "event": "DELETE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal."
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_addresses', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'country_code', OLD.`country_code`, 'state_id', OLD.`state_id`, 'city', OLD.`city`, 'street', OLD.`street`, 'postal_code', OLD.`postal_code`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
     },
     {
       "name": "trg_tb_addresses_bi",
@@ -1652,7 +1655,7 @@
       "event": "INSERT",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Dirección incompleta. Campos: city, street."
+      "logic": "Rechaza la operación ante: Dirección incompleta. Campos: city, street. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.city)) = 0 OR CHAR_LENGTH(TRIM(NEW.street)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Dirección incompleta';\n    END IF;END"
     },
     {
       "name": "trg_tb_addresses_bu",
@@ -1660,7 +1663,7 @@
       "event": "UPDATE",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Dirección incompleta. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: city, street."
+      "logic": "Rechaza la operación ante: Dirección incompleta. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: city, street. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.city)) = 0 OR CHAR_LENGTH(TRIM(NEW.street)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Dirección incompleta';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
     },
     {
       "name": "trg_tb_addresses_bd",
@@ -1668,7 +1671,7 @@
       "event": "DELETE",
       "timing": "BEFORE",
       "type": "soft",
-      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE."
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_addresses; use deleted_at.';END"
     },
     {
       "name": "trg_tb_carts_ai",
@@ -1676,7 +1679,7 @@
       "event": "INSERT",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password. "
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_carts', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'status', NEW.`status`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_carts_au",
@@ -1684,7 +1687,7 @@
       "event": "UPDATE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password. "
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_carts', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'status', OLD.`status`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'status', NEW.`status`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_carts_ad",
@@ -1692,7 +1695,7 @@
       "event": "DELETE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal."
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_carts', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'status', OLD.`status`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
     },
     {
       "name": "trg_tb_carts_bi",
@@ -1700,7 +1703,7 @@
       "event": "INSERT",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Estado de carrito inválido. Campos: status."
+      "logic": "Rechaza la operación ante: Estado de carrito inválido. Campos: status. SQL: BEGIN\n    IF NEW.status NOT IN ('active','checked_out','abandoned') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de carrito inválido';\n    END IF;END"
     },
     {
       "name": "trg_tb_carts_bu",
@@ -1708,7 +1711,7 @@
       "event": "UPDATE",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Estado de carrito inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: status."
+      "logic": "Rechaza la operación ante: Estado de carrito inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: status. SQL: BEGIN\n    IF NEW.status NOT IN ('active','checked_out','abandoned') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de carrito inválido';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
     },
     {
       "name": "trg_tb_carts_bd",
@@ -1716,7 +1719,7 @@
       "event": "DELETE",
       "timing": "BEFORE",
       "type": "soft",
-      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE."
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_carts; use deleted_at.';END"
     },
     {
       "name": "trg_tb_orders_ai",
@@ -1724,7 +1727,7 @@
       "event": "INSERT",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password. "
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_orders', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'cart_id', NEW.`cart_id`, 'status', NEW.`status`, 'total_amount', NEW.`total_amount`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_orders_au",
@@ -1732,7 +1735,7 @@
       "event": "UPDATE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password. "
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_orders', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'cart_id', OLD.`cart_id`, 'status', OLD.`status`, 'total_amount', OLD.`total_amount`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'cart_id', NEW.`cart_id`, 'status', NEW.`status`, 'total_amount', NEW.`total_amount`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_orders_ad",
@@ -1740,7 +1743,7 @@
       "event": "DELETE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal."
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_orders', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'cart_id', OLD.`cart_id`, 'status', OLD.`status`, 'total_amount', OLD.`total_amount`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
     },
     {
       "name": "trg_tb_orders_bi",
@@ -1748,7 +1751,7 @@
       "event": "INSERT",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Total de pedido no positivo; Estado de pedido inválido. Campos: status, total_amount."
+      "logic": "Rechaza la operación ante: Total de pedido no positivo; Estado de pedido inválido. Campos: status, total_amount. SQL: BEGIN\n    IF NEW.total_amount <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Total de pedido no positivo';\n    END IF;\n    IF NEW.status NOT IN ('pending','paid','cancelled','shipped','delivered') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de pedido inválido';\n    END IF;END"
     },
     {
       "name": "trg_tb_orders_bu",
@@ -1756,7 +1759,7 @@
       "event": "UPDATE",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Total de pedido no positivo; Estado de pedido inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: status, total_amount."
+      "logic": "Rechaza la operación ante: Total de pedido no positivo; Estado de pedido inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: status, total_amount. SQL: BEGIN\n    IF NEW.total_amount <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Total de pedido no positivo';\n    END IF;\n    IF NEW.status NOT IN ('pending','paid','cancelled','shipped','delivered') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de pedido inválido';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
     },
     {
       "name": "trg_tb_orders_bd",
@@ -1764,7 +1767,7 @@
       "event": "DELETE",
       "timing": "BEFORE",
       "type": "soft",
-      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE."
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_orders; use deleted_at.';END"
     },
     {
       "name": "trg_tb_wishlists_ai",
@@ -1772,7 +1775,7 @@
       "event": "INSERT",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password. "
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_wishlists', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'product_id', NEW.`product_id`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_wishlists_au",
@@ -1780,7 +1783,7 @@
       "event": "UPDATE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password. "
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_wishlists', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'product_id', OLD.`product_id`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'product_id', NEW.`product_id`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_wishlists_ad",
@@ -1788,7 +1791,7 @@
       "event": "DELETE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal."
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_wishlists', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'product_id', OLD.`product_id`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
     },
     {
       "name": "trg_tb_wishlists_bi",
@@ -1796,7 +1799,7 @@
       "event": "INSERT",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Wishlist requiere usuario activo; Wishlist requiere producto activo. Campos: product_id, user_id."
+      "logic": "Rechaza la operación ante: Wishlist requiere usuario activo; Wishlist requiere producto activo. Campos: product_id, user_id. SQL: BEGIN\n    IF NOT EXISTS (SELECT 1 FROM tb_users u WHERE u.id = NEW.user_id AND u.deleted_at IS NULL) THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Wishlist requiere usuario activo';\n    END IF;\n    IF NOT EXISTS (SELECT 1 FROM tb_products p WHERE p.id = NEW.product_id AND p.deleted_at IS NULL) THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Wishlist requiere producto activo';\n    END IF;END"
     },
     {
       "name": "trg_tb_wishlists_bu",
@@ -1804,7 +1807,7 @@
       "event": "UPDATE",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Wishlist requiere usuario activo; Wishlist requiere producto activo. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: product_id, user_id."
+      "logic": "Rechaza la operación ante: Wishlist requiere usuario activo; Wishlist requiere producto activo. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: product_id, user_id. SQL: BEGIN\n    IF NOT EXISTS (SELECT 1 FROM tb_users u WHERE u.id = NEW.user_id AND u.deleted_at IS NULL) THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Wishlist requiere usuario activo';\n    END IF;\n    IF NOT EXISTS (SELECT 1 FROM tb_products p WHERE p.id = NEW.product_id AND p.deleted_at IS NULL) THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Wishlist requiere producto activo';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
     },
     {
       "name": "trg_tb_wishlists_bd",
@@ -1812,7 +1815,7 @@
       "event": "DELETE",
       "timing": "BEFORE",
       "type": "soft",
-      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE."
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_wishlists; use deleted_at.';END"
     },
     {
       "name": "trg_tb_payments_ai",
@@ -1820,7 +1823,7 @@
       "event": "INSERT",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password. "
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_payments', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'order_id', NEW.`order_id`, 'payment_method_id', NEW.`payment_method_id`, 'amount', NEW.`amount`, 'payment_status', NEW.`payment_status`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_payments_au",
@@ -1828,7 +1831,7 @@
       "event": "UPDATE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password. "
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_payments', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'order_id', OLD.`order_id`, 'payment_method_id', OLD.`payment_method_id`, 'amount', OLD.`amount`, 'payment_status', OLD.`payment_status`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'order_id', NEW.`order_id`, 'payment_method_id', NEW.`payment_method_id`, 'amount', NEW.`amount`, 'payment_status', NEW.`payment_status`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_payments_ad",
@@ -1836,7 +1839,7 @@
       "event": "DELETE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal."
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_payments', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'order_id', OLD.`order_id`, 'payment_method_id', OLD.`payment_method_id`, 'amount', OLD.`amount`, 'payment_status', OLD.`payment_status`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
     },
     {
       "name": "trg_tb_payments_bi",
@@ -1844,7 +1847,7 @@
       "event": "INSERT",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Pago no positivo; Estado de pago inválido. Campos: amount, payment_status."
+      "logic": "Rechaza la operación ante: Pago no positivo; Estado de pago inválido. Campos: amount, payment_status. SQL: BEGIN\n    IF NEW.amount <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Pago no positivo';\n    END IF;\n    IF NEW.payment_status NOT IN ('Pending','Completed','Failed','Refunded') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de pago inválido';\n    END IF;END"
     },
     {
       "name": "trg_tb_payments_bu",
@@ -1852,7 +1855,7 @@
       "event": "UPDATE",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Pago no positivo; Estado de pago inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: amount, payment_status."
+      "logic": "Rechaza la operación ante: Pago no positivo; Estado de pago inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: amount, payment_status. SQL: BEGIN\n    IF NEW.amount <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Pago no positivo';\n    END IF;\n    IF NEW.payment_status NOT IN ('Pending','Completed','Failed','Refunded') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de pago inválido';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
     },
     {
       "name": "trg_tb_payments_bd",
@@ -1860,7 +1863,7 @@
       "event": "DELETE",
       "timing": "BEFORE",
       "type": "soft",
-      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE."
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_payments; use deleted_at.';END"
     },
     {
       "name": "trg_tb_shipments_ai",
@@ -1868,7 +1871,7 @@
       "event": "INSERT",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password. "
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_shipments', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'order_id', NEW.`order_id`, 'carrier_id', NEW.`carrier_id`, 'address_id', NEW.`address_id`, 'tracking_code', NEW.`tracking_code`, 'status', NEW.`status`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_shipments_au",
@@ -1876,7 +1879,7 @@
       "event": "UPDATE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password. "
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_shipments', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'order_id', OLD.`order_id`, 'carrier_id', OLD.`carrier_id`, 'address_id', OLD.`address_id`, 'tracking_code', OLD.`tracking_code`, 'status', OLD.`status`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'order_id', NEW.`order_id`, 'carrier_id', NEW.`carrier_id`, 'address_id', NEW.`address_id`, 'tracking_code', NEW.`tracking_code`, 'status', NEW.`status`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_shipments_ad",
@@ -1884,7 +1887,7 @@
       "event": "DELETE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal."
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_shipments', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'order_id', OLD.`order_id`, 'carrier_id', OLD.`carrier_id`, 'address_id', OLD.`address_id`, 'tracking_code', OLD.`tracking_code`, 'status', OLD.`status`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
     },
     {
       "name": "trg_tb_shipments_bi",
@@ -1892,7 +1895,7 @@
       "event": "INSERT",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Tracking vacío; Estado de envío inválido. Campos: status, tracking_code."
+      "logic": "Rechaza la operación ante: Tracking vacío; Estado de envío inválido. Campos: status, tracking_code. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.tracking_code)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Tracking vacío';\n    END IF;\n    IF NEW.status NOT IN ('pending','in_transit','delivered','returned') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de envío inválido';\n    END IF;END"
     },
     {
       "name": "trg_tb_shipments_bu",
@@ -1900,7 +1903,7 @@
       "event": "UPDATE",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Tracking vacío; Estado de envío inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: status, tracking_code."
+      "logic": "Rechaza la operación ante: Tracking vacío; Estado de envío inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: status, tracking_code. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.tracking_code)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Tracking vacío';\n    END IF;\n    IF NEW.status NOT IN ('pending','in_transit','delivered','returned') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de envío inválido';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
     },
     {
       "name": "trg_tb_shipments_bd",
@@ -1908,7 +1911,7 @@
       "event": "DELETE",
       "timing": "BEFORE",
       "type": "soft",
-      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE."
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_shipments; use deleted_at.';END"
     },
     {
       "name": "trg_tb_invoices_ai",
@@ -1916,7 +1919,7 @@
       "event": "INSERT",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password. "
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_invoices', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'order_id', NEW.`order_id`, 'invoice_number', NEW.`invoice_number`, 'total_amount', NEW.`total_amount`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_invoices_au",
@@ -1924,7 +1927,7 @@
       "event": "UPDATE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password. "
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_invoices', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'order_id', OLD.`order_id`, 'invoice_number', OLD.`invoice_number`, 'total_amount', OLD.`total_amount`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'order_id', NEW.`order_id`, 'invoice_number', NEW.`invoice_number`, 'total_amount', NEW.`total_amount`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
     },
     {
       "name": "trg_tb_invoices_ad",
@@ -1932,7 +1935,7 @@
       "event": "DELETE",
       "timing": "AFTER",
       "type": "audit",
-      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal."
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_invoices', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'order_id', OLD.`order_id`, 'invoice_number', OLD.`invoice_number`, 'total_amount', OLD.`total_amount`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
     },
     {
       "name": "trg_tb_invoices_bi",
@@ -1940,7 +1943,7 @@
       "event": "INSERT",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Total de factura no positivo; Folio vacío. Campos: invoice_number, total_amount."
+      "logic": "Rechaza la operación ante: Total de factura no positivo; Folio vacío. Campos: invoice_number, total_amount. SQL: BEGIN\n    IF NEW.total_amount <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Total de factura no positivo';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.invoice_number)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Folio vacío';\n    END IF;END"
     },
     {
       "name": "trg_tb_invoices_bu",
@@ -1948,7 +1951,7 @@
       "event": "UPDATE",
       "timing": "BEFORE",
       "type": "validation",
-      "logic": "Rechaza la operación ante: Total de factura no positivo; Folio vacío. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: invoice_number, total_amount."
+      "logic": "Rechaza la operación ante: Total de factura no positivo; Folio vacío. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: invoice_number, total_amount. SQL: BEGIN\n    IF NEW.total_amount <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Total de factura no positivo';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.invoice_number)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Folio vacío';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
     },
     {
       "name": "trg_tb_invoices_bd",
@@ -1956,7 +1959,7 @@
       "event": "DELETE",
       "timing": "BEFORE",
       "type": "soft",
-      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE."
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_invoices; use deleted_at.';END"
     }
   ],
   "modules": [
@@ -1966,13 +1969,207 @@
     "Compras",
     "Pagos y envíos"
   ],
-  "mermaid": "erDiagram\n    direction LR\n    tb_users {\n        BIGINT id PK\n        string email\n    }\n    tb_roles {\n        BIGINT id PK\n        string name\n    }\n    tb_user_roles {\n        BIGINT id PK\n        BIGINT user_id FK\n        BIGINT role_id FK\n    }\n    tb_permissions {\n        BIGINT id PK\n        string code\n    }\n    tb_role_permissions {\n        BIGINT id PK\n        BIGINT role_id FK\n        BIGINT permission_id FK\n    }\n    tb_categories {\n        BIGINT id PK\n        string name\n    }\n    tb_products {\n        BIGINT id PK\n        string SKU\n        string name\n    }\n    tb_product_categories {\n        BIGINT id PK\n        BIGINT product_id FK\n        BIGINT category_id FK\n    }\n    tb_tags {\n        BIGINT id PK\n        string name\n    }\n    tb_product_tags {\n        BIGINT id PK\n        BIGINT product_id FK\n        BIGINT tag_id FK\n    }\n    tb_reviews {\n        BIGINT id PK\n        BIGINT user_id FK\n        BIGINT product_id FK\n    }\n    tbc_countries {\n        BIGINT id PK\n        string code\n        string name\n    }\n    tbc_states {\n        BIGINT id PK\n        string country_code FK\n        string name\n    }\n    tb_people {\n        BIGINT id PK\n        BIGINT user_id FK\n        string country_code FK\n    }\n    tb_addresses {\n        BIGINT id PK\n        BIGINT user_id FK\n        string country_code FK\n        BIGINT state_id FK\n    }\n    tb_carts {\n        BIGINT id PK\n        BIGINT user_id FK\n    }\n    tbd_shopping_cart {\n        BIGINT id PK\n        BIGINT cart_id FK\n        BIGINT user_id FK\n        BIGINT product_id FK\n    }\n    tb_orders {\n        BIGINT id PK\n        BIGINT user_id FK\n        BIGINT cart_id FK\n    }\n    tb_order_items {\n        BIGINT id PK\n        BIGINT order_id FK\n        BIGINT product_id FK\n    }\n    tb_wishlists {\n        BIGINT id PK\n        BIGINT user_id FK\n        BIGINT product_id FK\n    }\n    tbc_payment_methods {\n        BIGINT id PK\n        string code\n        string name\n    }\n    tb_payments {\n        BIGINT id PK\n        BIGINT order_id FK\n        BIGINT payment_method_id FK\n    }\n    tb_carriers {\n        BIGINT id PK\n        string name\n    }\n    tb_shipments {\n        BIGINT id PK\n        BIGINT order_id FK\n        BIGINT carrier_id FK\n        BIGINT address_id FK\n    }\n    tb_invoices {\n        BIGINT id PK\n        BIGINT order_id FK\n        string invoice_number\n    }\n    tb_logs {\n        BIGINT id PK\n        string operation\n    }\n    tb_users ||--o{ tb_user_roles : \"user_id\"\n    tb_roles ||--o{ tb_user_roles : \"role_id\"\n    tb_roles ||--o{ tb_role_permissions : \"role_id\"\n    tb_permissions ||--o{ tb_role_permissions : \"permission_id\"\n    tb_products ||--o{ tb_product_categories : \"product_id\"\n    tb_categories ||--o{ tb_product_categories : \"category_id\"\n    tb_products ||--o{ tb_product_tags : \"product_id\"\n    tb_tags ||--o{ tb_product_tags : \"tag_id\"\n    tb_users ||--o{ tb_reviews : \"user_id\"\n    tb_products ||--o{ tb_reviews : \"product_id\"\n    tbc_countries ||--o{ tbc_states : \"country_code\"\n    tb_users ||--o| tb_people : \"user_id\"\n    tbc_countries ||--o{ tb_people : \"country_code\"\n    tb_users ||--o{ tb_addresses : \"user_id\"\n    tbc_countries ||--o{ tb_addresses : \"country_code\"\n    tbc_states |o--o{ tb_addresses : \"state_id, country_code\"\n    tb_users ||--o{ tb_carts : \"user_id\"\n    tb_carts ||--o{ tbd_shopping_cart : \"cart_id, user_id\"\n    tb_users ||--o{ tbd_shopping_cart : \"user_id\"\n    tb_products ||--o{ tbd_shopping_cart : \"product_id\"\n    tb_users ||--o{ tb_orders : \"user_id\"\n    tb_carts |o--o| tb_orders : \"cart_id, user_id\"\n    tb_orders ||--o{ tb_order_items : \"order_id\"\n    tb_products ||--o{ tb_order_items : \"product_id\"\n    tb_users ||--o{ tb_wishlists : \"user_id\"\n    tb_products ||--o{ tb_wishlists : \"product_id\"\n    tb_orders ||--o{ tb_payments : \"order_id\"\n    tbc_payment_methods ||--o{ tb_payments : \"payment_method_id\"\n    tb_orders ||--o{ tb_shipments : \"order_id\"\n    tb_carriers ||--o{ tb_shipments : \"carrier_id\"\n    tb_addresses ||--o{ tb_shipments : \"address_id\"\n    tb_orders ||--o| tb_invoices : \"order_id\"",
+  "mermaid": "erDiagram\n    direction LR\n    tb_users {\n        BIGINT id PK\n        VARCHAR_254_ email\n        VARCHAR_100_ nickname\n        VARCHAR_255_ password\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_roles {\n        BIGINT id PK\n        VARCHAR_80_ name\n        DATETIME created_at\n    }\n    tb_user_roles {\n        BIGINT id PK\n        BIGINT user_id FK\n        BIGINT role_id FK\n        DATETIME created_at\n    }\n    tb_users ||--o{ tb_user_roles : \"user_id\"\n    tb_roles ||--o{ tb_user_roles : \"role_id\"\n    tb_permissions {\n        BIGINT id PK\n        VARCHAR_100_ code\n        TEXT description\n        DATETIME created_at\n    }\n    tb_role_permissions {\n        BIGINT id PK\n        BIGINT role_id FK\n        BIGINT permission_id FK\n        DATETIME created_at\n    }\n    tb_roles ||--o{ tb_role_permissions : \"role_id\"\n    tb_permissions ||--o{ tb_role_permissions : \"permission_id\"\n    tb_categories {\n        BIGINT id PK\n        VARCHAR_150_ name\n        TEXT description\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_products {\n        BIGINT id PK\n        VARCHAR_50_ SKU\n        VARCHAR_250_ name\n        TEXT description\n        DECIMAL_12_2_ current_price\n        INT current_stock\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_product_categories {\n        BIGINT id PK\n        BIGINT product_id FK\n        BIGINT category_id FK\n        DATETIME created_at\n    }\n    tb_products ||--o{ tb_product_categories : \"product_id\"\n    tb_categories ||--o{ tb_product_categories : \"category_id\"\n    tb_tags {\n        BIGINT id PK\n        VARCHAR_80_ name\n        DATETIME created_at\n    }\n    tb_product_tags {\n        BIGINT id PK\n        BIGINT product_id FK\n        BIGINT tag_id FK\n        DATETIME created_at\n    }\n    tb_products ||--o{ tb_product_tags : \"product_id\"\n    tb_tags ||--o{ tb_product_tags : \"tag_id\"\n    tb_reviews {\n        BIGINT id PK\n        BIGINT user_id FK\n        BIGINT product_id FK\n        INT rating\n        TEXT comment\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_users ||--o{ tb_reviews : \"user_id\"\n    tb_products ||--o{ tb_reviews : \"product_id\"\n    tbc_countries {\n        BIGINT id PK\n        CHAR_2_ code\n        VARCHAR_100_ name\n        DATETIME created_at\n    }\n    tbc_states {\n        BIGINT id PK\n        CHAR_2_ country_code FK\n        VARCHAR_100_ name\n        DATETIME created_at\n    }\n    tbc_countries ||--o{ tbc_states : \"country_code\"\n    tb_people {\n        BIGINT id PK\n        BIGINT user_id FK\n        VARCHAR_150_ given_names\n        VARCHAR_150_ family_names\n        DATE birth_date\n        CHAR_2_ country_code FK\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_users ||--o{ tb_people : \"user_id\"\n    tbc_countries ||--o{ tb_people : \"country_code\"\n    tb_addresses {\n        BIGINT id PK\n        BIGINT user_id FK\n        CHAR_2_ country_code FK\n        BIGINT state_id FK\n        VARCHAR_120_ city\n        VARCHAR_250_ street\n        VARCHAR_20_ postal_code\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_users ||--o{ tb_addresses : \"user_id\"\n    tbc_countries ||--o{ tb_addresses : \"country_code\"\n    tbc_states |o--o{ tb_addresses : \"state_id, country_code\"\n    tb_carts {\n        BIGINT id PK\n        BIGINT user_id FK\n        VARCHAR_20_ status\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_users ||--o{ tb_carts : \"user_id\"\n    tbd_shopping_cart {\n        BIGINT id PK\n        BIGINT cart_id FK\n        BIGINT user_id FK\n        BIGINT product_id FK\n        INT quantity\n        DATETIME created_at\n    }\n    tb_carts ||--o{ tbd_shopping_cart : \"cart_id, user_id\"\n    tb_users ||--o{ tbd_shopping_cart : \"user_id\"\n    tb_products ||--o{ tbd_shopping_cart : \"product_id\"\n    tb_orders {\n        BIGINT id PK\n        BIGINT user_id FK\n        BIGINT cart_id FK\n        VARCHAR_20_ status\n        DECIMAL_12_2_ total_amount\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_users ||--o{ tb_orders : \"user_id\"\n    tb_carts |o--o{ tb_orders : \"cart_id, user_id\"\n    tb_order_items {\n        BIGINT id PK\n        BIGINT order_id FK\n        BIGINT product_id FK\n        VARCHAR_250_ product_name\n        INT quantity\n        DECIMAL_12_2_ unit_price\n        DECIMAL_12_2_ subtotal\n        DATETIME created_at\n    }\n    tb_orders ||--o{ tb_order_items : \"order_id\"\n    tb_products ||--o{ tb_order_items : \"product_id\"\n    tb_wishlists {\n        BIGINT id PK\n        BIGINT user_id FK\n        BIGINT product_id FK\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_users ||--o{ tb_wishlists : \"user_id\"\n    tb_products ||--o{ tb_wishlists : \"product_id\"\n    tbc_payment_methods {\n        BIGINT id PK\n        VARCHAR_40_ code\n        VARCHAR_100_ name\n        DATETIME created_at\n    }\n    tb_payments {\n        BIGINT id PK\n        BIGINT order_id FK\n        BIGINT payment_method_id FK\n        DECIMAL_12_2_ amount\n        VARCHAR_20_ payment_status\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_orders ||--o{ tb_payments : \"order_id\"\n    tbc_payment_methods ||--o{ tb_payments : \"payment_method_id\"\n    tb_carriers {\n        BIGINT id PK\n        VARCHAR_150_ name\n        DATETIME created_at\n    }\n    tb_shipments {\n        BIGINT id PK\n        BIGINT order_id FK\n        BIGINT carrier_id FK\n        BIGINT address_id FK\n        VARCHAR_150_ tracking_code\n        VARCHAR_20_ status\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_orders ||--o{ tb_shipments : \"order_id\"\n    tb_carriers ||--o{ tb_shipments : \"carrier_id\"\n    tb_addresses ||--o{ tb_shipments : \"address_id\"\n    tb_invoices {\n        BIGINT id PK\n        BIGINT order_id FK\n        VARCHAR_80_ invoice_number\n        DECIMAL_12_2_ total_amount\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_orders ||--o{ tb_invoices : \"order_id\"\n    tb_logs {\n        BIGINT id PK\n        VARCHAR_100_ table_name\n        BIGINT entity_id\n        VARCHAR_10_ operation\n        VARCHAR_288_ db_actor\n        JSON old_data\n        JSON new_data\n        DATETIME created_at\n    }",
   "demo": {
     "products": 5000,
     "users": 10222
-  }
-}
-</script>
+  },
+  "relationships": [
+    {
+      "source": "tb_users",
+      "target": "tb_user_roles",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_roles",
+      "target": "tb_user_roles",
+      "fields": "role_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_roles",
+      "target": "tb_role_permissions",
+      "fields": "role_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_permissions",
+      "target": "tb_role_permissions",
+      "fields": "permission_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_products",
+      "target": "tb_product_categories",
+      "fields": "product_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_categories",
+      "target": "tb_product_categories",
+      "fields": "category_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_products",
+      "target": "tb_product_tags",
+      "fields": "product_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_tags",
+      "target": "tb_product_tags",
+      "fields": "tag_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_users",
+      "target": "tb_reviews",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_products",
+      "target": "tb_reviews",
+      "fields": "product_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tbc_countries",
+      "target": "tbc_states",
+      "fields": "country_code",
+      "referenced": "code"
+    },
+    {
+      "source": "tb_users",
+      "target": "tb_people",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tbc_countries",
+      "target": "tb_people",
+      "fields": "country_code",
+      "referenced": "code"
+    },
+    {
+      "source": "tb_users",
+      "target": "tb_addresses",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tbc_countries",
+      "target": "tb_addresses",
+      "fields": "country_code",
+      "referenced": "code"
+    },
+    {
+      "source": "tbc_states",
+      "target": "tb_addresses",
+      "fields": "state_id, country_code",
+      "referenced": "id, country_code"
+    },
+    {
+      "source": "tb_users",
+      "target": "tb_carts",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_carts",
+      "target": "tbd_shopping_cart",
+      "fields": "cart_id, user_id",
+      "referenced": "id, user_id"
+    },
+    {
+      "source": "tb_users",
+      "target": "tbd_shopping_cart",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_products",
+      "target": "tbd_shopping_cart",
+      "fields": "product_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_users",
+      "target": "tb_orders",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_carts",
+      "target": "tb_orders",
+      "fields": "cart_id, user_id",
+      "referenced": "id, user_id"
+    },
+    {
+      "source": "tb_orders",
+      "target": "tb_order_items",
+      "fields": "order_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_products",
+      "target": "tb_order_items",
+      "fields": "product_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_users",
+      "target": "tb_wishlists",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_products",
+      "target": "tb_wishlists",
+      "fields": "product_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_orders",
+      "target": "tb_payments",
+      "fields": "order_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tbc_payment_methods",
+      "target": "tb_payments",
+      "fields": "payment_method_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_orders",
+      "target": "tb_shipments",
+      "fields": "order_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_carriers",
+      "target": "tb_shipments",
+      "fields": "carrier_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_addresses",
+      "target": "tb_shipments",
+      "fields": "address_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_orders",
+      "target": "tb_invoices",
+      "fields": "order_id",
+      "referenced": "id"
+    }
+  ],
+  "source": "Practica03/ecosistema_v2/02_mysql.sql"
+}</script>
 <script>
 'use strict';
 document.addEventListener('DOMContentLoaded', () => {
@@ -1994,7 +2191,7 @@ document.addEventListener('DOMContentLoaded', () => {
  const number = n => new Intl.NumberFormat('es-ES',{useGrouping:true}).format(n);
  function toast(message){ $('toast').textContent=message; $('toast').hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(()=>$('toast').hidden=true,3000); }
  // Los totales estructurales se calculan; solo demo.products/demo.users se editan manualmente.
- const counts={tables:tables.length,triggers:triggers.length,...data.demo};
+ const counts={tables:tables.length,triggers:triggers.length,fields:tables.reduce((n,t)=>n+t.fields.length,0),relations:data.relationships.length};
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  document.querySelectorAll('[data-counter]').forEach(el=>{
   const goal=counts[el.dataset.counter];
@@ -2086,13 +2283,14 @@ document.addEventListener('DOMContentLoaded', () => {
  $('copyMermaid').addEventListener('click',async()=>{try{if(!navigator.clipboard)throw new Error();await navigator.clipboard.writeText(data.mermaid);toast('Código Mermaid copiado.');}catch(error){const text=$('mermaidSource');text.closest('details').open=true;const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(text);selection.removeAllRanges();selection.addRange(range);toast('Código seleccionado. Copia con Ctrl+C o ⌘C.');}});
  async function renderDiagram(){
   try {
-   const {default:mermaid}=await import('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs');
+   const {default:mermaid}=await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
    mermaid.initialize({startOnLoad:false,securityLevel:'strict',theme:'base',maxTextSize:100000,themeVariables:{background:'#20202f',primaryColor:'#2d293f',primaryTextColor:'#e8e6f5',primaryBorderColor:'#73628f',lineColor:'#6c8493',secondaryColor:'#20383d',tertiaryColor:'#27293c',fontFamily:'JetBrains Mono, monospace',fontSize:'12px',mainBkg:'#2d293f',nodeBkg:'#2d293f',nodeBorder:'#73628f',textColor:'#e8e6f5',attributeBackgroundColorOdd:'#28283b',attributeBackgroundColorEven:'#232335'},er:{useMaxWidth:false,diagramPadding:20,minEntityWidth:145,entityPadding:15}});
    const result=await mermaid.render('dbTestERD',data.mermaid);
    $('diagram').innerHTML=result.svg;
    diagramSvg=$('diagram').querySelector('svg');
    diagramSvg.setAttribute('role','img');diagramSvg.setAttribute('aria-label','Modelo entidad relación: 26 tablas de seguridad, catálogo, clientes, compras y pagos.');
    originalWidth=diagramSvg.viewBox.baseVal.width;
+   enhanceAtlasERD({svg:diagramSvg,data,tables,colors,setZoom,getScale:()=>scale,openTable:name=>{reset();const item=nodes.find(n=>n.table.name===name);if(item){item.el.open=true;item.el.scrollIntoView({behavior:reduced?"instant":"smooth",block:"start"});}}});
    $('zoomIn').disabled=false;$('zoomOut').disabled=false;$('fitDiagram').disabled=false;
    setZoom(Math.max(.85,Math.min(1,($('diagramViewport').clientWidth-64)/originalWidth)));
   }catch(error){
@@ -2101,6 +2299,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
  }
  renderDiagram();
+ const route=()=>{const id=location.hash.replace(/^#\//, "");if(id&&document.getElementById(id))document.getElementById(id).scrollIntoView();};window.addEventListener("hashchange",route);requestAnimationFrame(route);
  // BÚSQUEDA EN VIVO: filtra tablas, campos y triggers, sin peticiones de red.
  // Cada entrada actualiza los acordeones visibles y la tabla de triggers.
  $('search').addEventListener('input',event=>{state.query=event.target.value;applyFilters();});

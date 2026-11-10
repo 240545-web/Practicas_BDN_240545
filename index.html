@@ -1,0 +1,2310 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Diccionario interactivo de db_test: 26 tablas, 156 campos y 72 triggers. Explora el modelo relacional, sus módulos y reglas de negocio.">
+<meta name="theme-color" content="#1e1e2e">
+<title>db_test — Atlas de datos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<style>
+:root{color-scheme:dark;--bg:#1e1e2e;--side:#191925;--surface:#252536;--surface2:#2b2b3e;--line:#ffffff10;--ink:#f0f0fa;--muted:#aaaabd;--dim:#9292a8;--purple:#c4a3ff;--cyan:#7edee5;--green:#b9f28b;--orange:#ffbd88;--radius:16px;--mono:'JetBrains Mono',monospace;--display:'Space Grotesk',sans-serif;--body:'DM Sans',system-ui,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:95px}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 var(--body)}button,input,select{font:inherit}button,a,input,select,summary{-webkit-tap-highlight-color:transparent}button{cursor:pointer}a{color:inherit;text-decoration:none}button{color:inherit}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}::selection{background:#c4a3ff40;color:#fff}code,.mono{font-family:var(--mono)}code{font-size:.84em}button{border:0}button svg{pointer-events:none}[hidden]{display:none!important}.skip{position:fixed;top:-100px;left:20px;z-index:200;background:var(--cyan);color:#171723;padding:12px 18px;border-radius:10px}.skip:focus{top:15px}
+.sidebar{position:fixed;inset:0 auto 0 0;width:238px;background:var(--side);border-right:1px solid var(--line);padding:30px 21px;display:flex;flex-direction:column;z-index:50}.brand{display:flex;gap:12px;align-items:center;padding:0 10px}.brand-icon{height:38px;width:38px;background:#c4a3ff18;border:1px solid #c4a3ff35;display:grid;place-items:center;border-radius:12px;color:var(--purple);font-size:17px}.brand strong{font:600 20px var(--display);letter-spacing:-.8px}.brand small{display:block;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--dim);margin-top:2px}.nav-label{color:var(--dim);font-size:10px;letter-spacing:1.7px;text-transform:uppercase;margin:41px 12px 13px}.nav{display:grid;gap:6px}.nav a{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:9px;color:var(--muted);font-size:12px;transition:background .2s,color .2s}.nav a i{width:17px;font-size:13px}.nav a:hover{background:#ffffff06;color:white}.nav a.active{color:var(--purple);background:#c4a3ff13}.nav .count{margin-left:auto;font:10px var(--mono);border:1px solid #ffffff13;padding:1px 5px;border-radius:4px}.module-nav{display:grid;gap:9px;padding:0 10px}.module-nav button{background:none;text-align:left;font-size:12px;display:flex;align-items:center;gap:11px;color:var(--muted);padding:4px 2px}.module-nav button:hover{color:white}.module-nav small{margin-left:auto;color:var(--dim);font-family:var(--mono)}.dot{width:7px;height:7px;border-radius:50%;display:inline-block;background:var(--accent,var(--purple));flex:0 0 auto}.sidebar-bottom{margin-top:auto;border-top:1px solid var(--line);padding:18px 11px 0;font-size:11px;color:var(--dim)}.schema-tag{font:10px var(--mono);display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:6px;padding:5px 8px;color:var(--muted);margin-bottom:11px}.status-dot{width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 0 4px #b9f28b0c}.sidebar-bottom p{margin:0;line-height:1.8}
+.workspace{margin-left:238px}.topbar{height:70px;border-bottom:1px solid var(--line);padding:0 40px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#1e1e2ef2;backdrop-filter:blur(16px);z-index:40}.breadcrumb{font-size:11px;display:flex;gap:13px;align-items:center;color:var(--dim)}.breadcrumb b{font-weight:500;color:var(--muted)}.top-right{display:flex;gap:14px;align-items:center}.version{font:10px var(--mono);border:1px solid var(--line);border-radius:5px;padding:3px 7px;color:var(--dim)}.top-live{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:8px}.content{max-width:1510px;margin:0 auto;padding:37px 40px 28px}.hero{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:29px}.eyebrow{display:flex;gap:9px;align-items:center;font:10px var(--mono);color:var(--purple);letter-spacing:1.5px;text-transform:uppercase}.eyebrow:before{content:'';width:18px;height:1px;background:var(--purple)}h1{font:500 clamp(30px,3.4vw,47px)/1.17 var(--display);letter-spacing:-2px;margin:15px 0 12px}h1 span{color:var(--purple)}.hero p{font-size:12px;color:var(--muted);max-width:590px;margin:0}.hero-icon{width:137px;height:108px;position:relative;flex:none;display:grid;place-items:center;color:var(--purple);isolation:isolate}.hero-icon:before,.hero-icon:after{content:'';position:absolute;inset:9px 17px;border:1px solid #c4a3ff22;border-radius:24px;transform:rotate(-18deg);z-index:-1}.hero-icon:after{transform:rotate(17deg);inset:15px 25px;border-color:#7edee52b}.hero-icon i{font-size:40px;filter:drop-shadow(0 0 20px #c4a3ff38)}.hero-node{position:absolute;width:8px;height:8px;border-radius:3px;background:var(--cyan);right:6px;top:27px;box-shadow:0 0 20px #7edee533}.hero-node:last-child{left:12px;top:auto;bottom:18px;background:var(--green)}
+.section{scroll-margin-top:94px;margin-bottom:32px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:17px}.title-group{display:flex;gap:11px;align-items:center}.section-number{font:10px var(--mono);color:var(--dim)}h2{font:500 18px var(--display);letter-spacing:-.4px;margin:0}.section-note{font-size:10px;color:var(--dim);display:flex;align-items:center;gap:7px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.stat{position:relative;border:1px solid var(--line);background:linear-gradient(135deg,#ffffff03,transparent),var(--surface);border-radius:var(--radius);padding:20px 19px 17px;overflow:hidden;transition:transform .25s,border-color .25s}.stat:after{content:'';position:absolute;top:0;left:20px;right:20px;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.7}.stat:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}.stat-top{display:flex;justify-content:space-between;align-items:center}.stat-icon{width:36px;height:36px;border-radius:10px;background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent);display:grid;place-items:center;font-size:16px}.stat-type{font:8px var(--mono);text-transform:uppercase;letter-spacing:1px;color:var(--dim)}.stat-value{font:500 clamp(28px,3vw,37px)/1 var(--display);letter-spacing:-1.5px;margin:18px 0 6px;font-variant-numeric:tabular-nums}.stat-label{font-size:11px;color:var(--muted)}.stat-foot{font-size:9px;color:var(--dim);margin-top:13px;display:flex;gap:5px;align-items:center}.stat-foot i{color:var(--accent);font-size:8px}.overview-grid{display:grid;grid-template-columns:1.14fr 1fr;gap:16px;margin-top:17px}.panel{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);overflow:hidden}.panel-heading{display:flex;justify-content:space-between;align-items:center;padding:18px 21px 0}.panel-heading h3{font:500 13px var(--display);margin:0}.panel-heading small{font:9px var(--mono);color:var(--dim)}.chart-body{display:flex;align-items:center;gap:28px;min-height:203px;padding:16px 23px 22px}.donut-wrap{height:157px;width:157px;position:relative;flex:none}.donut-fallback{position:absolute;inset:8px;border-radius:50%;background:conic-gradient(var(--purple) 0 50%,var(--cyan) 50% 83.333%,var(--orange) 83.333%);mask:radial-gradient(transparent 0 52%,#000 53%);opacity:.7}.chart-center{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;pointer-events:none}.chart-center b{font:500 31px var(--display);letter-spacing:-1px}.chart-center span{font:8px var(--mono);letter-spacing:1px;color:var(--dim);text-transform:uppercase}.chart-legend{flex:1;min-width:0;display:grid;gap:17px}.legend-btn{display:flex;align-items:center;gap:8px;background:none;padding:0;color:var(--muted);font-size:11px;text-align:left;transition:color .2s}.legend-btn:hover{color:white}.legend-btn strong{margin-left:auto;font:500 12px var(--mono);color:var(--ink)}.legend-btn small{width:30px;text-align:right;font:9px var(--mono);color:var(--dim)}.modules-list{padding:18px 21px 21px;display:grid;gap:14px}.module-bar-row{display:grid;grid-template-columns:123px 1fr 18px;gap:12px;align-items:center;font-size:10px;color:var(--muted)}.module-track{height:4px;border-radius:5px;background:#ffffff06;overflow:hidden}.module-track span{display:block;height:100%;border-radius:5px;background:var(--accent);transform-origin:left;animation:grow 1.2s ease both}.module-bar-row b{font:10px var(--mono);color:var(--dim);text-align:right}
+.badge{display:inline-flex;align-items:center;gap:5px;font:9px var(--mono);padding:3px 7px;border:1px solid #c4a3ff22;border-radius:5px;color:var(--purple);background:#c4a3ff0b;white-space:nowrap}.badge.soft{color:var(--orange);background:#ffbd880a;border-color:#ffbd8825}.badge.neutral{color:var(--dim);background:#ffffff03;border-color:var(--line)}.badge.cyan{color:var(--cyan);border-color:#7edee52b;background:#7edee50b}.tools{display:flex;align-items:center;gap:6px}.icon-btn{min-width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line);border-radius:7px;background:#ffffff03;color:var(--muted);transition:background .2s,color .2s;font-size:11px}.icon-btn:hover{background:#c4a3ff13;color:var(--purple)}.small-btn{font-size:10px;border:1px solid var(--line);padding:7px 10px;display:inline-flex;align-items:center;gap:7px;border-radius:7px;background:#ffffff03;color:var(--muted);transition:all .2s}.small-btn:hover{background:#c4a3ff13;border-color:#c4a3ff30;color:var(--purple)}.diagram-toolbar{padding:12px 17px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line)}.diagram-toolbar .caption{display:flex;gap:9px;align-items:center;font:10px var(--mono);color:var(--muted)}.diagram-toolbar .caption i{color:var(--cyan)}.zoom-value{min-width:41px;text-align:center;font:9px var(--mono);color:var(--dim)}.diagram-viewport{height:410px;overflow:auto;background-color:#20202f;background-image:radial-gradient(#ffffff12 .7px,transparent .7px);background-size:17px 17px;position:relative;overscroll-behavior:contain;scrollbar-color:#52526b #20202f;scrollbar-width:thin}.diagram-inner{min-width:100%;width:max-content;min-height:100%;padding:30px;display:flex;justify-content:center;align-items:center}.diagram-inner svg{display:block;max-width:none!important;flex:none}.diagram-message{max-width:440px;color:var(--muted);font-size:12px;text-align:center;padding:30px}.diagram-message i{display:block;font-size:27px;margin-bottom:13px;color:var(--purple)}.diagram-footer{padding:10px 16px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;border-top:1px solid var(--line);font-size:9px;color:var(--dim)}.diagram-footer code{color:var(--muted)}.source-details{border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.source-details summary{padding:10px 17px;cursor:pointer}.source-details pre{margin:0;padding:16px;max-height:220px;overflow:auto;font:10px/1.8 var(--mono);background:#191925}.diagram-panel:fullscreen{background:var(--bg);padding:12px;display:flex;flex-direction:column}.diagram-panel:fullscreen .diagram-viewport{flex:1;height:auto}
+.search-row{display:flex;gap:10px;align-items:center;margin-bottom:14px}.search-box{position:relative;flex:1}.search-box>i{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:12px}.search-box input{width:100%;height:44px;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:0 74px 0 40px;color:var(--ink);font-size:11px;transition:border-color .2s}.search-box input:focus{border-color:#c4a3ff60;outline:none;box-shadow:0 0 0 3px #c4a3ff0a}.search-box input::placeholder{color:var(--dim)}.search-box kbd{position:absolute;right:14px;top:13px;font:9px var(--mono);color:var(--dim);border:1px solid var(--line);border-radius:4px;padding:0 5px}.search-clear{position:absolute;right:35px;top:11px;height:23px;width:23px;border-radius:5px;color:var(--muted);background:none}.search-clear:hover{background:#ffffff0c}.filters{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:16px}.chip{font-size:10px;background:none;border:1px solid var(--line);border-radius:7px;color:var(--muted);padding:5px 10px;transition:background .2s,border-color .2s;display:flex;gap:6px;align-items:center}.chip:hover{border-color:#ffffff30}.chip[aria-pressed="true"]{border-color:#c4a3ff44;color:var(--purple);background:#c4a3ff0d}.result-count{font:9px var(--mono);color:var(--dim);margin-left:auto}.dictionary-list{display:grid;gap:9px}.table-detail{border:1px solid var(--line);border-radius:11px;background:var(--surface);overflow:hidden;transition:border-color .2s}.table-detail:hover{border-color:#c4a3ff28}.table-detail[open]{border-color:#c4a3ff36}.table-detail summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:16px 17px;min-height:68px;position:relative}.table-detail summary::-webkit-details-marker{display:none}.entity-icon{display:grid;place-items:center;flex:none;width:32px;height:32px;border-radius:9px;background:color-mix(in srgb,var(--accent) 9%,transparent);border:1px solid color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);font-size:12px}.entity-title{min-width:0}.entity-title strong{display:block;font:500 11px var(--mono);overflow-wrap:anywhere}.entity-title small{font-size:9px;color:var(--dim);display:block;margin-top:4px}.summary-meta{display:flex;gap:8px;align-items:center;margin-left:auto;flex:none}.field-count{font:9px var(--mono);color:var(--dim);margin-right:4px}.chevron{font-size:9px;color:var(--dim);margin-left:5px;transition:transform .25s}.table-detail[open] .chevron{transform:rotate(180deg);color:var(--purple)}.table-content{border-top:1px solid var(--line);animation:appear .23s ease}.table-description{font-size:11px;color:var(--muted);margin:0;padding:16px 18px;line-height:1.8}.table-scroll{overflow-x:auto;scrollbar-width:thin}.data-table{width:100%;border-collapse:collapse;text-align:left;font-size:10px;line-height:1.8}.data-table th{font-size:8px;font-weight:500;text-transform:uppercase;letter-spacing:.7px;color:var(--dim);background:#19192550;padding:11px 15px;border-block:1px solid var(--line);white-space:nowrap}.data-table td{padding:11px 15px;border-bottom:1px solid #ffffff07;vertical-align:top;color:var(--muted)}.data-table tr:last-child td{border-bottom:0}.data-table tbody tr:hover{background:#c4a3ff05}.data-table code{color:#d5d5e5;font-size:9px}.field-name{min-width:130px}.field-type{min-width:130px}.field-logic{min-width:280px;max-width:600px}.key{font:8px var(--mono);border-radius:4px;padding:2px 4px;color:var(--orange);background:#ffbd8810;white-space:nowrap}.key.fk{color:var(--cyan);background:#7edee510}.null-yes{color:var(--dim)}.null-no{color:var(--green);font:9px var(--mono)}.table-trigger-list{border-top:1px solid var(--line);padding:12px 17px;background:#19192528}.table-trigger-list h4{font:9px var(--mono);color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin:0 0 9px}.trigger-tags{display:flex;gap:5px;flex-wrap:wrap}.trigger-tag{font:8px var(--mono);padding:3px 6px;border:1px solid var(--line);border-radius:4px;color:var(--muted)}.trigger-tag:hover{border-color:var(--purple);color:var(--purple)}.empty{padding:35px 20px;text-align:center;color:var(--muted);border:1px dashed #ffffff1b;border-radius:12px;font-size:12px}.empty i{display:block;font-size:25px;color:var(--purple);margin-bottom:10px}.empty button{margin-top:14px}.trigger-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:15px}.segmented{display:inline-flex;gap:3px;padding:4px;border:1px solid var(--line);border-radius:9px;background:var(--surface);max-width:100%;overflow-x:auto}.segmented button{padding:7px 10px;border-radius:6px;color:var(--dim);font-size:10px;white-space:nowrap;background:none}.segmented button[aria-pressed="true"]{background:#c4a3ff17;color:var(--purple)}.segmented button:hover{color:var(--ink)}.trigger-table-wrap{overflow:auto;max-height:550px;scrollbar-width:thin;scrollbar-color:#52526b var(--surface)}.trigger-table{min-width:850px}.trigger-table thead{position:sticky;top:0;z-index:2}.trigger-table th{background:#242435}.trigger-table td:first-child{min-width:180px}.trigger-table td:last-child{min-width:275px}.trigger-name{display:block;color:var(--ink)!important;font:9px var(--mono)!important;margin-bottom:5px;word-break:break-word}.event{font:8px var(--mono);color:var(--green);background:#b9f28b0a;border:1px solid #b9f28b20;padding:3px 6px;border-radius:4px;white-space:nowrap}.event.update{color:var(--cyan);background:#7edee50a;border-color:#7edee520}.event.delete{color:var(--orange);background:#ffbd880a;border-color:#ffbd8820}.timing{font:8px var(--mono);color:var(--dim)}.table-footer{padding:11px 16px;border-top:1px solid var(--line);font-size:9px;color:var(--dim);display:flex;justify-content:space-between;gap:10px}.info-note{padding:13px 16px;border:1px solid #ffbd8818;border-radius:10px;background:#ffbd8805;font-size:10px;color:var(--muted);margin-top:13px;display:flex;gap:10px;line-height:1.8}.info-note i{color:var(--orange);margin-top:4px}.footer{border-top:1px solid var(--line);padding:20px 0 0;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:9px;color:var(--dim)}.footer b{font-family:var(--mono);font-weight:400;color:var(--muted)}.footer a:hover{color:var(--purple)}.toast{position:fixed;bottom:22px;left:calc(50% + 100px);transform:translateX(-50%);padding:11px 17px;background:#343449;border:1px solid #c4a3ff40;border-radius:9px;color:var(--ink);font-size:11px;box-shadow:0 10px 35px #0003;z-index:120}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.reveal{animation:appear .6s both}.delay-1{animation-delay:.07s}.delay-2{animation-delay:.14s}.delay-3{animation-delay:.21s}@keyframes appear{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media(min-width:1500px){.content{padding-inline:55px}.topbar{padding-inline:55px}.stats{gap:19px}.stat{padding:23px}.overview-grid{gap:19px}.chart-body{gap:40px}}
+@media(max-width:1150px){.sidebar{width:208px;padding-inline:15px}.workspace{margin-left:208px}.content{padding:30px 25px}.topbar{padding-inline:25px}.chart-body{gap:15px;padding-inline:17px}.donut-wrap{width:135px;height:135px}.module-bar-row{grid-template-columns:110px 1fr 15px;gap:8px}.stat{padding:16px 14px}.hero-icon{display:none}.stat-type{font-size:7px}}
+@media(max-width:880px){.sidebar{display:none}.workspace{margin-left:0}.topbar{height:58px}.content{padding:28px 22px}.top-live{display:none}.overview-grid{grid-template-columns:1fr 1fr}.chart-body{gap:20px;flex-direction:column;min-height:0}.chart-legend{width:100%;gap:12px}.modules-list{padding-top:28px;gap:28px}.module-bar-row{grid-template-columns:1fr 18px}.module-track{grid-column:1/-1;grid-row:auto}.module-bar-row b{grid-column:2;grid-row:1}.module-bar-row{position:relative;display:flex;flex-wrap:wrap;gap:10px}.module-bar-row>span{flex:1}.module-track{order:3;flex:0 0 100%}.toast{left:50%}.hero p{max-width:650px}}
+@media(max-width:580px){.content{padding:25px 15px}.topbar{padding:0 16px}.breadcrumb{font-size:10px;gap:9px}.version{display:none}h1{font-size:33px;letter-spacing:-1.3px}.hero{margin-bottom:25px}.hero p{font-size:11px}.stats{grid-template-columns:repeat(2,1fr);gap:10px}.stat-value{font-size:32px}.stat-type{font-size:7px}.overview-grid{grid-template-columns:1fr;gap:12px}.chart-body{flex-direction:row;gap:24px;padding:20px}.donut-wrap{height:140px;width:140px}.modules-list{gap:15px;padding-top:20px}.module-bar-row{display:grid;grid-template-columns:120px 1fr 20px;gap:10px}.module-track{order:initial;grid-column:auto;grid-row:auto}.module-bar-row b{grid-column:auto;grid-row:auto}.section-head{align-items:flex-start}.section-note{display:none}h2{font-size:16px}.section{margin-bottom:28px}.summary-meta .field-count{display:none}.entity-title strong{font-size:10px}.table-detail summary{gap:9px;padding:14px 11px}.summary-meta{gap:4px}.badge{font-size:8px;padding:3px 5px}.entity-icon{width:28px;height:28px;font-size:10px}.search-row{flex-wrap:wrap}.search-box{flex-basis:100%}.result-count{margin-left:0;width:100%}.diagram-toolbar .caption{font-size:8px;gap:5px}.diagram-viewport{height:350px}.tools .small-btn{font-size:0;gap:0;padding:7px 9px}.tools .small-btn i{font-size:10px}.segmented{width:100%;justify-content:space-between}.segmented button{font-size:9px;padding:7px 8px}.trigger-controls .result-count{width:auto;margin-left:auto}.data-table th{padding:9px 12px}.data-table td{padding:10px 12px}.footer{font-size:8px}.table-footer{flex-wrap:wrap}.info-note{font-size:9px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.diagram-inner{justify-content:flex-start;align-items:flex-start}.diagram-inner .node{cursor:grab;touch-action:none}.diagram-inner .node:focus{outline:none;filter:drop-shadow(0 0 5px var(--cyan))}.diagram-inner .erd-muted{opacity:.16}.diagram-inner .erd-active{filter:drop-shadow(0 0 4px var(--cyan))}#erdModule option{background:var(--surface);color:var(--ink)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<aside class="sidebar" aria-label="Navegación del diccionario">
+ <a class="brand" href="#main"><span class="brand-icon"><i class="fa-solid fa-cubes-stacked" aria-hidden="true"></i></span><span><strong>db_test<span style="color:var(--purple)">.</span></strong><small>Data atlas</small></span></a>
+ <div class="nav-label">Workspace</div>
+ <nav class="nav" aria-label="Secciones"><a href="#overview" class="active"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i>Vista general</a><a href="#erd"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i>Modelo relacional<span class="count">26</span></a><a href="#dictionary"><i class="fa-solid fa-table-list" aria-hidden="true"></i>Diccionario<span class="count">26</span></a><a href="#triggers"><i class="fa-solid fa-bolt" aria-hidden="true"></i>Triggers<span class="count">72</span></a></nav>
+ <div class="nav-label">Módulos del sistema</div><div id="moduleNav" class="module-nav"></div>
+ <div class="sidebar-bottom"><div class="schema-tag"><span class="status-dot"></span>MODELO · V2</div><p>26 entidades. Un ecosistema.<br>Documentación que conecta.</p></div>
+</aside>
+<div class="workspace">
+ <header class="topbar"><div class="breadcrumb"><i class="fa-solid fa-house" aria-hidden="true"></i><span>/</span><b>db_test</b><span>/</span><span>Diccionario de datos</span></div><div class="top-right"><span class="top-live"><span class="status-dot"></span>Documentación interactiva</span><span class="version">v2.0</span></div></header>
+ <main class="content" id="main">
+  <div class="hero reveal"><div><div class="eyebrow">El mapa de tu base de datos</div><h1>Todo conectado.<br><span>Todo documentado.</span></h1><p>Explora las entidades, relaciones y reglas que dan vida a <code>db_test</code>.<br>Un atlas interactivo del ecosistema de e-commerce.</p></div><div class="hero-icon" aria-hidden="true"><i class="fa-solid fa-database"></i><span class="hero-node"></span><span class="hero-node"></span></div></div>
+  <section class="section reveal delay-1" id="overview" aria-labelledby="overviewTitle">
+   <div class="section-head"><div class="title-group"><span class="section-number">01 /</span><h2 id="overviewTitle">El ecosistema, en cifras</h2></div><span class="section-note"><i class="fa-regular fa-circle-dot" aria-hidden="true"></i> Estructura del modelo · Fuente: SQL confirmado</span></div>
+   <div class="stats">
+    <article class="stat" style="--accent:var(--purple)"><div class="stat-top"><span class="stat-icon"><i class="fa-solid fa-table-cells-large" aria-hidden="true"></i></span><span class="stat-type">Esquema</span></div><div class="stat-value" data-counter="tables">26</div><div class="stat-label">Tablas relacionadas</div><div class="stat-foot"><i class="fa-solid fa-circle" aria-hidden="true"></i>Distribuidas en 5 módulos</div></article>
+    <article class="stat" style="--accent:var(--cyan)"><div class="stat-top"><span class="stat-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span><span class="stat-type">Automatización</span></div><div class="stat-value" data-counter="triggers">72</div><div class="stat-label">Triggers definidos</div><div class="stat-foot"><i class="fa-solid fa-circle" aria-hidden="true"></i>6 por cada tabla principal</div></article>
+    <article class="stat" style="--accent:var(--green)"><div class="stat-top"><span class="stat-icon"><i class="fa-solid fa-box-open" aria-hidden="true"></i></span><span class="stat-type">Esquema</span></div><div class="stat-value" data-counter="fields">156</div><div class="stat-label">Campos documentados</div><div class="stat-foot"><i class="fa-solid fa-flask" aria-hidden="true"></i>Derivado del esquema SQL</div></article>
+    <article class="stat" style="--accent:var(--orange)"><div class="stat-top"><span class="stat-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></span><span class="stat-type">Esquema</span></div><div class="stat-value" data-counter="relations">32</div><div class="stat-label">Relaciones declaradas</div><div class="stat-foot"><i class="fa-solid fa-flask" aria-hidden="true"></i>Derivado del esquema SQL</div></article>
+   </div>
+   <div class="overview-grid">
+    <article class="panel"><div class="panel-heading"><h3>Distribución de triggers</h3><small>72 en total</small></div><div class="chart-body"><div class="donut-wrap"><div class="donut-fallback" id="donutFallback" aria-hidden="true"></div><canvas id="triggerChart" role="img" aria-label="Triggers: 36 de auditoría, 24 de validación y 12 de bloqueo Soft Delete"></canvas><div class="chart-center" aria-hidden="true"><b>72</b><span>Triggers</span></div></div><div class="chart-legend"><button class="legend-btn" data-type="audit"><span class="dot" style="--accent:var(--purple)"></span>Auditoría<strong>36</strong><small>50 %</small></button><button class="legend-btn" data-type="validation"><span class="dot" style="--accent:var(--cyan)"></span>Validación<strong>24</strong><small>33 %</small></button><button class="legend-btn" data-type="soft"><span class="dot" style="--accent:var(--orange)"></span>Soft Delete<strong>12</strong><small>17 %</small></button></div></div></article>
+    <article class="panel"><div class="panel-heading"><h3>Un modelo, cinco dominios</h3><small>26 tablas</small></div><div class="modules-list" id="moduleBars"></div></article>
+   </div>
+  </section>
+  <section class="section reveal delay-2" id="erd" aria-labelledby="erdTitle"><div class="section-head"><div class="title-group"><span class="section-number">02 /</span><h2 id="erdTitle">Cada relación tiene una historia</h2></div><span class="badge cyan"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i> ER DIAGRAM</span></div>
+   <div class="panel diagram-panel" id="diagramPanel"><div class="diagram-toolbar"><div class="caption"><i class="fa-solid fa-circle-nodes" aria-hidden="true"></i>db_test <span style="color:var(--dim)">/ esquema relacional</span></div><div class="tools"><button class="icon-btn" id="zoomOut" aria-label="Reducir diagrama" disabled><i class="fa-solid fa-minus" aria-hidden="true"></i></button><output class="zoom-value" id="zoomLabel">—</output><button class="icon-btn" id="zoomIn" aria-label="Ampliar diagrama" disabled><i class="fa-solid fa-plus" aria-hidden="true"></i></button><button class="small-btn" id="fitDiagram" disabled><i class="fa-solid fa-expand" aria-hidden="true"></i>Ajustar</button><button class="icon-btn" id="fullscreenDiagram" aria-label="Pantalla completa"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i></button></div></div>
+    <div class="diagram-toolbar"><input class="small-btn" id="erdSearch" type="search" placeholder="Buscar tabla…" aria-label="Buscar tabla en el diagrama"><select class="small-btn" id="erdModule" aria-label="Filtrar módulo del diagrama"><option value="">Todos los módulos</option></select><span id="erdCount" class="section-note" role="status"></span></div>
+    <div class="diagram-viewport" id="diagramViewport" tabindex="0" role="region" aria-label="Diagrama ER con desplazamiento horizontal y vertical"><div class="diagram-inner" id="diagram"><div class="diagram-message" role="status"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i>Preparando las conexiones del modelo…</div></div></div>
+    <div class="diagram-footer"><span><code>PK</code> Primaria &nbsp;·&nbsp; <code>FK</code> Foránea &nbsp;·&nbsp; <code>||</code> Uno &nbsp;·&nbsp; <code>o{</code> Cero o muchos</span><button class="small-btn" id="copyMermaid"><i class="fa-regular fa-copy" aria-hidden="true"></i>Copiar Mermaid</button></div><details class="source-details"><summary>Ver el código fuente del diagrama</summary><pre id="mermaidSource"></pre></details>
+   </div>
+  </section>
+  <section class="section reveal delay-3" id="dictionary" aria-labelledby="dictionaryTitle"><div class="section-head"><div class="title-group"><span class="section-number">03 /</span><h2 id="dictionaryTitle">Dentro de cada tabla</h2></div><span class="section-note" id="fieldTotal">156 campos documentados</span></div>
+   <div class="search-row"><div class="search-box"><label class="sr-only" for="search">Buscar tablas, columnas o triggers</label><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" id="search" placeholder="Buscar una tabla, un campo o un trigger…" autocomplete="off" spellcheck="false" aria-controls="dictionaryList triggerRows"><button class="search-clear" id="clearSearch" aria-label="Borrar búsqueda" hidden>×</button><kbd aria-hidden="true">/</kbd></div><button class="small-btn" id="expandAll"><i class="fa-solid fa-angles-down" aria-hidden="true"></i>Expandir</button><button class="small-btn" id="collapseAll"><i class="fa-solid fa-angles-up" aria-hidden="true"></i>Contraer</button></div>
+   <div class="filters" id="moduleFilters" role="group" aria-label="Filtrar tablas por módulo"></div><div class="dictionary-list" id="dictionaryList"></div><div class="empty" id="tablesEmpty" hidden><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>No encontramos tablas para esta búsqueda.<br><button class="small-btn" data-reset>Limpiar filtros</button></div>
+  </section>
+  <section class="section" id="triggers" aria-labelledby="triggersTitle"><div class="section-head"><div class="title-group"><span class="section-number">04 /</span><h2 id="triggersTitle">Las reglas detrás de los datos</h2></div><span class="badge"><i class="fa-solid fa-bolt" aria-hidden="true"></i>72 TRIGGERS</span></div>
+   <div class="trigger-controls"><div class="segmented" role="group" aria-label="Tipo de trigger"><button data-trigger-filter="all" aria-pressed="true">Todos <span>72</span></button><button data-trigger-filter="audit" aria-pressed="false">Auditoría <span>36</span></button><button data-trigger-filter="soft" aria-pressed="false">Soft Delete <span>12</span></button><button data-trigger-filter="validation" aria-pressed="false">Validación <span>24</span></button></div><span class="result-count" id="triggerCount" role="status" aria-live="polite">72 de 72 triggers</span></div>
+   <div class="panel"><div class="trigger-table-wrap"><table class="data-table trigger-table"><caption class="sr-only">Inventario de los 72 triggers por nombre, tabla, evento, momento y lógica</caption><thead><tr><th scope="col">Nombre del Trigger</th><th scope="col">Tabla Afectada</th><th scope="col">Evento (INSERT/UPDATE/DELETE)</th><th scope="col">Momento (BEFORE/AFTER)</th><th scope="col">Lógica</th></tr></thead><tbody id="triggerRows"></tbody></table><div class="empty" id="triggersEmpty" hidden>No hay triggers que coincidan con los filtros.<br><button class="small-btn" data-reset>Limpiar filtros</button></div></div><div class="table-footer"><span>MySQL 8.0.16+ · PostgreSQL 16+</span><span>36 auditoría &nbsp;/&nbsp; 24 validación &nbsp;/&nbsp; 12 bloqueo</span></div></div>
+   <div class="info-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span><strong>Soft Delete conserva la historia.</strong> Los triggers BEFORE DELETE bloquean el borrado físico; la baja se realiza con <code>UPDATE deleted_at</code>. Los AFTER DELETE están definidos, pero no se alcanzan en un borrado bloqueado. Las actualizaciones de baja se auditan como UPDATE.</span></div>
+  </section>
+  <footer class="footer"><span><b>db_test.</b> &nbsp; Diseñado para explorar. Documentado para construir.</span><span>Modelo v2 · Datos estáticos · <a href="https://github.com/240545-web/Practicas_BDN_240545/tree/Practica03" target="_blank" rel="noopener noreferrer">Ver repositorio <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></span></footer>
+  <noscript><p>Activa JavaScript para explorar las 26 tablas y los 72 triggers. El HTML contiene todos los datos; las estadísticas de productos y usuarios son ejemplos.</p></noscript>
+ </main>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<!-- DATOS EDITABLES. featuredTables: cinco ejemplos explícitos completos.
+     additionalTables: las otras 21 fichas completas. demo: cifras ilustrativas.
+     No se realizan consultas a una base de datos ni se incluyen credenciales. -->
+<script src="docs/atlas-erd.js"></script>
+<script id="dictionaryData" type="application/json">{
+  "featuredTables": [
+    {
+      "name": "tb_users",
+      "module": "Seguridad",
+      "description": "Cuentas e identidad de acceso. Email y nickname únicos; credencial excluida de la auditoría.",
+      "softDelete": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(254)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Correo único de la cuenta; el trigger valida su estructura básica. Valor único."
+        },
+        {
+          "name": "nickname",
+          "type": "VARCHAR(100)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Alias único y no vacío. Valor único."
+        },
+        {
+          "name": "password",
+          "type": "VARCHAR(255)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Hash de credencial; SHA2 en la generación MySQL, bcrypt con pgcrypto en PostgreSQL. No se copia a logs."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "SI",
+          "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
+        }
+      ]
+    },
+    {
+      "name": "tb_products",
+      "module": "Catálogo",
+      "description": "Catálogo comercial con SKU único, precio positivo e inventario no negativo.",
+      "softDelete": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "SKU",
+          "type": "VARCHAR(50)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Código comercial único; se conserva la grafía SKU y las comillas en PostgreSQL. Valor único."
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(250)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Nombre legible de la entidad."
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "key": "—",
+          "nullable": "SI",
+          "description": "Descripción textual opcional."
+        },
+        {
+          "name": "current_price",
+          "type": "DECIMAL(12,2)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Precio vigente, estrictamente mayor a cero."
+        },
+        {
+          "name": "current_stock",
+          "type": "INT",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Unidades disponibles, nunca negativas. La rutina de compra descuenta una unidad."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "SI",
+          "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
+        }
+      ]
+    },
+    {
+      "name": "tb_orders",
+      "module": "Compras",
+      "description": "Pedidos reales con comprador, carrito opcional, estado e importe total positivo.",
+      "softDelete": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY). UNIQUE (id, user_id)."
+        },
+        {
+          "name": "user_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Cuenta propietaria o asociada. FK → tb_users.id; tb_carts.id, user_id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (id, user_id)."
+        },
+        {
+          "name": "cart_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "SI",
+          "description": "Carrito de origen. La relación compuesta preserva su propietario. FK → tb_carts.id, user_id. DELETE RESTRICT / UPDATE CASCADE. Valor único."
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Estado operativo limitado por CHECK y, en las tablas principales, por triggers de validación."
+        },
+        {
+          "name": "total_amount",
+          "type": "DECIMAL(12,2)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Importe total positivo; la rutina masiva lo iguala al importe de su partida."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "SI",
+          "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
+        }
+      ]
+    },
+    {
+      "name": "tb_payments",
+      "module": "Pagos y envíos",
+      "description": "Pagos vinculados a pedidos reales. Importe positivo y estado restringido.",
+      "softDelete": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "order_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Pedido real relacionado; nunca se sustituye por un ID de usuario. FK → tb_orders.id. DELETE RESTRICT / UPDATE CASCADE."
+        },
+        {
+          "name": "payment_method_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Método de pago del catálogo. Las semillas usan los ID 1, 2 y 3. FK → tbc_payment_methods.id. DELETE RESTRICT / UPDATE CASCADE."
+        },
+        {
+          "name": "amount",
+          "type": "DECIMAL(12,2)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Importe del pago, estrictamente positivo."
+        },
+        {
+          "name": "payment_status",
+          "type": "VARCHAR(20)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Pending, Completed, Failed o Refunded."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "SI",
+          "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
+        }
+      ]
+    },
+    {
+      "name": "tb_people",
+      "module": "Clientes y ubicación",
+      "description": "Ficha personal única por cuenta, con fecha de nacimiento y país de referencia.",
+      "softDelete": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "user_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Cuenta propietaria o asociada. FK → tb_users.id. DELETE RESTRICT / UPDATE CASCADE. Valor único."
+        },
+        {
+          "name": "given_names",
+          "type": "VARCHAR(150)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Nombre o nombres personales, obligatorios y no vacíos."
+        },
+        {
+          "name": "family_names",
+          "type": "VARCHAR(150)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Apellidos personales, obligatorios y no vacíos."
+        },
+        {
+          "name": "birth_date",
+          "type": "DATE",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de nacimiento; el trigger rechaza fechas futuras."
+        },
+        {
+          "name": "country_code",
+          "type": "CHAR(2)",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Código de país; referencia el catálogo de países. FK → tbc_countries.code. DELETE RESTRICT / UPDATE CASCADE."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "SI",
+          "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
+        }
+      ]
+    }
+  ],
+  "additionalTables": [
+    {
+      "name": "tb_roles",
+      "module": "Seguridad",
+      "description": "Roles de seguridad que agrupan permisos reutilizables.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(80)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Nombre legible de la entidad. Valor único."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tb_user_roles",
+      "module": "Seguridad",
+      "description": "Asociación de usuarios y roles. Cada par se registra una sola vez.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "user_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Cuenta propietaria o asociada. FK → tb_users.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (user_id, role_id)."
+        },
+        {
+          "name": "role_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Rol de seguridad asociado. FK → tb_roles.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (user_id, role_id)."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tb_permissions",
+      "module": "Seguridad",
+      "description": "Catálogo de capacidades identificadas mediante códigos únicos.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(100)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Código de catálogo único. Valor único."
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "key": "—",
+          "nullable": "SI",
+          "description": "Descripción textual opcional."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tb_role_permissions",
+      "module": "Seguridad",
+      "description": "Asignación de permisos a roles; resuelve una relación muchos a muchos.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "role_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Rol de seguridad asociado. FK → tb_roles.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (role_id, permission_id)."
+        },
+        {
+          "name": "permission_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Permiso asignado al rol. FK → tb_permissions.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (role_id, permission_id)."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tb_categories",
+      "module": "Catálogo",
+      "description": "Categorías del catálogo con nombres únicos y baja lógica.",
+      "softDelete": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(150)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Nombre legible de la entidad. Valor único."
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "key": "—",
+          "nullable": "SI",
+          "description": "Descripción textual opcional."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "SI",
+          "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
+        }
+      ]
+    },
+    {
+      "name": "tb_product_categories",
+      "module": "Catálogo",
+      "description": "Clasificación múltiple de productos mediante una tabla de asociación.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "product_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Producto relacionado. FK → tb_products.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (product_id, category_id)."
+        },
+        {
+          "name": "category_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Categoría relacionada. FK → tb_categories.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (product_id, category_id)."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tb_tags",
+      "module": "Catálogo",
+      "description": "Etiquetas reutilizables con nombre único.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(80)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Nombre legible de la entidad. Valor único."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tb_product_tags",
+      "module": "Catálogo",
+      "description": "Asociación muchos a muchos entre productos y etiquetas.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "product_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Producto relacionado. FK → tb_products.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (product_id, tag_id)."
+        },
+        {
+          "name": "tag_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Etiqueta relacionada. FK → tb_tags.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (product_id, tag_id)."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tb_reviews",
+      "module": "Catálogo",
+      "description": "Opiniones de compradores. Una reseña por usuario y producto; valoración entre 1 y 5.",
+      "softDelete": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "user_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Cuenta propietaria o asociada. FK → tb_users.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (user_id, product_id)."
+        },
+        {
+          "name": "product_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Producto relacionado. FK → tb_products.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (user_id, product_id)."
+        },
+        {
+          "name": "rating",
+          "type": "INT",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Puntuación entera entre 1 y 5."
+        },
+        {
+          "name": "comment",
+          "type": "TEXT",
+          "key": "—",
+          "nullable": "SI",
+          "description": "Comentario de la reseña; opcional."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "SI",
+          "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
+        }
+      ]
+    },
+    {
+      "name": "tbc_countries",
+      "module": "Clientes y ubicación",
+      "description": "Catálogo de países con código de dos caracteres y nombre únicos.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "code",
+          "type": "CHAR(2)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Código de catálogo único. Valor único."
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(100)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Nombre legible de la entidad. Valor único."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tbc_states",
+      "module": "Clientes y ubicación",
+      "description": "Estados o provincias asociados a un país. Nombre único dentro de cada país.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY). UNIQUE (id, country_code)."
+        },
+        {
+          "name": "country_code",
+          "type": "CHAR(2)",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Código de país; referencia el catálogo de países. FK → tbc_countries.code. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (country_code, name); UNIQUE (id, country_code)."
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(100)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Nombre legible de la entidad. UNIQUE (country_code, name)."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tb_addresses",
+      "module": "Clientes y ubicación",
+      "description": "Domicilios de usuarios. La FK compuesta garantiza que el estado pertenezca al país.",
+      "softDelete": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "user_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Cuenta propietaria o asociada. FK → tb_users.id. DELETE RESTRICT / UPDATE CASCADE."
+        },
+        {
+          "name": "country_code",
+          "type": "CHAR(2)",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Código de país; referencia el catálogo de países. FK → tbc_countries.code; tbc_states.id, country_code. DELETE RESTRICT / UPDATE CASCADE."
+        },
+        {
+          "name": "state_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "SI",
+          "description": "Estado o provincia opcional; debe pertenecer al país indicado. FK → tbc_states.id, country_code. DELETE RESTRICT / UPDATE CASCADE."
+        },
+        {
+          "name": "city",
+          "type": "VARCHAR(120)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Ciudad obligatoria y no vacía."
+        },
+        {
+          "name": "street",
+          "type": "VARCHAR(250)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Calle y referencia del domicilio, obligatorias y no vacías."
+        },
+        {
+          "name": "postal_code",
+          "type": "VARCHAR(20)",
+          "key": "—",
+          "nullable": "SI",
+          "description": "Código postal opcional; conserva su formato textual."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "SI",
+          "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
+        }
+      ]
+    },
+    {
+      "name": "tb_carts",
+      "module": "Compras",
+      "description": "Carritos de compra con propietario y estado operativo; admite baja lógica.",
+      "softDelete": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY). UNIQUE (id, user_id)."
+        },
+        {
+          "name": "user_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Cuenta propietaria o asociada. FK → tb_users.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (id, user_id)."
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Estado operativo limitado por CHECK y, en las tablas principales, por triggers de validación."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "SI",
+          "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
+        }
+      ]
+    },
+    {
+      "name": "tbd_shopping_cart",
+      "module": "Compras",
+      "description": "Partidas de carrito. La FK compuesta conserva la correspondencia con su propietario.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "cart_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Carrito de origen. La relación compuesta preserva su propietario. FK → tb_carts.id, user_id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (cart_id, product_id)."
+        },
+        {
+          "name": "user_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Cuenta propietaria o asociada. FK → tb_carts.id, user_id; tb_users.id. DELETE RESTRICT / UPDATE CASCADE."
+        },
+        {
+          "name": "product_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Producto relacionado. FK → tb_products.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (cart_id, product_id)."
+        },
+        {
+          "name": "quantity",
+          "type": "INT",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Cantidad de unidades, estrictamente mayor a cero."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tb_order_items",
+      "module": "Compras",
+      "description": "Partidas históricas de pedido. El subtotal se calcula y almacena como cantidad por precio.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "order_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Pedido real relacionado; nunca se sustituye por un ID de usuario. FK → tb_orders.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (order_id, product_id)."
+        },
+        {
+          "name": "product_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Producto relacionado. FK → tb_products.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (order_id, product_id)."
+        },
+        {
+          "name": "product_name",
+          "type": "VARCHAR(250)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Nombre del producto conservado como dato histórico del pedido."
+        },
+        {
+          "name": "quantity",
+          "type": "INT",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Cantidad de unidades, estrictamente mayor a cero."
+        },
+        {
+          "name": "unit_price",
+          "type": "DECIMAL(12,2)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Precio unitario histórico, estrictamente positivo."
+        },
+        {
+          "name": "subtotal",
+          "type": "DECIMAL(12,2)",
+          "key": "—",
+          "nullable": "SI",
+          "description": "Columna generada STORED: quantity × unit_price. No se introduce manualmente."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tb_wishlists",
+      "module": "Compras",
+      "description": "Productos guardados por usuario. Evita duplicar el par y valida referencias activas.",
+      "softDelete": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "user_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Cuenta propietaria o asociada. FK → tb_users.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (user_id, product_id)."
+        },
+        {
+          "name": "product_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Producto relacionado. FK → tb_products.id. DELETE RESTRICT / UPDATE CASCADE. UNIQUE (user_id, product_id)."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "SI",
+          "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
+        }
+      ]
+    },
+    {
+      "name": "tbc_payment_methods",
+      "module": "Pagos y envíos",
+      "description": "Catálogo de métodos: tarjeta, tarjeta de puntos y efectivo en las semillas de prueba.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "code",
+          "type": "VARCHAR(40)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Código de catálogo único. Valor único."
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(100)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Nombre legible de la entidad. Valor único."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tb_carriers",
+      "module": "Pagos y envíos",
+      "description": "Catálogo de transportistas, identificados por un nombre único.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "name",
+          "type": "VARCHAR(150)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Nombre legible de la entidad. Valor único."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    },
+    {
+      "name": "tb_shipments",
+      "module": "Pagos y envíos",
+      "description": "Envíos asociados a una orden, transportista y dirección; tracking único.",
+      "softDelete": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "order_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Pedido real relacionado; nunca se sustituye por un ID de usuario. FK → tb_orders.id. DELETE RESTRICT / UPDATE CASCADE."
+        },
+        {
+          "name": "carrier_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Transportista responsable del envío. FK → tb_carriers.id. DELETE RESTRICT / UPDATE CASCADE."
+        },
+        {
+          "name": "address_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Dirección de entrega referenciada. FK → tb_addresses.id. DELETE RESTRICT / UPDATE CASCADE."
+        },
+        {
+          "name": "tracking_code",
+          "type": "VARCHAR(150)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Identificador de rastreo único y no vacío. Valor único."
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(20)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Estado operativo limitado por CHECK y, en las tablas principales, por triggers de validación."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "SI",
+          "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
+        }
+      ]
+    },
+    {
+      "name": "tb_invoices",
+      "module": "Pagos y envíos",
+      "description": "Facturas con folio único. Cada pedido puede tener como máximo una factura.",
+      "softDelete": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "order_id",
+          "type": "BIGINT",
+          "key": "FK",
+          "nullable": "NO",
+          "description": "Pedido real relacionado; nunca se sustituye por un ID de usuario. FK → tb_orders.id. DELETE RESTRICT / UPDATE CASCADE. Valor único."
+        },
+        {
+          "name": "invoice_number",
+          "type": "VARCHAR(80)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Folio de factura único y no vacío. Valor único."
+        },
+        {
+          "name": "total_amount",
+          "type": "DECIMAL(12,2)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Importe total positivo; la rutina masiva lo iguala al importe de su partida."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        },
+        {
+          "name": "updated_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha actualizada por el trigger BEFORE UPDATE de la tabla principal."
+        },
+        {
+          "name": "deleted_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "SI",
+          "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
+        }
+      ]
+    },
+    {
+      "name": "tb_logs",
+      "module": "Seguridad",
+      "description": "Bitácora de cambios con imágenes JSON anteriores y posteriores, sin hashes de contraseña.",
+      "softDelete": false,
+      "fields": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "key": "PK",
+          "nullable": "NO",
+          "description": "Identificador primario autogenerado (AUTO_INCREMENT / IDENTITY)."
+        },
+        {
+          "name": "table_name",
+          "type": "VARCHAR(100)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Nombre de la entidad auditada; no es una FK polimórfica."
+        },
+        {
+          "name": "entity_id",
+          "type": "BIGINT",
+          "key": "—",
+          "nullable": "NO",
+          "description": "ID del registro afectado, conservado sin FK a las entidades auditadas."
+        },
+        {
+          "name": "operation",
+          "type": "VARCHAR(10)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Evento auditado: INSERT, UPDATE o DELETE."
+        },
+        {
+          "name": "db_actor",
+          "type": "VARCHAR(288)",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Identidad de conexión que realizó la operación."
+        },
+        {
+          "name": "old_data",
+          "type": "JSON",
+          "key": "—",
+          "nullable": "SI",
+          "description": "Imagen JSON previa, sin password. NULL para un INSERT."
+        },
+        {
+          "name": "new_data",
+          "type": "JSON",
+          "key": "—",
+          "nullable": "SI",
+          "description": "Imagen JSON nueva, sin password. NULL para un DELETE."
+        },
+        {
+          "name": "created_at",
+          "type": "DATETIME",
+          "key": "—",
+          "nullable": "NO",
+          "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
+        }
+      ]
+    }
+  ],
+  "triggers": [
+    {
+      "name": "trg_tb_users_ai",
+      "table": "tb_users",
+      "event": "INSERT",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_users', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'email', NEW.`email`, 'nickname', NEW.`nickname`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_users_au",
+      "table": "tb_users",
+      "event": "UPDATE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_users', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'email', OLD.`email`, 'nickname', OLD.`nickname`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'email', NEW.`email`, 'nickname', NEW.`nickname`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_users_ad",
+      "table": "tb_users",
+      "event": "DELETE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_users', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'email', OLD.`email`, 'nickname', OLD.`nickname`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
+    },
+    {
+      "name": "trg_tb_users_bi",
+      "table": "tb_users",
+      "event": "INSERT",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Email inválido; Nickname vacío; Hash de contraseña inválido. Campos: email, nickname, password. SQL: BEGIN\n    IF NEW.email NOT REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+[.][A-Za-z]{2,}$' THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Email inválido';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.nickname)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nickname vacío';\n    END IF;\n    IF CHAR_LENGTH(NEW.password) < 32 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Hash de contraseña inválido';\n    END IF;END"
+    },
+    {
+      "name": "trg_tb_users_bu",
+      "table": "tb_users",
+      "event": "UPDATE",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Email inválido; Nickname vacío; Hash de contraseña inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: email, nickname, password. SQL: BEGIN\n    IF NEW.email NOT REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+[.][A-Za-z]{2,}$' THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Email inválido';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.nickname)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nickname vacío';\n    END IF;\n    IF CHAR_LENGTH(NEW.password) < 32 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Hash de contraseña inválido';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
+    },
+    {
+      "name": "trg_tb_users_bd",
+      "table": "tb_users",
+      "event": "DELETE",
+      "timing": "BEFORE",
+      "type": "soft",
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_users; use deleted_at.';END"
+    },
+    {
+      "name": "trg_tb_categories_ai",
+      "table": "tb_categories",
+      "event": "INSERT",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_categories', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'name', NEW.`name`, 'description', NEW.`description`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_categories_au",
+      "table": "tb_categories",
+      "event": "UPDATE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_categories', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'name', OLD.`name`, 'description', OLD.`description`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'name', NEW.`name`, 'description', NEW.`description`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_categories_ad",
+      "table": "tb_categories",
+      "event": "DELETE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_categories', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'name', OLD.`name`, 'description', OLD.`description`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
+    },
+    {
+      "name": "trg_tb_categories_bi",
+      "table": "tb_categories",
+      "event": "INSERT",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Categoría sin nombre. Campos: name. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.name)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Categoría sin nombre';\n    END IF;END"
+    },
+    {
+      "name": "trg_tb_categories_bu",
+      "table": "tb_categories",
+      "event": "UPDATE",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Categoría sin nombre. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: name. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.name)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Categoría sin nombre';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
+    },
+    {
+      "name": "trg_tb_categories_bd",
+      "table": "tb_categories",
+      "event": "DELETE",
+      "timing": "BEFORE",
+      "type": "soft",
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_categories; use deleted_at.';END"
+    },
+    {
+      "name": "trg_tb_products_ai",
+      "table": "tb_products",
+      "event": "INSERT",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_products', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'SKU', NEW.`SKU`, 'name', NEW.`name`, 'description', NEW.`description`, 'current_price', NEW.`current_price`, 'current_stock', NEW.`current_stock`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_products_au",
+      "table": "tb_products",
+      "event": "UPDATE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_products', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'SKU', OLD.`SKU`, 'name', OLD.`name`, 'description', OLD.`description`, 'current_price', OLD.`current_price`, 'current_stock', OLD.`current_stock`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'SKU', NEW.`SKU`, 'name', NEW.`name`, 'description', NEW.`description`, 'current_price', NEW.`current_price`, 'current_stock', NEW.`current_stock`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_products_ad",
+      "table": "tb_products",
+      "event": "DELETE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_products', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'SKU', OLD.`SKU`, 'name', OLD.`name`, 'description', OLD.`description`, 'current_price', OLD.`current_price`, 'current_stock', OLD.`current_stock`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
+    },
+    {
+      "name": "trg_tb_products_bi",
+      "table": "tb_products",
+      "event": "INSERT",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Precio debe ser positivo; Stock negativo; Producto sin nombre; SKU vacío. Campos: SKU, current_price, current_stock, name. SQL: BEGIN\n    IF NEW.current_price <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Precio debe ser positivo';\n    END IF;\n    IF NEW.current_stock < 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stock negativo';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.name)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Producto sin nombre';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.SKU)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'SKU vacío';\n    END IF;END"
+    },
+    {
+      "name": "trg_tb_products_bu",
+      "table": "tb_products",
+      "event": "UPDATE",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Precio debe ser positivo; Stock negativo; Producto sin nombre; SKU vacío. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: SKU, current_price, current_stock, name. SQL: BEGIN\n    IF NEW.current_price <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Precio debe ser positivo';\n    END IF;\n    IF NEW.current_stock < 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stock negativo';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.name)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Producto sin nombre';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.SKU)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'SKU vacío';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
+    },
+    {
+      "name": "trg_tb_products_bd",
+      "table": "tb_products",
+      "event": "DELETE",
+      "timing": "BEFORE",
+      "type": "soft",
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_products; use deleted_at.';END"
+    },
+    {
+      "name": "trg_tb_reviews_ai",
+      "table": "tb_reviews",
+      "event": "INSERT",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_reviews', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'product_id', NEW.`product_id`, 'rating', NEW.`rating`, 'comment', NEW.`comment`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_reviews_au",
+      "table": "tb_reviews",
+      "event": "UPDATE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_reviews', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'product_id', OLD.`product_id`, 'rating', OLD.`rating`, 'comment', OLD.`comment`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'product_id', NEW.`product_id`, 'rating', NEW.`rating`, 'comment', NEW.`comment`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_reviews_ad",
+      "table": "tb_reviews",
+      "event": "DELETE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_reviews', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'product_id', OLD.`product_id`, 'rating', OLD.`rating`, 'comment', OLD.`comment`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
+    },
+    {
+      "name": "trg_tb_reviews_bi",
+      "table": "tb_reviews",
+      "event": "INSERT",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Rating fuera de rango. Campos: rating. SQL: BEGIN\n    IF NEW.rating < 1 OR NEW.rating > 5 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Rating fuera de rango';\n    END IF;END"
+    },
+    {
+      "name": "trg_tb_reviews_bu",
+      "table": "tb_reviews",
+      "event": "UPDATE",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Rating fuera de rango. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: rating. SQL: BEGIN\n    IF NEW.rating < 1 OR NEW.rating > 5 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Rating fuera de rango';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
+    },
+    {
+      "name": "trg_tb_reviews_bd",
+      "table": "tb_reviews",
+      "event": "DELETE",
+      "timing": "BEFORE",
+      "type": "soft",
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_reviews; use deleted_at.';END"
+    },
+    {
+      "name": "trg_tb_people_ai",
+      "table": "tb_people",
+      "event": "INSERT",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_people', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'given_names', NEW.`given_names`, 'family_names', NEW.`family_names`, 'birth_date', NEW.`birth_date`, 'country_code', NEW.`country_code`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_people_au",
+      "table": "tb_people",
+      "event": "UPDATE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_people', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'given_names', OLD.`given_names`, 'family_names', OLD.`family_names`, 'birth_date', OLD.`birth_date`, 'country_code', OLD.`country_code`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'given_names', NEW.`given_names`, 'family_names', NEW.`family_names`, 'birth_date', NEW.`birth_date`, 'country_code', NEW.`country_code`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_people_ad",
+      "table": "tb_people",
+      "event": "DELETE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_people', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'given_names', OLD.`given_names`, 'family_names', OLD.`family_names`, 'birth_date', OLD.`birth_date`, 'country_code', OLD.`country_code`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
+    },
+    {
+      "name": "trg_tb_people_bi",
+      "table": "tb_people",
+      "event": "INSERT",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Nombre personal vacío; Nacimiento futuro. Campos: birth_date, family_names, given_names. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.given_names)) = 0 OR CHAR_LENGTH(TRIM(NEW.family_names)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nombre personal vacío';\n    END IF;\n    IF NEW.birth_date > CURRENT_DATE THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nacimiento futuro';\n    END IF;END"
+    },
+    {
+      "name": "trg_tb_people_bu",
+      "table": "tb_people",
+      "event": "UPDATE",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Nombre personal vacío; Nacimiento futuro. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: birth_date, family_names, given_names. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.given_names)) = 0 OR CHAR_LENGTH(TRIM(NEW.family_names)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nombre personal vacío';\n    END IF;\n    IF NEW.birth_date > CURRENT_DATE THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Nacimiento futuro';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
+    },
+    {
+      "name": "trg_tb_people_bd",
+      "table": "tb_people",
+      "event": "DELETE",
+      "timing": "BEFORE",
+      "type": "soft",
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_people; use deleted_at.';END"
+    },
+    {
+      "name": "trg_tb_addresses_ai",
+      "table": "tb_addresses",
+      "event": "INSERT",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_addresses', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'country_code', NEW.`country_code`, 'state_id', NEW.`state_id`, 'city', NEW.`city`, 'street', NEW.`street`, 'postal_code', NEW.`postal_code`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_addresses_au",
+      "table": "tb_addresses",
+      "event": "UPDATE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_addresses', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'country_code', OLD.`country_code`, 'state_id', OLD.`state_id`, 'city', OLD.`city`, 'street', OLD.`street`, 'postal_code', OLD.`postal_code`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'country_code', NEW.`country_code`, 'state_id', NEW.`state_id`, 'city', NEW.`city`, 'street', NEW.`street`, 'postal_code', NEW.`postal_code`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_addresses_ad",
+      "table": "tb_addresses",
+      "event": "DELETE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_addresses', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'country_code', OLD.`country_code`, 'state_id', OLD.`state_id`, 'city', OLD.`city`, 'street', OLD.`street`, 'postal_code', OLD.`postal_code`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
+    },
+    {
+      "name": "trg_tb_addresses_bi",
+      "table": "tb_addresses",
+      "event": "INSERT",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Dirección incompleta. Campos: city, street. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.city)) = 0 OR CHAR_LENGTH(TRIM(NEW.street)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Dirección incompleta';\n    END IF;END"
+    },
+    {
+      "name": "trg_tb_addresses_bu",
+      "table": "tb_addresses",
+      "event": "UPDATE",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Dirección incompleta. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: city, street. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.city)) = 0 OR CHAR_LENGTH(TRIM(NEW.street)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Dirección incompleta';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
+    },
+    {
+      "name": "trg_tb_addresses_bd",
+      "table": "tb_addresses",
+      "event": "DELETE",
+      "timing": "BEFORE",
+      "type": "soft",
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_addresses; use deleted_at.';END"
+    },
+    {
+      "name": "trg_tb_carts_ai",
+      "table": "tb_carts",
+      "event": "INSERT",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_carts', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'status', NEW.`status`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_carts_au",
+      "table": "tb_carts",
+      "event": "UPDATE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_carts', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'status', OLD.`status`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'status', NEW.`status`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_carts_ad",
+      "table": "tb_carts",
+      "event": "DELETE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_carts', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'status', OLD.`status`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
+    },
+    {
+      "name": "trg_tb_carts_bi",
+      "table": "tb_carts",
+      "event": "INSERT",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Estado de carrito inválido. Campos: status. SQL: BEGIN\n    IF NEW.status NOT IN ('active','checked_out','abandoned') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de carrito inválido';\n    END IF;END"
+    },
+    {
+      "name": "trg_tb_carts_bu",
+      "table": "tb_carts",
+      "event": "UPDATE",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Estado de carrito inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: status. SQL: BEGIN\n    IF NEW.status NOT IN ('active','checked_out','abandoned') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de carrito inválido';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
+    },
+    {
+      "name": "trg_tb_carts_bd",
+      "table": "tb_carts",
+      "event": "DELETE",
+      "timing": "BEFORE",
+      "type": "soft",
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_carts; use deleted_at.';END"
+    },
+    {
+      "name": "trg_tb_orders_ai",
+      "table": "tb_orders",
+      "event": "INSERT",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_orders', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'cart_id', NEW.`cart_id`, 'status', NEW.`status`, 'total_amount', NEW.`total_amount`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_orders_au",
+      "table": "tb_orders",
+      "event": "UPDATE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_orders', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'cart_id', OLD.`cart_id`, 'status', OLD.`status`, 'total_amount', OLD.`total_amount`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'cart_id', NEW.`cart_id`, 'status', NEW.`status`, 'total_amount', NEW.`total_amount`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_orders_ad",
+      "table": "tb_orders",
+      "event": "DELETE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_orders', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'cart_id', OLD.`cart_id`, 'status', OLD.`status`, 'total_amount', OLD.`total_amount`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
+    },
+    {
+      "name": "trg_tb_orders_bi",
+      "table": "tb_orders",
+      "event": "INSERT",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Total de pedido no positivo; Estado de pedido inválido. Campos: status, total_amount. SQL: BEGIN\n    IF NEW.total_amount <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Total de pedido no positivo';\n    END IF;\n    IF NEW.status NOT IN ('pending','paid','cancelled','shipped','delivered') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de pedido inválido';\n    END IF;END"
+    },
+    {
+      "name": "trg_tb_orders_bu",
+      "table": "tb_orders",
+      "event": "UPDATE",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Total de pedido no positivo; Estado de pedido inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: status, total_amount. SQL: BEGIN\n    IF NEW.total_amount <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Total de pedido no positivo';\n    END IF;\n    IF NEW.status NOT IN ('pending','paid','cancelled','shipped','delivered') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de pedido inválido';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
+    },
+    {
+      "name": "trg_tb_orders_bd",
+      "table": "tb_orders",
+      "event": "DELETE",
+      "timing": "BEFORE",
+      "type": "soft",
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_orders; use deleted_at.';END"
+    },
+    {
+      "name": "trg_tb_wishlists_ai",
+      "table": "tb_wishlists",
+      "event": "INSERT",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_wishlists', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'product_id', NEW.`product_id`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_wishlists_au",
+      "table": "tb_wishlists",
+      "event": "UPDATE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_wishlists', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'product_id', OLD.`product_id`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'user_id', NEW.`user_id`, 'product_id', NEW.`product_id`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_wishlists_ad",
+      "table": "tb_wishlists",
+      "event": "DELETE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_wishlists', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'user_id', OLD.`user_id`, 'product_id', OLD.`product_id`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
+    },
+    {
+      "name": "trg_tb_wishlists_bi",
+      "table": "tb_wishlists",
+      "event": "INSERT",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Wishlist requiere usuario activo; Wishlist requiere producto activo. Campos: product_id, user_id. SQL: BEGIN\n    IF NOT EXISTS (SELECT 1 FROM tb_users u WHERE u.id = NEW.user_id AND u.deleted_at IS NULL) THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Wishlist requiere usuario activo';\n    END IF;\n    IF NOT EXISTS (SELECT 1 FROM tb_products p WHERE p.id = NEW.product_id AND p.deleted_at IS NULL) THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Wishlist requiere producto activo';\n    END IF;END"
+    },
+    {
+      "name": "trg_tb_wishlists_bu",
+      "table": "tb_wishlists",
+      "event": "UPDATE",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Wishlist requiere usuario activo; Wishlist requiere producto activo. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: product_id, user_id. SQL: BEGIN\n    IF NOT EXISTS (SELECT 1 FROM tb_users u WHERE u.id = NEW.user_id AND u.deleted_at IS NULL) THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Wishlist requiere usuario activo';\n    END IF;\n    IF NOT EXISTS (SELECT 1 FROM tb_products p WHERE p.id = NEW.product_id AND p.deleted_at IS NULL) THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Wishlist requiere producto activo';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
+    },
+    {
+      "name": "trg_tb_wishlists_bd",
+      "table": "tb_wishlists",
+      "event": "DELETE",
+      "timing": "BEFORE",
+      "type": "soft",
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_wishlists; use deleted_at.';END"
+    },
+    {
+      "name": "trg_tb_payments_ai",
+      "table": "tb_payments",
+      "event": "INSERT",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_payments', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'order_id', NEW.`order_id`, 'payment_method_id', NEW.`payment_method_id`, 'amount', NEW.`amount`, 'payment_status', NEW.`payment_status`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_payments_au",
+      "table": "tb_payments",
+      "event": "UPDATE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_payments', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'order_id', OLD.`order_id`, 'payment_method_id', OLD.`payment_method_id`, 'amount', OLD.`amount`, 'payment_status', OLD.`payment_status`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'order_id', NEW.`order_id`, 'payment_method_id', NEW.`payment_method_id`, 'amount', NEW.`amount`, 'payment_status', NEW.`payment_status`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_payments_ad",
+      "table": "tb_payments",
+      "event": "DELETE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_payments', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'order_id', OLD.`order_id`, 'payment_method_id', OLD.`payment_method_id`, 'amount', OLD.`amount`, 'payment_status', OLD.`payment_status`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
+    },
+    {
+      "name": "trg_tb_payments_bi",
+      "table": "tb_payments",
+      "event": "INSERT",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Pago no positivo; Estado de pago inválido. Campos: amount, payment_status. SQL: BEGIN\n    IF NEW.amount <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Pago no positivo';\n    END IF;\n    IF NEW.payment_status NOT IN ('Pending','Completed','Failed','Refunded') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de pago inválido';\n    END IF;END"
+    },
+    {
+      "name": "trg_tb_payments_bu",
+      "table": "tb_payments",
+      "event": "UPDATE",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Pago no positivo; Estado de pago inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: amount, payment_status. SQL: BEGIN\n    IF NEW.amount <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Pago no positivo';\n    END IF;\n    IF NEW.payment_status NOT IN ('Pending','Completed','Failed','Refunded') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de pago inválido';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
+    },
+    {
+      "name": "trg_tb_payments_bd",
+      "table": "tb_payments",
+      "event": "DELETE",
+      "timing": "BEFORE",
+      "type": "soft",
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_payments; use deleted_at.';END"
+    },
+    {
+      "name": "trg_tb_shipments_ai",
+      "table": "tb_shipments",
+      "event": "INSERT",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_shipments', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'order_id', NEW.`order_id`, 'carrier_id', NEW.`carrier_id`, 'address_id', NEW.`address_id`, 'tracking_code', NEW.`tracking_code`, 'status', NEW.`status`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_shipments_au",
+      "table": "tb_shipments",
+      "event": "UPDATE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_shipments', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'order_id', OLD.`order_id`, 'carrier_id', OLD.`carrier_id`, 'address_id', OLD.`address_id`, 'tracking_code', OLD.`tracking_code`, 'status', OLD.`status`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'order_id', NEW.`order_id`, 'carrier_id', NEW.`carrier_id`, 'address_id', NEW.`address_id`, 'tracking_code', NEW.`tracking_code`, 'status', NEW.`status`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_shipments_ad",
+      "table": "tb_shipments",
+      "event": "DELETE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_shipments', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'order_id', OLD.`order_id`, 'carrier_id', OLD.`carrier_id`, 'address_id', OLD.`address_id`, 'tracking_code', OLD.`tracking_code`, 'status', OLD.`status`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
+    },
+    {
+      "name": "trg_tb_shipments_bi",
+      "table": "tb_shipments",
+      "event": "INSERT",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Tracking vacío; Estado de envío inválido. Campos: status, tracking_code. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.tracking_code)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Tracking vacío';\n    END IF;\n    IF NEW.status NOT IN ('pending','in_transit','delivered','returned') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de envío inválido';\n    END IF;END"
+    },
+    {
+      "name": "trg_tb_shipments_bu",
+      "table": "tb_shipments",
+      "event": "UPDATE",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Tracking vacío; Estado de envío inválido. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: status, tracking_code. SQL: BEGIN\n    IF CHAR_LENGTH(TRIM(NEW.tracking_code)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Tracking vacío';\n    END IF;\n    IF NEW.status NOT IN ('pending','in_transit','delivered','returned') THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Estado de envío inválido';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
+    },
+    {
+      "name": "trg_tb_shipments_bd",
+      "table": "tb_shipments",
+      "event": "DELETE",
+      "timing": "BEFORE",
+      "type": "soft",
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_shipments; use deleted_at.';END"
+    },
+    {
+      "name": "trg_tb_invoices_ai",
+      "table": "tb_invoices",
+      "event": "INSERT",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro INSERT en tb_logs con la identidad de conexión y la imagen nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_invoices', NEW.id, 'INSERT', USER(), NULL, JSON_OBJECT('id', NEW.`id`, 'order_id', NEW.`order_id`, 'invoice_number', NEW.`invoice_number`, 'total_amount', NEW.`total_amount`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_invoices_au",
+      "table": "tb_invoices",
+      "event": "UPDATE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro UPDATE en tb_logs con la identidad de conexión y las imágenes anterior y nueva. Excluye password.  SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_invoices', NEW.id, 'UPDATE', USER(), JSON_OBJECT('id', OLD.`id`, 'order_id', OLD.`order_id`, 'invoice_number', OLD.`invoice_number`, 'total_amount', OLD.`total_amount`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), JSON_OBJECT('id', NEW.`id`, 'order_id', NEW.`order_id`, 'invoice_number', NEW.`invoice_number`, 'total_amount', NEW.`total_amount`, 'created_at', NEW.`created_at`, 'updated_at', NEW.`updated_at`, 'deleted_at', NEW.`deleted_at`));END"
+    },
+    {
+      "name": "trg_tb_invoices_ad",
+      "table": "tb_invoices",
+      "event": "DELETE",
+      "timing": "AFTER",
+      "type": "audit",
+      "logic": "Escribe un registro DELETE en tb_logs con la identidad de conexión y la imagen anterior. Excluye password. El bloqueo BEFORE DELETE impide alcanzar este evento en un borrado normal. SQL: BEGIN\n    INSERT INTO tb_logs(table_name, entity_id, operation, db_actor, old_data, new_data)\n    VALUES ('tb_invoices', OLD.id, 'DELETE', USER(), JSON_OBJECT('id', OLD.`id`, 'order_id', OLD.`order_id`, 'invoice_number', OLD.`invoice_number`, 'total_amount', OLD.`total_amount`, 'created_at', OLD.`created_at`, 'updated_at', OLD.`updated_at`, 'deleted_at', OLD.`deleted_at`), NULL);END"
+    },
+    {
+      "name": "trg_tb_invoices_bi",
+      "table": "tb_invoices",
+      "event": "INSERT",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Total de factura no positivo; Folio vacío. Campos: invoice_number, total_amount. SQL: BEGIN\n    IF NEW.total_amount <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Total de factura no positivo';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.invoice_number)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Folio vacío';\n    END IF;END"
+    },
+    {
+      "name": "trg_tb_invoices_bu",
+      "table": "tb_invoices",
+      "event": "UPDATE",
+      "timing": "BEFORE",
+      "type": "validation",
+      "logic": "Rechaza la operación ante: Total de factura no positivo; Folio vacío. Actualiza updated_at con CURRENT_TIMESTAMP. Campos: invoice_number, total_amount. SQL: BEGIN\n    IF NEW.total_amount <= 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Total de factura no positivo';\n    END IF;\n    IF CHAR_LENGTH(TRIM(NEW.invoice_number)) = 0 THEN\n        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Folio vacío';\n    END IF;\n    SET NEW.updated_at = CURRENT_TIMESTAMP;END"
+    },
+    {
+      "name": "trg_tb_invoices_bd",
+      "table": "tb_invoices",
+      "event": "DELETE",
+      "timing": "BEFORE",
+      "type": "soft",
+      "logic": "Bloquea cualquier DELETE físico mediante una excepción. Para dar de baja, actualizar deleted_at; esa operación se audita como UPDATE. SQL: BEGIN\n    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'DELETE físico bloqueado en tb_invoices; use deleted_at.';END"
+    }
+  ],
+  "modules": [
+    "Seguridad",
+    "Catálogo",
+    "Clientes y ubicación",
+    "Compras",
+    "Pagos y envíos"
+  ],
+  "mermaid": "erDiagram\n    direction LR\n    tb_users {\n        BIGINT id PK\n        VARCHAR_254_ email\n        VARCHAR_100_ nickname\n        VARCHAR_255_ password\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_roles {\n        BIGINT id PK\n        VARCHAR_80_ name\n        DATETIME created_at\n    }\n    tb_user_roles {\n        BIGINT id PK\n        BIGINT user_id FK\n        BIGINT role_id FK\n        DATETIME created_at\n    }\n    tb_users ||--o{ tb_user_roles : \"user_id\"\n    tb_roles ||--o{ tb_user_roles : \"role_id\"\n    tb_permissions {\n        BIGINT id PK\n        VARCHAR_100_ code\n        TEXT description\n        DATETIME created_at\n    }\n    tb_role_permissions {\n        BIGINT id PK\n        BIGINT role_id FK\n        BIGINT permission_id FK\n        DATETIME created_at\n    }\n    tb_roles ||--o{ tb_role_permissions : \"role_id\"\n    tb_permissions ||--o{ tb_role_permissions : \"permission_id\"\n    tb_categories {\n        BIGINT id PK\n        VARCHAR_150_ name\n        TEXT description\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_products {\n        BIGINT id PK\n        VARCHAR_50_ SKU\n        VARCHAR_250_ name\n        TEXT description\n        DECIMAL_12_2_ current_price\n        INT current_stock\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_product_categories {\n        BIGINT id PK\n        BIGINT product_id FK\n        BIGINT category_id FK\n        DATETIME created_at\n    }\n    tb_products ||--o{ tb_product_categories : \"product_id\"\n    tb_categories ||--o{ tb_product_categories : \"category_id\"\n    tb_tags {\n        BIGINT id PK\n        VARCHAR_80_ name\n        DATETIME created_at\n    }\n    tb_product_tags {\n        BIGINT id PK\n        BIGINT product_id FK\n        BIGINT tag_id FK\n        DATETIME created_at\n    }\n    tb_products ||--o{ tb_product_tags : \"product_id\"\n    tb_tags ||--o{ tb_product_tags : \"tag_id\"\n    tb_reviews {\n        BIGINT id PK\n        BIGINT user_id FK\n        BIGINT product_id FK\n        INT rating\n        TEXT comment\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_users ||--o{ tb_reviews : \"user_id\"\n    tb_products ||--o{ tb_reviews : \"product_id\"\n    tbc_countries {\n        BIGINT id PK\n        CHAR_2_ code\n        VARCHAR_100_ name\n        DATETIME created_at\n    }\n    tbc_states {\n        BIGINT id PK\n        CHAR_2_ country_code FK\n        VARCHAR_100_ name\n        DATETIME created_at\n    }\n    tbc_countries ||--o{ tbc_states : \"country_code\"\n    tb_people {\n        BIGINT id PK\n        BIGINT user_id FK\n        VARCHAR_150_ given_names\n        VARCHAR_150_ family_names\n        DATE birth_date\n        CHAR_2_ country_code FK\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_users ||--o{ tb_people : \"user_id\"\n    tbc_countries ||--o{ tb_people : \"country_code\"\n    tb_addresses {\n        BIGINT id PK\n        BIGINT user_id FK\n        CHAR_2_ country_code FK\n        BIGINT state_id FK\n        VARCHAR_120_ city\n        VARCHAR_250_ street\n        VARCHAR_20_ postal_code\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_users ||--o{ tb_addresses : \"user_id\"\n    tbc_countries ||--o{ tb_addresses : \"country_code\"\n    tbc_states |o--o{ tb_addresses : \"state_id, country_code\"\n    tb_carts {\n        BIGINT id PK\n        BIGINT user_id FK\n        VARCHAR_20_ status\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_users ||--o{ tb_carts : \"user_id\"\n    tbd_shopping_cart {\n        BIGINT id PK\n        BIGINT cart_id FK\n        BIGINT user_id FK\n        BIGINT product_id FK\n        INT quantity\n        DATETIME created_at\n    }\n    tb_carts ||--o{ tbd_shopping_cart : \"cart_id, user_id\"\n    tb_users ||--o{ tbd_shopping_cart : \"user_id\"\n    tb_products ||--o{ tbd_shopping_cart : \"product_id\"\n    tb_orders {\n        BIGINT id PK\n        BIGINT user_id FK\n        BIGINT cart_id FK\n        VARCHAR_20_ status\n        DECIMAL_12_2_ total_amount\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_users ||--o{ tb_orders : \"user_id\"\n    tb_carts |o--o{ tb_orders : \"cart_id, user_id\"\n    tb_order_items {\n        BIGINT id PK\n        BIGINT order_id FK\n        BIGINT product_id FK\n        VARCHAR_250_ product_name\n        INT quantity\n        DECIMAL_12_2_ unit_price\n        DECIMAL_12_2_ subtotal\n        DATETIME created_at\n    }\n    tb_orders ||--o{ tb_order_items : \"order_id\"\n    tb_products ||--o{ tb_order_items : \"product_id\"\n    tb_wishlists {\n        BIGINT id PK\n        BIGINT user_id FK\n        BIGINT product_id FK\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_users ||--o{ tb_wishlists : \"user_id\"\n    tb_products ||--o{ tb_wishlists : \"product_id\"\n    tbc_payment_methods {\n        BIGINT id PK\n        VARCHAR_40_ code\n        VARCHAR_100_ name\n        DATETIME created_at\n    }\n    tb_payments {\n        BIGINT id PK\n        BIGINT order_id FK\n        BIGINT payment_method_id FK\n        DECIMAL_12_2_ amount\n        VARCHAR_20_ payment_status\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_orders ||--o{ tb_payments : \"order_id\"\n    tbc_payment_methods ||--o{ tb_payments : \"payment_method_id\"\n    tb_carriers {\n        BIGINT id PK\n        VARCHAR_150_ name\n        DATETIME created_at\n    }\n    tb_shipments {\n        BIGINT id PK\n        BIGINT order_id FK\n        BIGINT carrier_id FK\n        BIGINT address_id FK\n        VARCHAR_150_ tracking_code\n        VARCHAR_20_ status\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_orders ||--o{ tb_shipments : \"order_id\"\n    tb_carriers ||--o{ tb_shipments : \"carrier_id\"\n    tb_addresses ||--o{ tb_shipments : \"address_id\"\n    tb_invoices {\n        BIGINT id PK\n        BIGINT order_id FK\n        VARCHAR_80_ invoice_number\n        DECIMAL_12_2_ total_amount\n        DATETIME created_at\n        DATETIME updated_at\n        DATETIME deleted_at\n    }\n    tb_orders ||--o{ tb_invoices : \"order_id\"\n    tb_logs {\n        BIGINT id PK\n        VARCHAR_100_ table_name\n        BIGINT entity_id\n        VARCHAR_10_ operation\n        VARCHAR_288_ db_actor\n        JSON old_data\n        JSON new_data\n        DATETIME created_at\n    }",
+  "demo": {
+    "products": 5000,
+    "users": 10222
+  },
+  "relationships": [
+    {
+      "source": "tb_users",
+      "target": "tb_user_roles",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_roles",
+      "target": "tb_user_roles",
+      "fields": "role_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_roles",
+      "target": "tb_role_permissions",
+      "fields": "role_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_permissions",
+      "target": "tb_role_permissions",
+      "fields": "permission_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_products",
+      "target": "tb_product_categories",
+      "fields": "product_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_categories",
+      "target": "tb_product_categories",
+      "fields": "category_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_products",
+      "target": "tb_product_tags",
+      "fields": "product_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_tags",
+      "target": "tb_product_tags",
+      "fields": "tag_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_users",
+      "target": "tb_reviews",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_products",
+      "target": "tb_reviews",
+      "fields": "product_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tbc_countries",
+      "target": "tbc_states",
+      "fields": "country_code",
+      "referenced": "code"
+    },
+    {
+      "source": "tb_users",
+      "target": "tb_people",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tbc_countries",
+      "target": "tb_people",
+      "fields": "country_code",
+      "referenced": "code"
+    },
+    {
+      "source": "tb_users",
+      "target": "tb_addresses",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tbc_countries",
+      "target": "tb_addresses",
+      "fields": "country_code",
+      "referenced": "code"
+    },
+    {
+      "source": "tbc_states",
+      "target": "tb_addresses",
+      "fields": "state_id, country_code",
+      "referenced": "id, country_code"
+    },
+    {
+      "source": "tb_users",
+      "target": "tb_carts",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_carts",
+      "target": "tbd_shopping_cart",
+      "fields": "cart_id, user_id",
+      "referenced": "id, user_id"
+    },
+    {
+      "source": "tb_users",
+      "target": "tbd_shopping_cart",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_products",
+      "target": "tbd_shopping_cart",
+      "fields": "product_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_users",
+      "target": "tb_orders",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_carts",
+      "target": "tb_orders",
+      "fields": "cart_id, user_id",
+      "referenced": "id, user_id"
+    },
+    {
+      "source": "tb_orders",
+      "target": "tb_order_items",
+      "fields": "order_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_products",
+      "target": "tb_order_items",
+      "fields": "product_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_users",
+      "target": "tb_wishlists",
+      "fields": "user_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_products",
+      "target": "tb_wishlists",
+      "fields": "product_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_orders",
+      "target": "tb_payments",
+      "fields": "order_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tbc_payment_methods",
+      "target": "tb_payments",
+      "fields": "payment_method_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_orders",
+      "target": "tb_shipments",
+      "fields": "order_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_carriers",
+      "target": "tb_shipments",
+      "fields": "carrier_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_addresses",
+      "target": "tb_shipments",
+      "fields": "address_id",
+      "referenced": "id"
+    },
+    {
+      "source": "tb_orders",
+      "target": "tb_invoices",
+      "fields": "order_id",
+      "referenced": "id"
+    }
+  ],
+  "source": "Practica03/ecosistema_v2/02_mysql.sql"
+}</script>
+<script>
+'use strict';
+document.addEventListener('DOMContentLoaded', () => {
+ const data = JSON.parse(document.getElementById('dictionaryData').textContent);
+ const tables = [...data.featuredTables, ...data.additionalTables];
+ const triggers = data.triggers;
+ const colors = ['#c4a3ff','#7edee5','#b9f28b','#ffbd88','#eea7d8'];
+ const icons = ['fa-shield-halved','fa-boxes-stacked','fa-location-dot','fa-cart-shopping','fa-truck-fast'];
+ const labels = {audit:'Auditoría',validation:'Validación',soft:'Soft Delete'};
+ const $ = id => document.getElementById(id);
+ const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const norm = value => String(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+ const associated = new Map(tables.map(t => [t.name,triggers.filter(x => x.table===t.name)]));
+ const moduleIndex = module => data.modules.indexOf(module);
+ const state = {query:'',module:'all',type:'all'};
+ const rememberedOpen = new Map();
+ let searching = false;
+ let toastTimer;
+ const number = n => new Intl.NumberFormat('es-ES',{useGrouping:true}).format(n);
+ function toast(message){ $('toast').textContent=message; $('toast').hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(()=>$('toast').hidden=true,3000); }
+ // Los totales estructurales se calculan; solo demo.products/demo.users se editan manualmente.
+ const counts={tables:tables.length,triggers:triggers.length,fields:tables.reduce((n,t)=>n+t.fields.length,0),relations:data.relationships.length};
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ document.querySelectorAll('[data-counter]').forEach(el=>{
+  const goal=counts[el.dataset.counter];
+  if(reduced){el.textContent=number(goal);return;}
+  el.textContent='0'; const started=performance.now();
+  function frame(now){const progress=Math.min((now-started)/1300,1);el.textContent=number(Math.round(goal*(1-Math.pow(1-progress,3))));if(progress<1)requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+ });
+ $('fieldTotal').textContent=number(tables.reduce((n,t)=>n+t.fields.length,0))+' campos documentados';
+ data.modules.forEach((module,i)=>{
+  const total=tables.filter(t=>t.module===module).length;
+  const sidebar=document.createElement('button');sidebar.dataset.module=module;
+  sidebar.innerHTML=`<span class="dot" style="--accent:${colors[i]}"></span>${escape(module)}<small>${total}</small>`;
+  $('moduleNav').append(sidebar);
+  const row=document.createElement('div');row.className='module-bar-row';row.style.setProperty('--accent',colors[i]);
+  row.innerHTML=`<span>${escape(module)}</span><div class="module-track"><span style="width:${total/6*100}%"></span></div><b>${total}</b>`;
+  $('moduleBars').append(row);
+ });
+ $('moduleFilters').innerHTML=`<button class="chip" data-module="all" aria-pressed="true">Todos los módulos</button>`+data.modules.map((m,i)=>`<button class="chip" data-module="${escape(m)}" aria-pressed="false"><span class="dot" style="--accent:${colors[i]}"></span>${escape(m)}</button>`).join('')+`<span class="result-count" id="tableCount" role="status" aria-live="polite">26 de 26 tablas</span>`;
+ // Todas las fichas (incluidas las 21 compactas) contienen el detalle de cada campo.
+ const nodes = tables.map(t=>{
+  const group=moduleIndex(t.module), ownTriggers=associated.get(t.name);
+  const el=document.createElement('details');el.className='table-detail';el.id='table-'+t.name;el.dataset.table=t.name;el.style.setProperty('--accent',colors[group]);
+  const keywords=norm([t.name,t.module,t.description,...t.fields.flatMap(f=>Object.values(f)),...ownTriggers.flatMap(x=>Object.values(x))].join(' '));
+  el.innerHTML=`<summary><span class="entity-icon"><i class="fa-solid ${icons[group]}" aria-hidden="true"></i></span><span class="entity-title"><strong>${escape(t.name)}</strong><small>${escape(t.module)}</small></span><span class="summary-meta"><span class="field-count">${t.fields.length} campos</span><span class="badge ${ownTriggers.length?'':'neutral'}">${ownTriggers.length?'<i class="fa-solid fa-bolt" aria-hidden="true"></i>':''}${ownTriggers.length} triggers</span><i class="fa-solid fa-chevron-down chevron" aria-hidden="true"></i></span></summary><div class="table-content"><p class="table-description">${escape(t.description)} ${t.softDelete?'<span class="badge soft">Soft Delete</span>':''}</p><div class="table-scroll"><table class="data-table"><caption class="sr-only">Columnas de ${escape(t.name)}</caption><thead><tr><th scope="col">Nombre del Campo</th><th scope="col">Tipo de Dato</th><th scope="col">Llave (PK/FK)</th><th scope="col">Nulo (SI/NO)</th><th scope="col">Descripción / Lógica</th></tr></thead><tbody>${t.fields.map(f=>`<tr><td class="field-name"><code>${escape(f.name)}</code></td><td class="field-type"><code>${escape(f.type)}</code></td><td>${f.key==='—'?'—':f.key.split(' / ').map(k=>`<span class="key ${k==='FK'?'fk':''}">${k}</span>`).join(' ')}</td><td><span class="${f.nullable==='NO'?'null-no':'null-yes'}">${f.nullable}</span></td><td class="field-logic">${escape(f.description)}</td></tr>`).join('')}</tbody></table></div><div class="table-trigger-list"><h4>${ownTriggers.length?'Reglas asociadas':'Sin triggers propios en el conjunto de 72'}</h4><div class="trigger-tags">${ownTriggers.map(x=>`<button class="trigger-tag" data-find-trigger="${escape(x.name)}">${escape(x.name)}</button>`).join('')}</div></div></div>`;
+  $('dictionaryList').append(el);
+  return {el,table:t,keywords};
+ });
+ // La primera ficha sirve como punto de entrada; todas las demás se pueden desplegar.
+ nodes.find(x=>x.table.name==='tb_users').el.open=true;
+ const triggerNodes=triggers.map(t=>{
+  const row=document.createElement('tr');row.id='trigger-'+t.name;
+  row.innerHTML=`<td><code class="trigger-name">${escape(t.name)}</code><span class="badge ${t.type==='soft'?'soft':t.type==='validation'?'cyan':''}">${labels[t.type]}</span></td><td><a href="#table-${escape(t.table)}" data-open-table="${escape(t.table)}"><code>${escape(t.table)}</code></a></td><td><span class="event ${t.event.toLowerCase()}">${t.event}</span></td><td><span class="timing">${t.timing}</span></td><td>${escape(t.logic)}</td>`;
+  $('triggerRows').append(row);
+  const table=nodes.find(n=>n.table.name===t.table).table;
+  return {el:row,trigger:t,module:table.module,keywords:norm(Object.values(t).join(' '))};
+ });
+ function matches(text,query){return query.split(/\s+/).filter(Boolean).every(word=>text.includes(word));}
+ function applyFilters(){
+  const query=norm(state.query.trim());
+  if(query&&!searching){nodes.forEach(n=>rememberedOpen.set(n.table.name,n.el.open));searching=true;}
+  if(!query&&searching){nodes.forEach(n=>n.el.open=rememberedOpen.get(n.table.name)||false);searching=false;}
+  let visible=0;
+  nodes.forEach(n=>{const match=(state.module==='all'||n.table.module===state.module)&&matches(n.keywords,query);n.el.hidden=!match;if(match){visible++;if(query)n.el.open=true;}});
+  let visibleTriggers=0;
+  triggerNodes.forEach(n=>{const match=(state.module==='all'||n.module===state.module)&&(state.type==='all'||state.type===n.trigger.type)&&matches(n.keywords,query);n.el.hidden=!match;if(match)visibleTriggers++;});
+  $('tableCount').textContent=`${visible} de ${tables.length} tablas`;
+  $('triggerCount').textContent=`${visibleTriggers} de ${triggers.length} triggers`;
+  $('tablesEmpty').hidden=visible!==0; $('triggersEmpty').hidden=visibleTriggers!==0;
+  $('clearSearch').hidden=!state.query;
+  document.querySelectorAll('#moduleFilters [data-module]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.module===state.module)));
+  document.querySelectorAll('[data-trigger-filter]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.triggerFilter===state.type)));
+ }
+ function reset(){state.query='';state.module='all';state.type='all';$('search').value='';applyFilters();}
+ document.querySelectorAll('[data-module]').forEach(btn=>btn.addEventListener('click',()=>{state.module=btn.dataset.module;applyFilters();if(btn.closest('#moduleNav'))$('dictionary').scrollIntoView({behavior:reduced?'instant':'smooth'});}));
+ document.querySelectorAll('[data-trigger-filter]').forEach(btn=>btn.addEventListener('click',()=>{state.type=btn.dataset.triggerFilter;applyFilters();}));
+ document.querySelectorAll('[data-type]').forEach(btn=>btn.addEventListener('click',()=>{state.type=btn.dataset.type;applyFilters();$('triggers').scrollIntoView({behavior:reduced?'instant':'smooth'});}));
+ document.querySelectorAll('[data-reset]').forEach(btn=>btn.addEventListener('click',reset));
+ $('clearSearch').addEventListener('click',()=>{state.query='';$('search').value='';applyFilters();$('search').focus();});
+ $('expandAll').addEventListener('click',()=>nodes.filter(n=>!n.el.hidden).forEach(n=>n.el.open=true));
+ $('collapseAll').addEventListener('click',()=>nodes.filter(n=>!n.el.hidden).forEach(n=>n.el.open=false));
+ document.querySelectorAll('[data-find-trigger]').forEach(btn=>btn.addEventListener('click',()=>{state.query=btn.dataset.findTrigger;state.type='all';state.module='all';$('search').value=state.query;applyFilters();$('triggers').scrollIntoView({behavior:reduced?'instant':'smooth'});}));
+ document.querySelectorAll('[data-open-table]').forEach(link=>link.addEventListener('click',()=>{reset();const node=nodes.find(n=>n.table.name===link.dataset.openTable);node.el.open=true;}));
+ document.addEventListener('keydown',event=>{
+  const editing=/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)||document.activeElement.isContentEditable;
+  if(event.key==='/'&&!editing){event.preventDefault();$('search').focus();$('dictionary').scrollIntoView({behavior:reduced?'instant':'smooth'});}
+  if(event.key==='Escape'&&document.activeElement===$('search')){reset();$('search').blur();}
+ });
+ if('IntersectionObserver' in window){
+  const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)document.querySelectorAll('.nav a').forEach(a=>a.classList.toggle('active',a.hash==='#'+entry.target.id));});},{rootMargin:'-10% 0px -65% 0px',threshold:0});
+  document.querySelectorAll('main section[id]').forEach(section=>observer.observe(section));
+ }
+ // Chart.js via CDN. La leyenda HTML y el anillo CSS permanecen si el CDN falla.
+ if(window.Chart){
+  try {
+   new Chart($('triggerChart'),{type:'doughnut',data:{labels:['Auditoría','Validación','Soft Delete'],datasets:[{data:[triggers.filter(t=>t.type==='audit').length,triggers.filter(t=>t.type==='validation').length,triggers.filter(t=>t.type==='soft').length],backgroundColor:[colors[0],colors[1],colors[3]],borderColor:'#252536',borderWidth:5,hoverOffset:5,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:'77%',animation:reduced?false:{duration:1400},plugins:{legend:{display:false},tooltip:{backgroundColor:'#191925',titleFont:{family:'DM Sans'},bodyFont:{family:'JetBrains Mono',size:10},padding:12,callbacks:{label:ctx=>`${ctx.raw} triggers · ${Math.round(ctx.raw/triggers.length*100)} %`}}},onClick:(ev,elements)=>{if(elements.length){state.type=['audit','validation','soft'][elements[0].index];applyFilters();$('triggers').scrollIntoView({behavior:reduced?'instant':'smooth'});}}}});
+   $('donutFallback').hidden=true;
+  }catch(error){console.warn('Chart.js:',error);$('triggerChart').hidden=true;}
+ }else{$('triggerChart').hidden=true;}
+ // Mermaid es la única importación ESM. Los datos y el resto de la UI son locales.
+ $('mermaidSource').textContent=data.mermaid;
+ let diagramSvg=null, originalWidth=1, scale=1;
+ function setZoom(next){if(!diagramSvg)return;scale=Math.min(2,Math.max(.025,next));diagramSvg.style.width=(originalWidth*scale)+'px';diagramSvg.style.height='auto';$('zoomLabel').textContent=Math.round(scale*100)+' %';}
+ function fit(){setZoom(($('diagramViewport').clientWidth-64)/originalWidth);}
+ $('zoomIn').addEventListener('click',()=>setZoom(scale*1.3));
+ $('zoomOut').addEventListener('click',()=>setZoom(scale/1.3));
+ $('fitDiagram').addEventListener('click',fit);
+ $('fullscreenDiagram').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if($('diagramPanel').requestFullscreen)await $('diagramPanel').requestFullscreen();else toast('Tu navegador no admite pantalla completa. Usa los controles de zoom.');}catch(error){toast('No se pudo abrir pantalla completa. Usa los controles de zoom.');}});
+ $('copyMermaid').addEventListener('click',async()=>{try{if(!navigator.clipboard)throw new Error();await navigator.clipboard.writeText(data.mermaid);toast('Código Mermaid copiado.');}catch(error){const text=$('mermaidSource');text.closest('details').open=true;const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(text);selection.removeAllRanges();selection.addRange(range);toast('Código seleccionado. Copia con Ctrl+C o ⌘C.');}});
+ async function renderDiagram(){
+  try {
+   const {default:mermaid}=await import('https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs');
+   mermaid.initialize({startOnLoad:false,securityLevel:'strict',theme:'base',maxTextSize:100000,themeVariables:{background:'#20202f',primaryColor:'#2d293f',primaryTextColor:'#e8e6f5',primaryBorderColor:'#73628f',lineColor:'#6c8493',secondaryColor:'#20383d',tertiaryColor:'#27293c',fontFamily:'JetBrains Mono, monospace',fontSize:'12px',mainBkg:'#2d293f',nodeBkg:'#2d293f',nodeBorder:'#73628f',textColor:'#e8e6f5',attributeBackgroundColorOdd:'#28283b',attributeBackgroundColorEven:'#232335'},er:{useMaxWidth:false,diagramPadding:20,minEntityWidth:145,entityPadding:15}});
+   const result=await mermaid.render('dbTestERD',data.mermaid);
+   $('diagram').innerHTML=result.svg;
+   diagramSvg=$('diagram').querySelector('svg');
+   diagramSvg.setAttribute('role','img');diagramSvg.setAttribute('aria-label','Modelo entidad relación: 26 tablas de seguridad, catálogo, clientes, compras y pagos.');
+   originalWidth=diagramSvg.viewBox.baseVal.width;
+   enhanceAtlasERD({svg:diagramSvg,data,tables,colors,setZoom,getScale:()=>scale,openTable:name=>{reset();const item=nodes.find(n=>n.table.name===name);if(item){item.el.open=true;item.el.scrollIntoView({behavior:reduced?"instant":"smooth",block:"start"});}}});
+   $('zoomIn').disabled=false;$('zoomOut').disabled=false;$('fitDiagram').disabled=false;
+   setZoom(Math.max(.85,Math.min(1,($('diagramViewport').clientWidth-64)/originalWidth)));
+  }catch(error){
+   console.warn('Mermaid:',error);
+   $('diagram').innerHTML='<div class="diagram-message"><i class="fa-solid fa-wifi" aria-hidden="true"></i>No pudimos cargar el diagrama desde el CDN. Puedes consultar o copiar su código fuente debajo. Las fichas y filtros siguen disponibles.</div>';
+  }
+ }
+ renderDiagram();
+ const route=()=>{const id=location.hash.replace(/^#\//, "");if(id&&document.getElementById(id))document.getElementById(id).scrollIntoView();};window.addEventListener("hashchange",route);requestAnimationFrame(route);
+ // BÚSQUEDA EN VIVO: filtra tablas, campos y triggers, sin peticiones de red.
+ // Cada entrada actualiza los acordeones visibles y la tabla de triggers.
+ $('search').addEventListener('input',event=>{state.query=event.target.value;applyFilters();});
+ applyFilters();
+});
+</script>
+</body>
+</html>
