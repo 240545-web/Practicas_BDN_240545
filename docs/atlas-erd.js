@@ -1,53 +1,82 @@
-/* Atlas ERD: preserve Mermaid's LR placement and the existing Atlas shell. */
-function enhanceAtlasERD({svg,data,tables,colors,setZoom,getScale,openTable}) {
- const $=id=>document.getElementById(id), NS='http://www.w3.org/2000/svg';
- const entities=new Map();
+/* Static Atlas interaction: native Pointer Events and SVG, no backend. */
+function enhanceAtlasERD({svg,data,tables,colors,setZoom,getScale}) {
+ const $=id=>document.getElementById(id), viewport=$('diagramViewport');
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const entities=new Map(), nodeList=[...svg.querySelectorAll('g.node, g[id^="entity-"]')];
  for(const table of tables){
-  const node=[...svg.querySelectorAll('g.node, g[id^="entity-"]')].find(n=>n.id.includes('entity-'+table.name+'-') || [...n.querySelectorAll('text,tspan,.nodeLabel')].some(t=>t.textContent.trim()===table.name));
+  const node=nodeList.find(n=>n.id.includes('entity-'+table.name+'-') || [...n.querySelectorAll('text,tspan,.nodeLabel')].some(t=>t.textContent.trim()===table.name));
   if(!node)throw new Error('Tabla ausente del SVG: '+table.name);
-  entities.set(table.name,node);node.dataset.table=table.name;node.setAttribute('tabindex','0');node.setAttribute('role','button');node.setAttribute('aria-label','Abrir '+table.name);
+  entities.set(table.name,node);node.dataset.table=table.name;node.setAttribute('tabindex','0');node.setAttribute('role','button');node.setAttribute('aria-label','Ver campos y totales de '+table.name);
   const color=colors[data.modules.indexOf(table.module)];
-  node.querySelectorAll('rect').forEach((r,i)=>{r.style.stroke=color;r.style.fill=i%2?'#28283b':'#232335';});node.querySelectorAll('text,tspan').forEach(t=>{t.style.fill='#e8e6f5';});
+  node.querySelectorAll('path').forEach(p=>{if(p.getAttribute('fill')&&p.getAttribute('fill')!=='none')p.style.fill=p.closest('.row-rect-odd')?'#28283b':'#232335';if(p.getAttribute('stroke')!=='none')p.style.stroke=color;});
+  node.querySelectorAll('.attribute-type').forEach((label,i)=>{const text=label.querySelector('.nodeLabel p')||label.querySelector('.nodeLabel');if(text&&table.fields[i])text.textContent=table.fields[i].type;});
+  node.querySelectorAll('rect').forEach((r,i)=>{r.style.stroke=color;r.style.fill=i%2?'#28283b':'#232335';});node.querySelectorAll('text,tspan,.nodeLabel,.nodeLabel p,.nodeLabel span').forEach(t=>{t.style.fill='#e8e6f5';});
  }
- const edgePaths=[...svg.querySelectorAll('path.relationshipLine, .edgePaths path')];
+ const paths=[...svg.querySelectorAll('path.relationshipLine, .edgePaths path')];
+ // Match the renderer's endpoint IDs, never assume path order equals SQL order.
  const edges=data.relationships.map((rel,i)=>{
-  const exact=edgePaths.find(p=>p.id.includes(rel.source)&&p.id.includes(rel.target)&&!p.dataset.bound);
-  const path=exact||edgePaths[i];if(path)path.dataset.bound='true';
-  return {...rel,path};
+  const path=paths.find(p=>!p.dataset.bound && p.id.includes(rel.source+'-') && p.id.includes(rel.target+'-'));
+  if(!path)throw new Error('Relación ausente del SVG: '+rel.source+' → '+rel.target);
+  path.dataset.bound='true';path.dataset.source=rel.source;path.dataset.target=rel.target;path.style.pointerEvents='stroke';path.style.cursor='pointer';
+  const label=svg.querySelector(`[data-id="${CSS.escape(path.id)}"]`)||svg.querySelector(`#${CSS.escape(path.id.replace(/^id_/,''))}`);
+  return {...rel,path,label};
  });
- function focus(name){
-  const related=new Set([name]);edges.forEach(e=>{if(e.source===name||e.target===name){related.add(e.source);related.add(e.target);}});
-  entities.forEach((n,key)=>{n.classList.toggle('erd-muted',!!name&&!related.has(key));n.classList.toggle('erd-active',key===name);});
-  edges.forEach(e=>{if(e.path)e.path.classList.toggle('erd-muted',!!name&&e.source!==name&&e.target!==name);});
+ let selected=null, query='', mode='all', keyMode='';
+ function highlight(names=new Set(),edge=null){
+  const linked=new Set(names);edges.forEach(e=>{if(names.has(e.source)||names.has(e.target)){linked.add(e.source);linked.add(e.target);}});
+  entities.forEach((n,name)=>{n.classList.toggle('erd-muted',names.size>0&&!linked.has(name));n.classList.toggle('erd-active',names.has(name));});
+  edges.forEach(e=>{const active=edge?e===edge:names.has(e.source)||names.has(e.target);e.path.classList.toggle('erd-muted',names.size>0&&!active);e.path.classList.toggle('erd-edge-active',active);});
  }
- const original=new Map();entities.forEach((n,key)=>original.set(key,n.getAttribute('transform')||''));
- const offsets=new Map(tables.map(t=>[t.name,{x:0,y:0}]));
- function center(node){const box=node.getBBox(),m=node.getCTM(),parent=svg.getCTM().inverse();const point=new DOMPoint(box.x+box.width/2,box.y+box.height/2).matrixTransform(m).matrixTransform(parent);return {x:point.x,y:point.y,w:box.width,h:box.height};}
- function reroute(name){
-  edges.filter(e=>e.source===name||e.target===name).forEach(e=>{
-   if(!e.path)return;
-   const a=center(entities.get(e.source)),b=center(entities.get(e.target));
-   const right=b.x>=a.x,ax=a.x+(right?1:-1)*a.w/2,bx=b.x-(right?1:-1)*b.w/2;
-   const parent=e.path.parentElement.getCTM().inverse(),root=svg.getCTM();
-   const p=new DOMPoint(ax,a.y).matrixTransform(root).matrixTransform(parent),q=new DOMPoint(bx,b.y).matrixTransform(root).matrixTransform(parent),mid=(p.x+q.x)/2;
-   e.path.setAttribute('d',`M${p.x},${p.y} C${mid},${p.y} ${mid},${q.y} ${q.x},${q.y}`);
-  });
+ const panel=document.createElement('aside');panel.id='erdDetail';panel.className='erd-detail';panel.hidden=true;panel.setAttribute('aria-label','Detalle de tabla');document.body.append(panel);
+ function close(){panel.hidden=true;if(selected)entities.get(selected)?.focus({preventScroll:true});selected=null;highlight();}
+ function show(name){
+  const t=tables.find(t=>t.name===name);selected=name;const stats=t.stats;
+  panel.innerHTML=`<button class="small-btn erd-close" aria-label="Cerrar detalle">Cerrar ×</button><h3 tabindex="-1">${esc(name)}</h3><p>${esc(t.description)}</p><div class="erd-totals"><span>Campos <b>${stats.fields}</b></span><span>Registros <b>No disponible</b></span><span>PK (campos) <b>${stats.pk}</b></span><span>FK (campos) <b>${stats.fk}</b></span><span>NOT NULL <b>${stats.notNull}</b></span></div><p class="small">Registros: no hay un conteo verificado en los archivos. FK cuenta columnas, incluidas las claves compuestas.</p><div class="table-scroll"><table class="data-table"><thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Nulo</th><th>Descripción</th></tr></thead><tbody>${t.fields.map(f=>`<tr><td><code>${esc(f.name)}</code></td><td><code>${esc(f.type)}</code></td><td>${esc(f.key)}</td><td>${esc(f.nullable)}</td><td>${esc(f.description)}</td></tr>`).join('')}</tbody></table></div>`;
+  panel.hidden=false;panel.querySelector('button').onclick=close;panel.querySelector('h3').focus({preventScroll:true});highlight(new Set([name]));
  }
- function grow(){const b=svg.getBBox(),v=svg.viewBox.baseVal;const left=Math.min(v.x,b.x-30),top=Math.min(v.y,b.y-30);svg.setAttribute('viewBox',`${left} ${top} ${Math.max(v.x+v.width,b.x+b.width+30)-left} ${Math.max(v.y+v.height,b.y+b.height+30)-top}`);}
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden)close();});
  entities.forEach((node,name)=>{
-  let drag=null,moved=false;
-  node.addEventListener('pointerenter',()=>{if(!drag)focus(name);});node.addEventListener('pointerleave',()=>{if(!drag)focus(null);});
-  node.addEventListener('focus',()=>focus(name));node.addEventListener('blur',()=>focus(null));
-  node.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openTable(name);}});
-  node.addEventListener('pointerdown',e=>{if(e.button!==0)return;const p=new DOMPoint(e.clientX,e.clientY).matrixTransform(node.parentElement.getScreenCTM().inverse());drag={p,offset:{...offsets.get(name)},x:e.clientX,y:e.clientY};moved=false;node.setPointerCapture(e.pointerId);e.preventDefault();});
-  node.addEventListener('pointermove',e=>{if(!drag)return;if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>4)moved=true;if(!moved)return;const p=new DOMPoint(e.clientX,e.clientY).matrixTransform(node.parentElement.getScreenCTM().inverse()),o={x:drag.offset.x+p.x-drag.p.x,y:drag.offset.y+p.y-drag.p.y};offsets.set(name,o);node.setAttribute('transform',`translate(${o.x},${o.y}) ${original.get(name)}`);reroute(name);});
-  node.addEventListener('pointerup',e=>{if(!drag)return;drag=null;if(node.hasPointerCapture(e.pointerId))node.releasePointerCapture(e.pointerId);if(moved)grow();else openTable(name);});
-  node.addEventListener('pointercancel',()=>{drag=null;focus(null);});
+  node.addEventListener('pointerenter',()=>highlight(new Set([name])));node.addEventListener('pointerleave',()=>highlight(selected?new Set([selected]):new Set()));
+  node.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(name);}});
  });
+ edges.forEach(e=>{e.path.addEventListener('pointerenter',()=>highlight(new Set([e.source,e.target]),e));e.path.addEventListener('pointerleave',()=>highlight(selected?new Set([selected]):new Set()));});
+ // Drag anywhere on the canvas to pan; a stationary press on a table opens it.
+ viewport.style.touchAction='none';let drag=null;const pointers=new Map();let pinch=null;
+ viewport.addEventListener('pointerdown',e=>{
+  if(e.pointerType==='mouse'&&e.button!==0)return;
+  pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});viewport.setPointerCapture(e.pointerId);
+  if(pointers.size===2){const [a,b]=[...pointers.values()];pinch={distance:Math.hypot(a.x-b.x,a.y-b.y),scale:getScale()};if(drag)drag.moved=true;return;}
+  drag={id:e.pointerId,x:e.clientX,y:e.clientY,left:viewport.scrollLeft,top:viewport.scrollTop,moved:false,table:e.target.closest('[data-table]')?.dataset.table};e.preventDefault();viewport.classList.add('erd-panning');
+ });
+ function zoomAt(next,x,y){const r=viewport.getBoundingClientRect(),before=getScale(),localX=x-r.left,localY=y-r.top;setZoom(next);const ratio=getScale()/before;viewport.scrollLeft=(viewport.scrollLeft+localX)*ratio-localX;viewport.scrollTop=(viewport.scrollTop+localY)*ratio-localY;}
+ viewport.addEventListener('pointermove',e=>{
+  if(!pointers.has(e.pointerId))return;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pinch&&pointers.size===2){const [a,b]=[...pointers.values()];zoomAt(pinch.scale*Math.hypot(a.x-b.x,a.y-b.y)/pinch.distance,(a.x+b.x)/2,(a.y+b.y)/2);return;}
+  if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.hypot(dx,dy)>4)drag.moved=true;
+  viewport.scrollLeft=drag.left-dx;viewport.scrollTop=drag.top-dy;
+ });
+ function release(e){pointers.delete(e.pointerId);if(viewport.hasPointerCapture(e.pointerId))viewport.releasePointerCapture(e.pointerId);if(drag&&drag.id===e.pointerId&&e.type!=='pointercancel'&&!drag.moved&&drag.table)show(drag.table);drag=null;pinch=null;viewport.classList.remove('erd-panning');}
+ viewport.addEventListener('pointerup',release);viewport.addEventListener('pointercancel',release);
+ viewport.addEventListener('wheel',e=>{e.preventDefault();zoomAt(getScale()*Math.exp(-e.deltaY*.0015),e.clientX,e.clientY);},{passive:false});
+ viewport.addEventListener('keydown',e=>{const shifts={ArrowLeft:[-100,0],ArrowRight:[100,0],ArrowUp:[0,-100],ArrowDown:[0,100]};if(shifts[e.key]){e.preventDefault();viewport.scrollBy(...shifts[e.key]);}});
+ function center(name){
+  const n=entities.get(name);if(!n)return;setZoom(Math.max(.75,getScale()));
+  const r=n.getBoundingClientRect(),v=viewport.getBoundingClientRect();viewport.scrollLeft+=r.left+r.width/2-v.left-v.width/2;viewport.scrollTop+=r.top+r.height/2-v.top-v.height/2;
+ }
  $('erdModule').replaceChildren(new Option('Todos los módulos',''),...data.modules.map(m=>new Option(m,m)));
- function filter(){const query=$('erdSearch').value.toLowerCase().trim(),module=$('erdModule').value;const visible=new Set(tables.filter(t=>(!module||t.module===module)&&t.name.toLowerCase().includes(query)).map(t=>t.name));entities.forEach((n,key)=>{n.style.opacity=visible.has(key)?'':'0.12';});edges.forEach(e=>{if(e.path)e.path.style.opacity=visible.has(e.source)&&visible.has(e.target)?'':'0.08';});$('erdCount').textContent=`${visible.size} de ${tables.length} tablas`;}
- $('erdSearch').addEventListener('input',filter);$('erdModule').addEventListener('change',filter);filter();
- $('diagramViewport').addEventListener('wheel',e=>{e.preventDefault();const v=$('diagramViewport'),before=getScale(),x=e.clientX-v.getBoundingClientRect().left,y=e.clientY-v.getBoundingClientRect().top;setZoom(before*Math.exp(-e.deltaY*.0015));const ratio=getScale()/before;v.scrollLeft=(v.scrollLeft+x)*ratio-x;v.scrollTop=(v.scrollTop+y)*ratio-y;},{passive:false});
- svg.setAttribute('aria-label',`Modelo relacional: ${tables.length} tablas, ${data.relationships.length} relaciones. Arrastra tablas para moverlas; pulsa para abrir su detalle.`);
- svg.dataset.erdTables=entities.size;svg.dataset.erdRelationships=edges.length;
+ function filter(recenter=false){
+  query=$('erdSearch').value.toLowerCase().trim();const module=$('erdModule').value;
+  const matches=tables.filter(t=>(!module||t.module===module)&&(!query||t.name.toLowerCase().includes(query)||t.fields.some(f=>f.name.toLowerCase().includes(query))));const names=new Set(matches.map(t=>t.name));
+  entities.forEach((n,name)=>{n.style.opacity=names.has(name)?'':'0.12';n.style.visibility=mode==='relations'?'hidden':'';n.querySelectorAll('text,tspan,.nodeLabel,.nodeLabel p,.nodeLabel span').forEach(el=>{const f=tables.find(t=>t.name===name).fields.find(f=>f.name===el.textContent.trim());el.classList.toggle('erd-key',!!f&&!!keyMode&&f.key.includes(keyMode));});});
+  edges.forEach(e=>{e.path.style.opacity=names.has(e.source)&&names.has(e.target)?'':'0.08';e.path.style.visibility=mode==='tables'?'hidden':'';});
+  svg.querySelectorAll('.edgeLabels,.relationshipLabel').forEach(el=>el.style.visibility=mode==='tables'?'hidden':'');
+  $('erdCount').textContent=`${matches.length} de ${tables.length} tablas`;
+  if(query)highlight(names);else highlight(selected?new Set([selected]):new Set());
+  if(recenter&&query&&matches.length)center(matches[0].name);
+ }
+ $('erdSearch').addEventListener('input',()=>filter(true));$('erdModule').addEventListener('change',()=>filter());
+ document.querySelectorAll('[data-erd-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.erdMode;document.querySelectorAll('[data-erd-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));filter();}));
+ document.querySelectorAll('[data-erd-key]').forEach(b=>b.addEventListener('click',()=>{keyMode=keyMode===b.dataset.erdKey?'':b.dataset.erdKey;document.querySelectorAll('[data-erd-key]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.erdKey===keyMode)));filter();}));
+ $('resetDiagram').addEventListener('click',()=>{setZoom(.85);viewport.scrollLeft=0;viewport.scrollTop=0;$('erdSearch').value='';$('erdModule').value='';mode='all';keyMode='';panel.hidden=true;selected=null;document.querySelectorAll('[data-erd-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.erdMode==='all')));document.querySelectorAll('[data-erd-key]').forEach(b=>b.setAttribute('aria-pressed','false'));filter();});
+ filter();svg.setAttribute('aria-label',`ERD interactivo: ${tables.length} tablas. Arrastra para moverte, usa la rueda para zoom y pulsa una tabla para ver sus campos.`);svg.dataset.erdTables=entities.size;svg.dataset.erdRelationships=edges.length;
 }

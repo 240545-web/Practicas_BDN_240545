@@ -11,5 +11,190 @@
     "Compras": 5,
     "Pagos y envíos": 5
   },
-  "liveDatabaseVerified": false
+  "liveDatabaseVerified": false,
+  "perTable": {
+    "tb_users": {
+      "fields": 7,
+      "pk": 1,
+      "fk": 0,
+      "notNull": 6,
+      "records": null
+    },
+    "tb_products": {
+      "fields": 9,
+      "pk": 1,
+      "fk": 0,
+      "notNull": 7,
+      "records": null
+    },
+    "tb_orders": {
+      "fields": 8,
+      "pk": 1,
+      "fk": 2,
+      "notNull": 6,
+      "records": null
+    },
+    "tb_payments": {
+      "fields": 8,
+      "pk": 1,
+      "fk": 2,
+      "notNull": 7,
+      "records": null
+    },
+    "tb_people": {
+      "fields": 9,
+      "pk": 1,
+      "fk": 2,
+      "notNull": 8,
+      "records": null
+    },
+    "tb_roles": {
+      "fields": 3,
+      "pk": 1,
+      "fk": 0,
+      "notNull": 3,
+      "records": null
+    },
+    "tb_user_roles": {
+      "fields": 4,
+      "pk": 1,
+      "fk": 2,
+      "notNull": 4,
+      "records": null
+    },
+    "tb_permissions": {
+      "fields": 4,
+      "pk": 1,
+      "fk": 0,
+      "notNull": 3,
+      "records": null
+    },
+    "tb_role_permissions": {
+      "fields": 4,
+      "pk": 1,
+      "fk": 2,
+      "notNull": 4,
+      "records": null
+    },
+    "tb_categories": {
+      "fields": 6,
+      "pk": 1,
+      "fk": 0,
+      "notNull": 4,
+      "records": null
+    },
+    "tb_product_categories": {
+      "fields": 4,
+      "pk": 1,
+      "fk": 2,
+      "notNull": 4,
+      "records": null
+    },
+    "tb_tags": {
+      "fields": 3,
+      "pk": 1,
+      "fk": 0,
+      "notNull": 3,
+      "records": null
+    },
+    "tb_product_tags": {
+      "fields": 4,
+      "pk": 1,
+      "fk": 2,
+      "notNull": 4,
+      "records": null
+    },
+    "tb_reviews": {
+      "fields": 8,
+      "pk": 1,
+      "fk": 2,
+      "notNull": 6,
+      "records": null
+    },
+    "tbc_countries": {
+      "fields": 4,
+      "pk": 1,
+      "fk": 0,
+      "notNull": 4,
+      "records": null
+    },
+    "tbc_states": {
+      "fields": 4,
+      "pk": 1,
+      "fk": 1,
+      "notNull": 4,
+      "records": null
+    },
+    "tb_addresses": {
+      "fields": 10,
+      "pk": 1,
+      "fk": 3,
+      "notNull": 7,
+      "records": null
+    },
+    "tb_carts": {
+      "fields": 6,
+      "pk": 1,
+      "fk": 1,
+      "notNull": 5,
+      "records": null
+    },
+    "tbd_shopping_cart": {
+      "fields": 6,
+      "pk": 1,
+      "fk": 3,
+      "notNull": 6,
+      "records": null
+    },
+    "tb_order_items": {
+      "fields": 8,
+      "pk": 1,
+      "fk": 2,
+      "notNull": 7,
+      "records": null
+    },
+    "tb_wishlists": {
+      "fields": 6,
+      "pk": 1,
+      "fk": 2,
+      "notNull": 5,
+      "records": null
+    },
+    "tbc_payment_methods": {
+      "fields": 4,
+      "pk": 1,
+      "fk": 0,
+      "notNull": 4,
+      "records": null
+    },
+    "tb_carriers": {
+      "fields": 3,
+      "pk": 1,
+      "fk": 0,
+      "notNull": 3,
+      "records": null
+    },
+    "tb_shipments": {
+      "fields": 9,
+      "pk": 1,
+      "fk": 3,
+      "notNull": 8,
+      "records": null
+    },
+    "tb_invoices": {
+      "fields": 7,
+      "pk": 1,
+      "fk": 1,
+      "notNull": 6,
+      "records": null
+    },
+    "tb_logs": {
+      "fields": 8,
+      "pk": 1,
+      "fk": 0,
+      "notNull": 6,
+      "records": null
+    }
+  },
+  "recordsNote": "No hay un snapshot de filas verificado; init.sql configura permisos y no proporciona conteos. No se suman INSERT de scripts de versiones diferentes."
 }

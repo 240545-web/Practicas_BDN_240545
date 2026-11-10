@@ -26,6 +26,8 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .diagram-inner{justify-content:flex-start;align-items:flex-start}.diagram-inner .node{cursor:grab;touch-action:none}.diagram-inner .node:focus{outline:none;filter:drop-shadow(0 0 5px var(--cyan))}.diagram-inner .erd-muted{opacity:.16}.diagram-inner .erd-active{filter:drop-shadow(0 0 4px var(--cyan))}#erdModule option{background:var(--surface);color:var(--ink)}
+
+.diagram-viewport{cursor:grab;touch-action:none}.diagram-viewport.erd-panning{cursor:grabbing}.diagram-inner .node{cursor:pointer;touch-action:none}.erd-edge-active{stroke:var(--cyan)!important;stroke-width:3px!important;filter:drop-shadow(0 0 3px var(--cyan))}.diagram-inner .erd-key{color:var(--cyan)!important;fill:var(--cyan)!important;font-weight:800!important;text-decoration:underline}.erd-filters .tools{flex-wrap:wrap}.erd-filters .small-btn[aria-pressed="true"]{color:var(--cyan);border-color:var(--cyan);background:#7edee510}.erd-detail{position:fixed;right:0;top:70px;bottom:0;width:min(640px,calc(100vw - 20px));z-index:90;padding:24px;background:var(--surface);border-left:1px solid var(--line);box-shadow:-12px 0 40px #0006;overflow:auto}.erd-detail h3{font-family:var(--mono);color:var(--cyan);margin:18px 0}.erd-detail p{font-size:12px;color:var(--muted)}.erd-detail .data-table{min-width:570px}.erd-close{float:right}.erd-totals{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.erd-totals span{padding:8px 12px;border:1px solid var(--line);border-radius:7px;font:10px var(--mono);color:var(--muted)}.erd-totals b{display:block;color:var(--ink);margin-top:6px}.erd-table-stats{font:10px var(--mono);color:var(--muted);margin:10px 0}
 </style>
 </head>
 <body>
@@ -56,7 +58,8 @@
   </section>
   <section class="section reveal delay-2" id="erd" aria-labelledby="erdTitle"><div class="section-head"><div class="title-group"><span class="section-number">02 /</span><h2 id="erdTitle">Cada relación tiene una historia</h2></div><span class="badge cyan"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i> ER DIAGRAM</span></div>
    <div class="panel diagram-panel" id="diagramPanel"><div class="diagram-toolbar"><div class="caption"><i class="fa-solid fa-circle-nodes" aria-hidden="true"></i>db_test <span style="color:var(--dim)">/ esquema relacional</span></div><div class="tools"><button class="icon-btn" id="zoomOut" aria-label="Reducir diagrama" disabled><i class="fa-solid fa-minus" aria-hidden="true"></i></button><output class="zoom-value" id="zoomLabel">—</output><button class="icon-btn" id="zoomIn" aria-label="Ampliar diagrama" disabled><i class="fa-solid fa-plus" aria-hidden="true"></i></button><button class="small-btn" id="fitDiagram" disabled><i class="fa-solid fa-expand" aria-hidden="true"></i>Ajustar</button><button class="icon-btn" id="fullscreenDiagram" aria-label="Pantalla completa"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i></button></div></div>
-    <div class="diagram-toolbar"><input class="small-btn" id="erdSearch" type="search" placeholder="Buscar tabla…" aria-label="Buscar tabla en el diagrama"><select class="small-btn" id="erdModule" aria-label="Filtrar módulo del diagrama"><option value="">Todos los módulos</option></select><span id="erdCount" class="section-note" role="status"></span></div>
+    <div class="diagram-toolbar"><input class="small-btn" id="erdSearch" type="search" placeholder="Buscar tabla o campo…" aria-label="Buscar tabla en el diagrama"><select class="small-btn" id="erdModule" aria-label="Filtrar módulo del diagrama"><option value="">Todos los módulos</option></select><button class="small-btn" id="resetDiagram">Reset</button><span id="erdCount" class="section-note" role="status"></span></div>
+    <div class="diagram-toolbar erd-filters"><div class="tools" role="group" aria-label="Visibilidad del diagrama"><button class="small-btn" data-erd-mode="all" aria-pressed="true">Todo</button><button class="small-btn" data-erd-mode="tables" aria-pressed="false">Solo tablas</button><button class="small-btn" data-erd-mode="relations" aria-pressed="false">Solo relaciones</button><button class="small-btn" data-erd-key="PK" aria-pressed="false">Resaltar PK</button><button class="small-btn" data-erd-key="FK" aria-pressed="false">Resaltar FK</button></div><span class="section-note">Arrastra para moverte · Rueda para zoom · Clic para explorar</span></div>
     <div class="diagram-viewport" id="diagramViewport" tabindex="0" role="region" aria-label="Diagrama ER con desplazamiento horizontal y vertical"><div class="diagram-inner" id="diagram"><div class="diagram-message" role="status"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i>Preparando las conexiones del modelo…</div></div></div>
     <div class="diagram-footer"><span><code>PK</code> Primaria &nbsp;·&nbsp; <code>FK</code> Foránea &nbsp;·&nbsp; <code>||</code> Uno &nbsp;·&nbsp; <code>o{</code> Cero o muchos</span><button class="small-btn" id="copyMermaid"><i class="fa-regular fa-copy" aria-hidden="true"></i>Copiar Mermaid</button></div><details class="source-details"><summary>Ver el código fuente del diagrama</summary><pre id="mermaidSource"></pre></details>
    </div>
@@ -78,7 +81,7 @@
 <!-- DATOS EDITABLES. featuredTables: cinco ejemplos explícitos completos.
      additionalTables: las otras 21 fichas completas. demo: cifras ilustrativas.
      No se realizan consultas a una base de datos ni se incluyen credenciales. -->
-<script src="docs/atlas-erd.js"></script>
+<script src="docs/atlas-erd.js?v=interactive-2"></script>
 <script id="dictionaryData" type="application/json">{
   "featuredTables": [
     {
@@ -136,7 +139,14 @@
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 7,
+        "pk": 1,
+        "fk": 0,
+        "notNull": 6,
+        "records": null
+      }
     },
     {
       "name": "tb_products",
@@ -207,7 +217,14 @@
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 9,
+        "pk": 1,
+        "fk": 0,
+        "notNull": 7,
+        "records": null
+      }
     },
     {
       "name": "tb_orders",
@@ -271,7 +288,14 @@
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 8,
+        "pk": 1,
+        "fk": 2,
+        "notNull": 6,
+        "records": null
+      }
     },
     {
       "name": "tb_payments",
@@ -335,7 +359,14 @@
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 8,
+        "pk": 1,
+        "fk": 2,
+        "notNull": 7,
+        "records": null
+      }
     },
     {
       "name": "tb_people",
@@ -406,7 +437,14 @@
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 9,
+        "pk": 1,
+        "fk": 2,
+        "notNull": 8,
+        "records": null
+      }
     }
   ],
   "additionalTables": [
@@ -437,7 +475,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 3,
+        "pk": 1,
+        "fk": 0,
+        "notNull": 3,
+        "records": null
+      }
     },
     {
       "name": "tb_user_roles",
@@ -473,7 +518,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 4,
+        "pk": 1,
+        "fk": 2,
+        "notNull": 4,
+        "records": null
+      }
     },
     {
       "name": "tb_permissions",
@@ -509,7 +561,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 4,
+        "pk": 1,
+        "fk": 0,
+        "notNull": 3,
+        "records": null
+      }
     },
     {
       "name": "tb_role_permissions",
@@ -545,7 +604,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 4,
+        "pk": 1,
+        "fk": 2,
+        "notNull": 4,
+        "records": null
+      }
     },
     {
       "name": "tb_categories",
@@ -595,7 +661,14 @@
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 6,
+        "pk": 1,
+        "fk": 0,
+        "notNull": 4,
+        "records": null
+      }
     },
     {
       "name": "tb_product_categories",
@@ -631,7 +704,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 4,
+        "pk": 1,
+        "fk": 2,
+        "notNull": 4,
+        "records": null
+      }
     },
     {
       "name": "tb_tags",
@@ -660,7 +740,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 3,
+        "pk": 1,
+        "fk": 0,
+        "notNull": 3,
+        "records": null
+      }
     },
     {
       "name": "tb_product_tags",
@@ -696,7 +783,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 4,
+        "pk": 1,
+        "fk": 2,
+        "notNull": 4,
+        "records": null
+      }
     },
     {
       "name": "tb_reviews",
@@ -760,7 +854,14 @@
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 8,
+        "pk": 1,
+        "fk": 2,
+        "notNull": 6,
+        "records": null
+      }
     },
     {
       "name": "tbc_countries",
@@ -796,7 +897,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 4,
+        "pk": 1,
+        "fk": 0,
+        "notNull": 4,
+        "records": null
+      }
     },
     {
       "name": "tbc_states",
@@ -832,7 +940,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 4,
+        "pk": 1,
+        "fk": 1,
+        "notNull": 4,
+        "records": null
+      }
     },
     {
       "name": "tb_addresses",
@@ -910,7 +1025,14 @@
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 10,
+        "pk": 1,
+        "fk": 3,
+        "notNull": 7,
+        "records": null
+      }
     },
     {
       "name": "tb_carts",
@@ -960,7 +1082,14 @@
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 6,
+        "pk": 1,
+        "fk": 1,
+        "notNull": 5,
+        "records": null
+      }
     },
     {
       "name": "tbd_shopping_cart",
@@ -1010,7 +1139,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 6,
+        "pk": 1,
+        "fk": 3,
+        "notNull": 6,
+        "records": null
+      }
     },
     {
       "name": "tb_order_items",
@@ -1074,7 +1210,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 8,
+        "pk": 1,
+        "fk": 2,
+        "notNull": 7,
+        "records": null
+      }
     },
     {
       "name": "tb_wishlists",
@@ -1124,7 +1267,14 @@
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 6,
+        "pk": 1,
+        "fk": 2,
+        "notNull": 5,
+        "records": null
+      }
     },
     {
       "name": "tbc_payment_methods",
@@ -1160,7 +1310,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 4,
+        "pk": 1,
+        "fk": 0,
+        "notNull": 4,
+        "records": null
+      }
     },
     {
       "name": "tb_carriers",
@@ -1189,7 +1346,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 3,
+        "pk": 1,
+        "fk": 0,
+        "notNull": 3,
+        "records": null
+      }
     },
     {
       "name": "tb_shipments",
@@ -1260,7 +1424,14 @@
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 9,
+        "pk": 1,
+        "fk": 3,
+        "notNull": 8,
+        "records": null
+      }
     },
     {
       "name": "tb_invoices",
@@ -1317,7 +1488,14 @@
           "nullable": "SI",
           "description": "NULL significa activo; una fecha registra la baja lógica. El trigger BEFORE DELETE bloquea el borrado físico."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 7,
+        "pk": 1,
+        "fk": 1,
+        "notNull": 6,
+        "records": null
+      }
     },
     {
       "name": "tb_logs",
@@ -1381,7 +1559,14 @@
           "nullable": "NO",
           "description": "Fecha de creación; valor inicial CURRENT_TIMESTAMP."
         }
-      ]
+      ],
+      "stats": {
+        "fields": 8,
+        "pk": 1,
+        "fk": 0,
+        "notNull": 6,
+        "records": null
+      }
     }
   ],
   "triggers": [
@@ -2216,7 +2401,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const group=moduleIndex(t.module), ownTriggers=associated.get(t.name);
   const el=document.createElement('details');el.className='table-detail';el.id='table-'+t.name;el.dataset.table=t.name;el.style.setProperty('--accent',colors[group]);
   const keywords=norm([t.name,t.module,t.description,...t.fields.flatMap(f=>Object.values(f)),...ownTriggers.flatMap(x=>Object.values(x))].join(' '));
-  el.innerHTML=`<summary><span class="entity-icon"><i class="fa-solid ${icons[group]}" aria-hidden="true"></i></span><span class="entity-title"><strong>${escape(t.name)}</strong><small>${escape(t.module)}</small></span><span class="summary-meta"><span class="field-count">${t.fields.length} campos</span><span class="badge ${ownTriggers.length?'':'neutral'}">${ownTriggers.length?'<i class="fa-solid fa-bolt" aria-hidden="true"></i>':''}${ownTriggers.length} triggers</span><i class="fa-solid fa-chevron-down chevron" aria-hidden="true"></i></span></summary><div class="table-content"><p class="table-description">${escape(t.description)} ${t.softDelete?'<span class="badge soft">Soft Delete</span>':''}</p><div class="table-scroll"><table class="data-table"><caption class="sr-only">Columnas de ${escape(t.name)}</caption><thead><tr><th scope="col">Nombre del Campo</th><th scope="col">Tipo de Dato</th><th scope="col">Llave (PK/FK)</th><th scope="col">Nulo (SI/NO)</th><th scope="col">Descripción / Lógica</th></tr></thead><tbody>${t.fields.map(f=>`<tr><td class="field-name"><code>${escape(f.name)}</code></td><td class="field-type"><code>${escape(f.type)}</code></td><td>${f.key==='—'?'—':f.key.split(' / ').map(k=>`<span class="key ${k==='FK'?'fk':''}">${k}</span>`).join(' ')}</td><td><span class="${f.nullable==='NO'?'null-no':'null-yes'}">${f.nullable}</span></td><td class="field-logic">${escape(f.description)}</td></tr>`).join('')}</tbody></table></div><div class="table-trigger-list"><h4>${ownTriggers.length?'Reglas asociadas':'Sin triggers propios en el conjunto de 72'}</h4><div class="trigger-tags">${ownTriggers.map(x=>`<button class="trigger-tag" data-find-trigger="${escape(x.name)}">${escape(x.name)}</button>`).join('')}</div></div></div>`;
+  el.innerHTML=`<summary><span class="entity-icon"><i class="fa-solid ${icons[group]}" aria-hidden="true"></i></span><span class="entity-title"><strong>${escape(t.name)}</strong><small>${escape(t.module)}</small></span><span class="summary-meta"><span class="field-count">${t.fields.length} campos</span><span class="badge ${ownTriggers.length?'':'neutral'}">${ownTriggers.length?'<i class="fa-solid fa-bolt" aria-hidden="true"></i>':''}${ownTriggers.length} triggers</span><i class="fa-solid fa-chevron-down chevron" aria-hidden="true"></i></span></summary><div class="table-content"><div class="erd-table-stats">${t.stats.fields} campos · PK: ${t.stats.pk} · FK: ${t.stats.fk} · NOT NULL: ${t.stats.notNull} · Registros: No disponible</div><p class="table-description">${escape(t.description)} ${t.softDelete?'<span class="badge soft">Soft Delete</span>':''}</p><div class="table-scroll"><table class="data-table"><caption class="sr-only">Columnas de ${escape(t.name)}</caption><thead><tr><th scope="col">Nombre del Campo</th><th scope="col">Tipo de Dato</th><th scope="col">Llave (PK/FK)</th><th scope="col">Nulo (SI/NO)</th><th scope="col">Descripción / Lógica</th></tr></thead><tbody>${t.fields.map(f=>`<tr><td class="field-name"><code>${escape(f.name)}</code></td><td class="field-type"><code>${escape(f.type)}</code></td><td>${f.key==='—'?'—':f.key.split(' / ').map(k=>`<span class="key ${k==='FK'?'fk':''}">${k}</span>`).join(' ')}</td><td><span class="${f.nullable==='NO'?'null-no':'null-yes'}">${f.nullable}</span></td><td class="field-logic">${escape(f.description)}</td></tr>`).join('')}</tbody></table></div><div class="table-trigger-list"><h4>${ownTriggers.length?'Reglas asociadas':'Sin triggers propios en el conjunto de 72'}</h4><div class="trigger-tags">${ownTriggers.map(x=>`<button class="trigger-tag" data-find-trigger="${escape(x.name)}">${escape(x.name)}</button>`).join('')}</div></div></div>`;
   $('dictionaryList').append(el);
   return {el,table:t,keywords};
  });

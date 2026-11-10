@@ -21,7 +21,9 @@ for name, timing, event, table, body in source_triggers:
     assert (timing, event, table) == (target['timing'], target['event'], target['table'])
     assert body.strip() + 'END' in target['logic'], name
 assert len(re.findall(r'FOREIGN KEY \([^)]+\) REFERENCES', sql)) == len(data['relationships'])
+for t in tables.values():
+    fs=t['fields']; assert t['stats']==dict(fields=len(fs),pk=sum('PK' in f['key'] for f in fs),fk=sum('FK' in f['key'] for f in fs),notNull=sum(f['nullable']=='NO' for f in fs),records=None)
 assert sum(len(t['fields']) for t in tables.values()) == sum(map(len, source.values()))
-root_html = (root / 'index.html').read_text().replace('src="docs/atlas-erd.js"', 'src="atlas-erd.js"')
+root_html = (root / 'index.html').read_text().replace('src="docs/atlas-erd.js', 'src="atlas-erd.js')
 assert root_html == html, 'Root and docs versions differ'
 print(json.dumps({'tables': len(source), 'fields': sum(map(len, source.values())), 'triggers': len(source_triggers), 'relationships': len(data['relationships']), 'result': 'COINCIDE'}, ensure_ascii=False))
