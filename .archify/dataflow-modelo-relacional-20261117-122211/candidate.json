@@ -1,0 +1,305 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Práctica 04 · Flujo de datos en db_test",
+    "output": "docs/modelo-relacional.html",
+    "locale": "es",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/240545-web/Practicas_BDN_240545.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "97a88628c128bb7a360f15fc67d81ad3078cd6bb"
+    }
+  },
+  "stages": [
+    { "label": "Usuarios y catálogo" },
+    { "label": "Selección" },
+    { "label": "Procedimientos P04" },
+    { "label": "Pedido y pago" }
+  ],
+  "nodes": [
+    {
+      "id": "products",
+      "type": "database",
+      "label": "tb_products",
+      "sublabel": "catálogo",
+      "stage": 0,
+      "row": 0,
+      "sources": [
+        {
+          "path": "Practica03/backups/Untitled-1.sql",
+          "line": 86,
+          "end_line": 107,
+          "label": "DDL de tb_products"
+        }
+      ]
+    },
+    {
+      "id": "product_categories",
+      "type": "database",
+      "label": "tb_products_categories",
+      "sublabel": "puente N:M",
+      "stage": 0,
+      "row": 1,
+      "width": 150,
+      "sources": [
+        {
+          "path": "Practica03/scripts/create_tables.sql",
+          "line": 143,
+          "end_line": 157,
+          "label": "DDL de la tabla puente"
+        }
+      ]
+    },
+    {
+      "id": "users",
+      "type": "database",
+      "label": "tb_users",
+      "sublabel": "cuentas",
+      "stage": 0,
+      "row": 3,
+      "sources": [
+        {
+          "path": "Practica03/backups/Untitled-1.sql",
+          "line": 70,
+          "end_line": 81,
+          "label": "DDL de tb_users"
+        }
+      ]
+    },
+    {
+      "id": "offers",
+      "type": "database",
+      "label": "tbd_users_offer_products",
+      "sublabel": "ofertas activas",
+      "stage": 1,
+      "row": 0,
+      "width": 165,
+      "sources": [
+        {
+          "path": "Practica03/scripts/create_tables.sql",
+          "line": 164,
+          "end_line": 182,
+          "label": "DDL de ofertas"
+        }
+      ]
+    },
+    {
+      "id": "cart",
+      "type": "database",
+      "label": "tbd_shopping_cart",
+      "sublabel": "carrito",
+      "stage": 1,
+      "row": 3,
+      "sources": [
+        {
+          "path": "Practica03/scripts/create_tables.sql",
+          "line": 119,
+          "end_line": 136,
+          "label": "DDL del carrito"
+        }
+      ]
+    },
+    {
+      "id": "case1",
+      "type": "backend",
+      "label": "p04_caso1_final",
+      "sublabel": "11 pasos",
+      "stage": 2,
+      "row": 1,
+      "tag": "PROCEDURE"
+    },
+    {
+      "id": "case2",
+      "type": "backend",
+      "label": "p04_caso2_error",
+      "sublabel": "ruta de error",
+      "stage": 2,
+      "row": 3,
+      "tag": "PROCEDURE"
+    },
+    {
+      "id": "payments",
+      "type": "database",
+      "label": "tb_payments",
+      "sublabel": "pago",
+      "stage": 3,
+      "row": 0,
+      "sources": [
+        {
+          "path": "Practica03/scripts/create_tables.sql",
+          "line": 71,
+          "end_line": 88,
+          "label": "DDL de pagos"
+        }
+      ]
+    },
+    {
+      "id": "orders",
+      "type": "database",
+      "label": "tb_orders",
+      "sublabel": "pedido general",
+      "stage": 3,
+      "row": 1,
+      "sources": [
+        {
+          "path": "Practica03/scripts/create_tables.sql",
+          "line": 15,
+          "end_line": 31,
+          "label": "DDL de tb_orders"
+        }
+      ]
+    },
+    {
+      "id": "seller_orders",
+      "type": "database",
+      "label": "tb_seller_orders",
+      "sublabel": "compraventa",
+      "stage": 3,
+      "row": 3,
+      "sources": [
+        {
+          "path": "Practica03/scripts/Create_order_tables.sql",
+          "line": 10,
+          "end_line": 31,
+          "label": "DDL de compraventa"
+        }
+      ]
+    },
+    {
+      "id": "order_items",
+      "type": "database",
+      "label": "tb_order_items",
+      "sublabel": "partidas",
+      "stage": 3,
+      "row": 4,
+      "sources": [
+        {
+          "path": "Practica03/scripts/Create_order_tables.sql",
+          "line": 38,
+          "end_line": 63,
+          "label": "DDL de partidas"
+        }
+      ]
+    }
+  ],
+  "flows": [
+    {
+      "id": "products-to-bridge",
+      "from": "products",
+      "to": "product_categories",
+      "label": "CASCADE al borrar",
+      "classification": "1 a N · product_ID"
+    },
+    {
+      "id": "products-to-offers",
+      "from": "products",
+      "to": "offers",
+      "label": "1 a N",
+      "classification": "product_ID",
+      "route": "straight"
+    },
+    {
+      "id": "users-to-cart",
+      "from": "users",
+      "to": "cart",
+      "label": "1 a N",
+      "classification": "user_ID",
+      "route": "straight"
+    },
+    {
+      "id": "offers-to-cart",
+      "from": "offers",
+      "to": "cart",
+      "label": "oferta opcional",
+      "classification": "offer_ID sin FK declarada",
+      "variant": "dashed",
+      "labelAt": [285, 270]
+    },
+    {
+      "id": "cart-to-case1",
+      "from": "cart",
+      "to": "case1",
+      "label": "lee carrito",
+      "classification": "paso 2 del procedimiento",
+      "variant": "emphasis"
+    },
+    {
+      "id": "case1-to-orders",
+      "from": "case1",
+      "to": "orders",
+      "label": "INSERT paso 3",
+      "classification": "cabecera de pedido",
+      "variant": "emphasis",
+      "route": "straight",
+      "labelAt": [637, 245]
+    },
+    {
+      "id": "case2-to-orders",
+      "from": "case2",
+      "to": "orders",
+      "label": "ROLLBACK",
+      "classification": "deshace el pedido",
+      "variant": "dashed",
+      "labelAt": [615, 420]
+    },
+    {
+      "id": "case2-to-seller",
+      "from": "case2",
+      "to": "seller_orders",
+      "label": "ROLLBACK",
+      "classification": "deshace la compraventa",
+      "variant": "dashed",
+      "route": "straight",
+      "labelAt": [637, 543]
+    },
+    {
+      "id": "orders-to-payments",
+      "from": "orders",
+      "to": "payments",
+      "label": "INSERT paso 8",
+      "classification": "order_ID · CASCADE al borrar",
+      "labelAt": [900, 230]
+    },
+    {
+      "id": "seller-to-items",
+      "from": "seller_orders",
+      "to": "order_items",
+      "label": "INSERT paso 5",
+      "classification": "seller_order_ID · CASCADE al borrar",
+      "labelAt": [900, 530]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Cómo leer el flujo",
+      "items": [
+        "Etiquetas en lenguaje claro: «1 a N» es la cardinalidad, «CASCADE al borrar» la acción referencial y «INSERT paso N» el orden de escritura del procedimiento.",
+        "Las tablas base alimentan al procedimiento, que persiste pedido y compraventa; de ellos cuelgan el pago y las partidas.",
+        "Enfoca un nodo para abrir su pasaporte con alcance; usa el buscador o E para exportar PNG."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Ruta de error",
+      "items": [
+        "p04_caso1_final declara un EXIT HANDLER que ejecuta ROLLBACK ante SQLEXCEPTION antes de RESIGNAL.",
+        "p04_caso2_error se vincula a tb_orders y tb_seller_orders como ruta de reversión esperada de la práctica.",
+        "No hay DDL localizado para p04_caso2_error: sus flechas representan el contexto del manejo de errores, no una llamada verificada en código."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Alcance y verificaciones",
+      "items": [
+        "El catálogo debe tener 1000 productos, 504 con category_id y 504 filas en tb_products_categories.",
+        "La consulta de elegibilidad exige ofertas activas con stock suficiente y al menos 5 productos distintos por usuario.",
+        "El esquema incluye tb_users al inicio, relacionado 1 a N con tbd_shopping_cart.",
+        "Las DDL se citan de Practica03 en la revisión fijada; los procedimientos P04 son requisitos de la práctica."
+      ]
+    }
+  ]
+}
