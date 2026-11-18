@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/yait/Practicas_BDN_240545/.archify/architecture-arquitectura-db-20261117-133257/candidate.json",
+    "sha256": "7e9fc4adfd4d4631efeb10adab541d555732c948d4eceab1bace08073f35fbd3",
+    "bytes": 14713
+  },
+  "artifact": {
+    "path": "/Users/yait/Practicas_BDN_240545/docs/arquitectura_db.html",
+    "sha256": "c802d98b9b2ed56467db949629642cc2bcbd2ecb8f33c9452bb28b6ad968086e",
+    "bytes": 857468
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/yait/Practicas_BDN_240545/.archify/architecture-arquitectura-db-20261117-133257/review-2/arquitectura_db.finalize.json",
+    "summaryReceipt": "/Users/yait/Practicas_BDN_240545/.archify/architecture-arquitectura-db-20261117-133257/review-2/arquitectura_db.finalize-summary.json",
+    "browserCheckReceipt": "/Users/yait/Practicas_BDN_240545/.archify/architecture-arquitectura-db-20261117-133257/review-2/arquitectura_db.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-17T18:22:40.508Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2560,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

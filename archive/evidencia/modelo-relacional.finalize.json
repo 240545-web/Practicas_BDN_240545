@@ -1,0 +1,370 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "dataflow",
+  "quality": "showcase",
+  "startedAt": "2026-10-20T17:48:19.880Z",
+  "specification": {
+    "path": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.json",
+    "sha256": "a49d70e261fcf5cd70f77deb7bcc8dc7894f5152555f5450d8d5ccb2ee0df1f1",
+    "bytes": 33288
+  },
+  "artifact": {
+    "path": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.html",
+    "sha256": "cbf951fc04eb910a6ce6d87e00354f9db651e416ebd8076b73012f46f0c7dea7",
+    "bytes": 757345
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/usr/local/bin/node",
+        "/Users/yait/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "dataflow",
+        "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.json",
+        "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/Users/yait/Practicas_BDN_240545",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "a49d70e261fcf5cd70f77deb7bcc8dc7894f5152555f5450d8d5ccb2ee0df1f1",
+          "bytes": 33288
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 222,
+      "command": [
+        "/usr/local/bin/node",
+        "/Users/yait/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "dataflow",
+        "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.json",
+        "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/Users/yait/Practicas_BDN_240545",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "efd1f380-54fe-4a5d-8df5-09eda19f5952",
+        "ok": true,
+        "command": "deliver",
+        "type": "dataflow",
+        "input": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.json",
+        "output": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.html",
+        "specification": {
+          "sha256": "a49d70e261fcf5cd70f77deb7bcc8dc7894f5152555f5450d8d5ccb2ee0df1f1",
+          "bytes": 33288
+        },
+        "artifact": {
+          "sha256": "cbf951fc04eb910a6ce6d87e00354f9db651e416ebd8076b73012f46f0c7dea7",
+          "bytes": 757345
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "evidence": {
+          "verified": true,
+          "repository": "https://github.com/240545-web/Practicas_BDN_240545",
+          "revision": "97a88628c128bb7a360f15fc67d81ad3078cd6bb",
+          "references": 7
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 69,
+      "command": [
+        "/usr/local/bin/node",
+        "/Users/yait/.agents/skills/archify/bin/archify.mjs",
+        "check",
+        "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.html",
+        "artifact": {
+          "sha256": "cbf951fc04eb910a6ce6d87e00354f9db651e416ebd8076b73012f46f0c7dea7",
+          "bytes": 757345
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "metrics": {
+            "properCrossings": 0,
+            "resolvedCrossovers": 0,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": 93,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 6.925531914893617,
+            "maxBends": 0,
+            "routesOverSuggestedBends": 0,
+            "maxStretch": 1,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": 103,
+            "minInteriorSegmentPx": null,
+            "shortSegmentCount": 0,
+            "shortEndpointSegmentCount": 0,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [],
+            "detours": []
+          },
+          "leadingSpace": {
+            "measured": false,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "legacy-930",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 930,
+            "actualBudgetPx": 930,
+            "limit": "legacy",
+            "requestedTargetPx": null,
+            "requestedTargetMet": null,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "node",
+              "id": "products"
+            },
+            "minimumSourceTextPx": 7,
+            "minimumProjectedTextPx": 6.925531914893617,
+            "semanticTextCount": 18
+          },
+          "issues": []
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "efd1f380-54fe-4a5d-8df5-09eda19f5952"
+      }
+    },
+    "browser-check": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": 2523,
+      "command": [
+        "/usr/local/bin/node",
+        "/Users/yait/.agents/skills/archify/bin/archify.mjs",
+        "browser-check",
+        "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.html",
+        "--json",
+        "--require-provenance"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "fail",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "efd1f380-54fe-4a5d-8df5-09eda19f5952",
+        "artifact": {
+          "path": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.html",
+          "sha256": "cbf951fc04eb910a6ce6d87e00354f9db651e416ebd8076b73012f46f0c7dea7",
+          "bytes": 757345
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        },
+        "diagnostics": [
+          {
+            "code": "viewer/browser-check-runtime",
+            "severity": "error",
+            "message": "browser-check could not complete its Chrome inspection.",
+            "subject": {
+              "artifact": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.html"
+            },
+            "evidence": {
+              "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome transport: Node v24.21.0, libuv 1.52.1, darwin; pid=35356, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+            },
+            "supportedFixes": [
+              "resolve the reported Chrome inspection error, then rerun browser-check"
+            ]
+          }
+        ],
+        "containment": {
+          "status": "fail",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": []
+        },
+        "themeStates": {
+          "status": "fail",
+          "viewports": []
+        },
+        "readability": {
+          "status": "fail",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": []
+        },
+        "viewerChrome": {
+          "status": "fail",
+          "viewports": []
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "receipt": "modelo-relacional.browser-check.json",
+          "files": []
+        },
+        "error": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome transport: Node v24.21.0, libuv 1.52.1, darwin; pid=35356, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      }
+    }
+  },
+  "diagnostics": [
+    {
+      "code": "viewer/browser-check-runtime",
+      "severity": "error",
+      "message": "browser-check could not complete its Chrome inspection.",
+      "subject": {
+        "artifact": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.html"
+      },
+      "evidence": {
+        "reason": "Chrome DevTools read pipe failed: stream ended\nChrome process: still running.\nChrome transport: Node v24.21.0, libuv 1.52.1, darwin; pid=35356, exitCode=null, signalCode=null.\nChrome read pipe: readable=false, ended=true, destroyed=false, receivedBytes=0, messages=0, bufferedBytes=0.\nChrome write pipe: writable=true, ended=false, destroyed=false, completedWrites=1, writtenBytes=50, bufferedBytes=0."
+      },
+      "supportedFixes": [
+        "resolve the reported Chrome inspection error, then rerun browser-check"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.finalize.json",
+    "summaryReceipt": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.finalize-summary.json",
+    "browserCheckReceipt": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "browser-check",
+  "finishedAt": "2026-10-20T17:48:22.770Z",
+  "durationMs": 2890,
+  "update": {
+    "status": "unavailable",
+    "installedVersion": null,
+    "availableVersion": null,
+    "releaseNotes": null,
+    "checkedAt": null,
+    "source": null,
+    "noticeRequired": false,
+    "noticeText": null,
+    "reason": "cache-unavailable"
+  }
+}

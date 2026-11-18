@@ -14,7 +14,8 @@ CREATE USER IF NOT EXISTS 'marco.ramirez'@'%' IDENTIFIED BY 'qwerty123';
 CREATE USER IF NOT EXISTS 'adrian.gonzalez'@'%' IDENTIFIED BY '240XXX';
 CREATE USER IF NOT EXISTS 'ivan.alejandro'@'%' IDENTIFIED BY '240XXX';
 
-ALTER USER 'emigdio.aguirre'@'%' IDENTIFIED BY '240545';
+
+
 ALTER USER 'marco.ramirez'@'%' IDENTIFIED BY 'qwerty123';
 ALTER USER 'adrian.gonzalez'@'%' IDENTIFIED BY '240XXX';
 ALTER USER 'ivan.alejandro'@'%' IDENTIFIED BY '240XXX';

@@ -1,0 +1,357 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "architecture",
+  "quality": "showcase",
+  "startedAt": "2026-11-17T19:34:23.429Z",
+  "specification": {
+    "path": "/Users/yait/Practicas_BDN_240545/.archify/architecture-arquitectura-db-20261117-133257/candidate.json",
+    "sha256": "2acd47169d2f35e82e240ba521841f0579b02bf7cae1dc26de677b89b304f56f",
+    "bytes": 14869
+  },
+  "artifact": {
+    "path": "/Users/yait/Practicas_BDN_240545/docs/arquitectura_db.html",
+    "sha256": "9960f66041f6869ad58b021993ac489484e4e11141b1ce556bda86b79eea62a5",
+    "bytes": 14172
+  },
+  "stages": {
+    "validate": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": null,
+      "command": [
+        "/Users/yait/.nvm/versions/node/v22.23.4/bin/node",
+        "/Users/yait/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "architecture",
+        "/Users/yait/Practicas_BDN_240545/.archify/architecture-arquitectura-db-20261117-133257/candidate.json",
+        "/Users/yait/Practicas_BDN_240545/docs/arquitectura_db.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "/Users/yait/Practicas_BDN_240545",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "6757314e-95b8-4b08-ad46-a408ba111411",
+        "stage": "render",
+        "type": "architecture",
+        "input": "/Users/yait/Practicas_BDN_240545/.archify/architecture-arquitectura-db-20261117-133257/candidate.json",
+        "output": "/Users/yait/Practicas_BDN_240545/docs/arquitectura_db.html",
+        "error": "Architecture layout validation failed:\n- [clean-flow/endpoint-side-direction] architecture connections[4] id \"procedure-seller\" \"case1\" -> \"seller\" first segment 0 [625, 104] -> [635, 240] does not honor fromSide \"bottom\" — it must run vertical downward; keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments.\n- [clean-flow/endpoint-side-direction] architecture connections[4] id \"procedure-seller\" \"case1\" -> \"seller\" final segment 0 [625, 104] -> [635, 240] does not honor toSide \"top\" — it must run vertical downward from above; keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments.\n- [clean-flow/endpoint-side-direction] architecture connections[7] id \"payments-methods\" \"payments\" -> \"payment_methods\" first segment 0 [1125, 304] -> [1145, 440] does not honor fromSide \"bottom\" — it must run vertical downward; keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments.\n- [clean-flow/endpoint-side-direction] architecture connections[7] id \"payments-methods\" \"payments\" -> \"payment_methods\" final segment 0 [1125, 304] -> [1145, 440] does not honor toSide \"top\" — it must run vertical downward from above; keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments.",
+        "diagnostics": [
+          {
+            "code": "clean-flow/endpoint-side-direction",
+            "severity": "error",
+            "message": "[clean-flow/endpoint-side-direction] architecture connections[4] id \"procedure-seller\" \"case1\" -> \"seller\" first segment 0 [625, 104] -> [635, 240] does not honor fromSide \"bottom\" — it must run vertical downward; keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments.",
+            "subject": {
+              "diagramType": "architecture",
+              "collection": "connections",
+              "index": 4,
+              "id": "procedure-seller",
+              "from": "case1",
+              "to": "seller"
+            },
+            "evidence": {
+              "endpoint": "source",
+              "authoredField": "fromSide",
+              "sideOrigin": "authored",
+              "side": "bottom",
+              "segmentIndex": 0,
+              "from": [
+                625,
+                104
+              ],
+              "to": [
+                635,
+                240
+              ],
+              "expectedAxis": "vertical",
+              "expectedDirection": "downward"
+            },
+            "supportedFixes": [
+              "keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments"
+            ]
+          },
+          {
+            "code": "clean-flow/endpoint-side-direction",
+            "severity": "error",
+            "message": "[clean-flow/endpoint-side-direction] architecture connections[4] id \"procedure-seller\" \"case1\" -> \"seller\" final segment 0 [625, 104] -> [635, 240] does not honor toSide \"top\" — it must run vertical downward from above; keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments.",
+            "subject": {
+              "diagramType": "architecture",
+              "collection": "connections",
+              "index": 4,
+              "id": "procedure-seller",
+              "from": "case1",
+              "to": "seller"
+            },
+            "evidence": {
+              "endpoint": "target",
+              "authoredField": "toSide",
+              "sideOrigin": "authored",
+              "side": "top",
+              "segmentIndex": 0,
+              "from": [
+                625,
+                104
+              ],
+              "to": [
+                635,
+                240
+              ],
+              "expectedAxis": "vertical",
+              "expectedDirection": "downward from above"
+            },
+            "supportedFixes": [
+              "keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments"
+            ]
+          },
+          {
+            "code": "clean-flow/endpoint-side-direction",
+            "severity": "error",
+            "message": "[clean-flow/endpoint-side-direction] architecture connections[7] id \"payments-methods\" \"payments\" -> \"payment_methods\" first segment 0 [1125, 304] -> [1145, 440] does not honor fromSide \"bottom\" — it must run vertical downward; keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments.",
+            "subject": {
+              "diagramType": "architecture",
+              "collection": "connections",
+              "index": 7,
+              "id": "payments-methods",
+              "from": "payments",
+              "to": "payment_methods"
+            },
+            "evidence": {
+              "endpoint": "source",
+              "authoredField": "fromSide",
+              "sideOrigin": "authored",
+              "side": "bottom",
+              "segmentIndex": 0,
+              "from": [
+                1125,
+                304
+              ],
+              "to": [
+                1145,
+                440
+              ],
+              "expectedAxis": "vertical",
+              "expectedDirection": "downward"
+            },
+            "supportedFixes": [
+              "keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments"
+            ]
+          },
+          {
+            "code": "clean-flow/endpoint-side-direction",
+            "severity": "error",
+            "message": "[clean-flow/endpoint-side-direction] architecture connections[7] id \"payments-methods\" \"payments\" -> \"payment_methods\" final segment 0 [1125, 304] -> [1145, 440] does not honor toSide \"top\" — it must run vertical downward from above; keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments.",
+            "subject": {
+              "diagramType": "architecture",
+              "collection": "connections",
+              "index": 7,
+              "id": "payments-methods",
+              "from": "payments",
+              "to": "payment_methods"
+            },
+            "evidence": {
+              "endpoint": "target",
+              "authoredField": "toSide",
+              "sideOrigin": "authored",
+              "side": "top",
+              "segmentIndex": 0,
+              "from": [
+                1125,
+                304
+              ],
+              "to": [
+                1145,
+                440
+              ],
+              "expectedAxis": "vertical",
+              "expectedDirection": "downward from above"
+            },
+            "supportedFixes": [
+              "keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments"
+            ]
+          }
+        ],
+        "provenance": "failed",
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "not-run",
+      "execution": "blocked-by-validate"
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": false
+  },
+  "diagnostics": [
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] architecture connections[4] id \"procedure-seller\" \"case1\" -> \"seller\" first segment 0 [625, 104] -> [635, 240] does not honor fromSide \"bottom\" — it must run vertical downward; keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments.",
+      "subject": {
+        "diagramType": "architecture",
+        "collection": "connections",
+        "index": 4,
+        "id": "procedure-seller",
+        "from": "case1",
+        "to": "seller"
+      },
+      "evidence": {
+        "endpoint": "source",
+        "authoredField": "fromSide",
+        "sideOrigin": "authored",
+        "side": "bottom",
+        "segmentIndex": 0,
+        "from": [
+          625,
+          104
+        ],
+        "to": [
+          635,
+          240
+        ],
+        "expectedAxis": "vertical",
+        "expectedDirection": "downward"
+      },
+      "supportedFixes": [
+        "keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] architecture connections[4] id \"procedure-seller\" \"case1\" -> \"seller\" final segment 0 [625, 104] -> [635, 240] does not honor toSide \"top\" — it must run vertical downward from above; keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments.",
+      "subject": {
+        "diagramType": "architecture",
+        "collection": "connections",
+        "index": 4,
+        "id": "procedure-seller",
+        "from": "case1",
+        "to": "seller"
+      },
+      "evidence": {
+        "endpoint": "target",
+        "authoredField": "toSide",
+        "sideOrigin": "authored",
+        "side": "top",
+        "segmentIndex": 0,
+        "from": [
+          625,
+          104
+        ],
+        "to": [
+          635,
+          240
+        ],
+        "expectedAxis": "vertical",
+        "expectedDirection": "downward from above"
+      },
+      "supportedFixes": [
+        "keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] architecture connections[7] id \"payments-methods\" \"payments\" -> \"payment_methods\" first segment 0 [1125, 304] -> [1145, 440] does not honor fromSide \"bottom\" — it must run vertical downward; keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments.",
+      "subject": {
+        "diagramType": "architecture",
+        "collection": "connections",
+        "index": 7,
+        "id": "payments-methods",
+        "from": "payments",
+        "to": "payment_methods"
+      },
+      "evidence": {
+        "endpoint": "source",
+        "authoredField": "fromSide",
+        "sideOrigin": "authored",
+        "side": "bottom",
+        "segmentIndex": 0,
+        "from": [
+          1125,
+          304
+        ],
+        "to": [
+          1145,
+          440
+        ],
+        "expectedAxis": "vertical",
+        "expectedDirection": "downward"
+      },
+      "supportedFixes": [
+        "keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] architecture connections[7] id \"payments-methods\" \"payments\" -> \"payment_methods\" final segment 0 [1125, 304] -> [1145, 440] does not honor toSide \"top\" — it must run vertical downward from above; keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments.",
+      "subject": {
+        "diagramType": "architecture",
+        "collection": "connections",
+        "index": 7,
+        "id": "payments-methods",
+        "from": "payments",
+        "to": "payment_methods"
+      },
+      "evidence": {
+        "endpoint": "target",
+        "authoredField": "toSide",
+        "sideOrigin": "authored",
+        "side": "top",
+        "segmentIndex": 0,
+        "from": [
+          1125,
+          304
+        ],
+        "to": [
+          1145,
+          440
+        ],
+        "expectedAxis": "vertical",
+        "expectedDirection": "downward from above"
+      },
+      "supportedFixes": [
+        "keep automatic routing so the renderer can use a side-aware bridge, or set truthful fromSide/toSide with perpendicular via segments"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/Users/yait/Practicas_BDN_240545/.archify/architecture-arquitectura-db-20261117-133257/review-1/arquitectura_db.finalize.json",
+    "summaryReceipt": "/Users/yait/Practicas_BDN_240545/.archify/architecture-arquitectura-db-20261117-133257/review-1/arquitectura_db.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "validate",
+  "finishedAt": "2026-11-17T19:34:23.655Z",
+  "durationMs": 226,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-17T18:22:40.508Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

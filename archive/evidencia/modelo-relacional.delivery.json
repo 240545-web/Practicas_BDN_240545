@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "efd1f380-54fe-4a5d-8df5-09eda19f5952",
+  "status": "current",
+  "command": "deliver",
+  "type": "dataflow",
+  "input": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.json",
+  "output": "/Users/yait/Practicas_BDN_240545/docs/modelo-relacional.html",
+  "specification": {
+    "sha256": "a49d70e261fcf5cd70f77deb7bcc8dc7894f5152555f5450d8d5ccb2ee0df1f1",
+    "bytes": 33288
+  },
+  "artifact": {
+    "sha256": "cbf951fc04eb910a6ce6d87e00354f9db651e416ebd8076b73012f46f0c7dea7",
+    "bytes": 757345
+  }
+}

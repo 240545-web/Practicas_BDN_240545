@@ -1,0 +1,374 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Arquitectura de datos de la Práctica 04 · db_test",
+    "output": "docs/arquitectura_db.html",
+    "locale": "es",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/240545-web/Practicas_BDN_240545.git",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "26ca8fe9cab6c723b783ca162e26f79e4c05bd7e"
+    }
+  },
+  "components": [
+    {
+      "id": "users",
+      "type": "database",
+      "label": "tb_users",
+      "sublabel": "identidad de usuarios",
+      "pos": [40, 40],
+      "size": [140, 64],
+      "sources": [
+        {
+          "path": "Practica03/backups/Untitled-1.sql",
+          "line": 70,
+          "end_line": 81,
+          "label": "DDL de tb_users"
+        }
+      ]
+    },
+    {
+      "id": "cart",
+      "type": "database",
+      "label": "tbd_shopping_cart",
+      "sublabel": "carrito activo",
+      "pos": [280, 40],
+      "size": [170, 64],
+      "sources": [
+        {
+          "path": "Practica03/scripts/create_tables.sql",
+          "line": 119,
+          "end_line": 136,
+          "label": "DDL del carrito"
+        },
+        {
+          "path": "Practica04/scripts/caso1.sql",
+          "line": 17,
+          "end_line": 19,
+          "label": "Lectura del carrito"
+        },
+        {
+          "path": "Practica04/scripts/caso1.sql",
+          "line": 42,
+          "end_line": 44,
+          "label": "Limpieza del carrito"
+        }
+      ]
+    },
+    {
+      "id": "case1",
+      "type": "backend",
+      "label": "p04_caso1_final",
+      "sublabel": "procedimiento de 11 pasos",
+      "tag": "PROCEDURE",
+      "pos": [550, 40],
+      "size": [150, 64],
+      "sources": [
+        {
+          "path": "Practica04/scripts/caso1.sql",
+          "line": 6,
+          "end_line": 16,
+          "label": "Definición y transacción"
+        },
+        {
+          "path": "Practica04/scripts/caso1.sql",
+          "line": 21,
+          "end_line": 30,
+          "label": "Escritura de cabeceras"
+        },
+        {
+          "path": "Practica04/scripts/caso1.sql",
+          "line": 38,
+          "end_line": 45,
+          "label": "Pago y cierre"
+        }
+      ]
+    },
+    {
+      "id": "orders",
+      "type": "database",
+      "label": "tb_orders",
+      "sublabel": "pedido general",
+      "pos": [800, 40],
+      "size": [150, 64],
+      "sources": [
+        {
+          "path": "Practica04/scripts/caso1.sql",
+          "line": 21,
+          "end_line": 25,
+          "label": "Inserción del pedido"
+        },
+        {
+          "path": "Practica03/scripts/create_tables.sql",
+          "line": 15,
+          "end_line": 31,
+          "label": "DDL de tb_orders"
+        },
+        {
+          "path": "Practica04/queries/verificacion_orden.sql",
+          "line": 1,
+          "end_line": 3,
+          "label": "Verificación del pedido"
+        }
+      ]
+    },
+    {
+      "id": "products",
+      "type": "database",
+      "label": "tb_products",
+      "sublabel": "catálogo de productos",
+      "pos": [280, 240],
+      "size": [170, 64],
+      "sources": [
+        {
+          "path": "Practica03/backups/Untitled-1.sql",
+          "line": 86,
+          "end_line": 107,
+          "label": "DDL de tb_products"
+        },
+        {
+          "path": "Practica04/scripts/caso1.sql",
+          "line": 31,
+          "end_line": 34,
+          "label": "Uso del product_ID"
+        }
+      ]
+    },
+    {
+      "id": "seller",
+      "type": "database",
+      "label": "tb_seller_orders",
+      "sublabel": "compraventa",
+      "pos": [550, 240],
+      "size": [170, 64],
+      "sources": [
+        {
+          "path": "Practica04/scripts/caso1.sql",
+          "line": 26,
+          "end_line": 30,
+          "label": "Inserción de compraventa"
+        },
+        {
+          "path": "Practica03/scripts/Create_order_tables.sql",
+          "line": 10,
+          "end_line": 31,
+          "label": "DDL de compraventa"
+        }
+      ]
+    },
+    {
+      "id": "items",
+      "type": "database",
+      "label": "tb_order_items",
+      "sublabel": "detalle de venta",
+      "pos": [830, 240],
+      "size": [150, 64],
+      "sources": [
+        {
+          "path": "Practica04/scripts/caso1.sql",
+          "line": 31,
+          "end_line": 35,
+          "label": "Inserción del detalle"
+        },
+        {
+          "path": "Practica03/scripts/Create_order_tables.sql",
+          "line": 38,
+          "end_line": 63,
+          "label": "DDL del detalle"
+        }
+      ]
+    },
+    {
+      "id": "payments",
+      "type": "database",
+      "label": "tb_payments",
+      "sublabel": "registro de pago",
+      "pos": [1050, 240],
+      "size": [150, 64],
+      "sources": [
+        {
+          "path": "Practica04/scripts/caso1.sql",
+          "line": 38,
+          "end_line": 41,
+          "label": "Inserción del pago"
+        },
+        {
+          "path": "Practica03/scripts/create_tables.sql",
+          "line": 71,
+          "end_line": 88,
+          "label": "DDL de tb_payments"
+        }
+      ]
+    },
+    {
+      "id": "payment_methods",
+      "type": "database",
+      "label": "tbc_payment_methods",
+      "sublabel": "catálogo de métodos",
+      "pos": [1050, 440],
+      "size": [190, 64],
+      "sources": [
+        {
+          "path": "Practica03/scripts/create_tables.sql",
+          "line": 56,
+          "end_line": 64,
+          "label": "DDL de métodos de pago"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "users-cart",
+      "from": "users",
+      "to": "cart",
+      "label": "user_ID",
+      "route": "straight"
+    },
+    {
+      "id": "products-cart",
+      "from": "products",
+      "to": "cart",
+      "label": "product_ID",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "route": "straight"
+    },
+    {
+      "id": "cart-procedure",
+      "from": "cart",
+      "to": "case1",
+      "label": "lee carrito",
+      "variant": "emphasis",
+      "route": "straight"
+    },
+    {
+      "id": "procedure-orders",
+      "from": "case1",
+      "to": "orders",
+      "label": "INSERT",
+      "variant": "emphasis",
+      "route": "straight"
+    },
+    {
+      "id": "procedure-seller",
+      "from": "case1",
+      "to": "seller",
+      "label": "INSERT",
+      "variant": "emphasis"
+    },
+    {
+      "id": "orders-payments",
+      "from": "orders",
+      "to": "payments",
+      "label": "order_ID"
+    },
+    {
+      "id": "seller-items",
+      "from": "seller",
+      "to": "items",
+      "label": "seller_order",
+      "variant": "emphasis",
+      "route": "straight"
+    },
+    {
+      "id": "payments-methods",
+      "from": "payments",
+      "to": "payment_methods",
+      "label": "payment_method_ID"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Resumen de la arquitectura",
+      "items": [
+        "Esta base de datos resuelve la trazabilidad de una operación de comercio electrónico: toma los artículos seleccionados en tbd_shopping_cart, convierte cada compra en una cabecera general y en una compraventa, conserva el detalle con el nombre y el precio vigentes de cada producto y registra el pago asociado. Al separar carrito, cabeceras, detalle y pago, el modelo permite auditar la venta completa sin depender de cambios posteriores en el catálogo ni repetir la identidad del comprador en cada renglón."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Tablas y claves · catálogo y carrito",
+      "items": [
+        "tb_users — Identifica a compradores, vendedores y proveedores del sistema. PK: ID; sin FK declaradas. Existe para dar una sola fuente de identidad a user_ID, seller_ID y buyer_ID.",
+        "tb_products — Describe el catálogo con SKU, nombre, precio, stock y estatus. PK: ID; FK: category_ID a tb_categories, con SET NULL. Existe para separar la descripción del producto de los valores históricos copiados en el detalle.",
+        "tbd_shopping_cart — Guarda los artículos elegidos por un usuario antes de la compra. PK: ID; FK: user_ID a tb_users y product_ID a tb_products, ambas CASCADE; offer_ID no tiene FK declarada. Existe como entrada transitoria del procedimiento.",
+        "tbd_users_offer_products — Publica ofertas de usuarios con stock, estatus y fecha disponible. PK: ID; FK: user_ID a tb_users y product_ID a tb_products, ambas CASCADE. Existe para evaluar qué ofertas activas cumplen el filtro de la práctica."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Tablas y claves · venta y pago",
+      "items": [
+        "tb_orders — Registra la cabecera general del pedido del comprador. PK: ID; FK: user_ID a tb_users, CASCADE. Existe para conservar total_products, total_cost, status_string y status de cada compra.",
+        "tb_seller_orders — Registra la compraventa entre vendedor y comprador. PK: ID; FK: seller_ID y buyer_ID a tb_users, ambas CASCADE. Existe para aislar la operación del vendedor de la cabecera general.",
+        "tb_order_items — Conserva cada línea vendida con product_name, quantity y unit_price. PK: ID; FK: seller_order_ID a tb_seller_orders CASCADE, product_ID a tb_products RESTRICT y provider_ID a tbd_users_offer_products RESTRICT. Existe para preservar el precio y la cantidad al momento de la venta.",
+        "tb_payments — Registra el cobro aplicado a un pedido. PK: ID; FK: order_ID a tb_orders CASCADE y payment_method_ID a tbc_payment_methods RESTRICT. Existe para auditar amount, payment_status, transaction_reference y payment_date.",
+        "tbc_payment_methods — Cataloga los métodos de pago disponibles. PK: ID; sin FK declaradas. Existe para que tb_payments use payment_method_ID sin almacenar libremente el nombre del método."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Relaciones · catálogo y carrito",
+      "items": [
+        "tb_users 1:N tbd_shopping_cart · user_ID · CASCADE: al borrar el usuario se borran sus artículos en el carrito.",
+        "tb_users 1:N tbd_users_offer_products · user_ID · CASCADE: al borrar el usuario se borran sus ofertas.",
+        "tb_users 1:N tb_orders · user_ID · CASCADE: al borrar el usuario se borran sus pedidos generales.",
+        "tb_users 1:N tb_seller_orders · seller_ID y buyer_ID · CASCADE: al borrar el usuario se borran las compraventas donde participa.",
+        "tb_categories 1:N tb_products · category_ID · SET NULL: al borrar la categoría, la FK del producto queda nula.",
+        "tb_products 1:N tbd_shopping_cart · product_ID · CASCADE: al borrar el producto se borran sus renglones en el carrito.",
+        "tb_products 1:N tbd_users_offer_products · product_ID · CASCADE: al borrar el producto se borran sus ofertas.",
+        "tb_products N:M tb_categories · tb_products_categories · CASCADE en ambas FK: al borrar producto o categoría se borra la fila puente; esta forma corresponde al guion create_tables.sql."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Relaciones · venta y pago",
+      "items": [
+        "tb_orders 1:N tb_payments · order_ID · CASCADE: al borrar el pedido se borran sus pagos.",
+        "tbc_payment_methods 1:N tb_payments · payment_method_ID · RESTRICT: no se puede borrar un método si todavía hay pagos que lo usan.",
+        "tb_seller_orders 1:N tb_order_items · seller_order_ID · CASCADE: al borrar la compraventa se borran sus partidas.",
+        "tb_products 1:N tb_order_items · product_ID · RESTRICT: no se puede borrar un producto referenciado por una venta.",
+        "tbd_users_offer_products 1:N tb_order_items · provider_ID · RESTRICT: no se puede borrar una oferta referenciada como proveedor de una partida.",
+        "tbd_shopping_cart.offer_ID aparece como columna nula, pero el DDL consultado no declara una FK para ella; no se le asigna una acción de borrado."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Glosario",
+      "items": [
+        "Entidad: objeto del negocio representado por una tabla, como un pedido o un producto.",
+        "PK: clave primaria; columna o conjunto de columnas que identifica de forma única cada fila.",
+        "FK: clave foránea; columna que referencia la PK de otra tabla.",
+        "Cardinalidad: número de filas que pueden relacionarse entre dos entidades, por ejemplo 1:N o N:M.",
+        "Normalización: organización de los datos para reducir redundancia y dependencias innecesarias.",
+        "Integridad referencial: regla que evita que una FK apunte a una fila inexistente.",
+        "CASCADE: acción que propaga el borrado de la fila padre a las filas hijas.",
+        "RESTRICT: acción que impide borrar el padre mientras existan filas hijas que lo referencien.",
+        "SET NULL: acción que deja en NULL la FK de las filas hijas cuando se borra el padre.",
+        "Índice: estructura que acelera consultas y sostiene restricciones de unicidad o de clave foránea."
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Decisiones de diseño",
+      "items": [
+        "Normalización: el modelo separa la identidad del comprador, el carrito, las dos cabeceras de venta, el detalle y el pago. Así una compraventa puede tener muchas partidas sin repetir los datos del cliente; el detalle conserva product_name y unit_price para conservar el valor histórico aunque tb_products cambie después.",
+        "Tipos de datos: las claves ID usan INT UNSIGNED con AUTO_INCREMENT o SERIAL; los montos usan DECIMAL, no coma flotante, para preservar centavos; BIT(1) representa estatus; VARCHAR limita claves de negocio como key, SKU y transaction_reference; ENUM controla los estados de pago.",
+        "Índices: además de las PK, hay claves únicas para key de pedidos y compraventas, email y nickname de usuarios, y SKU de productos. Los índices por user_ID, order_ID, seller_order_ID, product_ID, provider_ID y payment_method_ID aceleran los recorridos entre cabecera, detalle y pago, y sostienen las FK declaradas."
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "Alcance de la evidencia",
+      "items": [
+        "El cuerpo de p04_caso1_final y la verificación de tb_orders se leyeron en Practica04; el DDL de Practica03 se usó solo para confirmar columnas, claves, tipos e índices.",
+        "No hay archivo Practica04/scripts/caso2.sql en el repositorio. Solo se conoce el nombre p04_caso2_error por la consulta de verificación, por lo que no se le atribuye lógica ni tablas adicionales.",
+        "Los SQL de la Práctica 04 no declaran ON DELETE; las acciones de borrado mostradas provienen del DDL citado. El insumo tools/diagramas/modelo-relacional.json se conservó sin modificaciones."
+      ]
+    }
+  ]
+}
