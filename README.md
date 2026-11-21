@@ -12,7 +12,9 @@ Periodo: Septiembre - Diciembre 2026
 
 ## Diccionario de datos
 
-El diccionario detallado de `db_test` se publica desde [`docs/`](docs/), con catálogo de tablas y columnas, claves, nulabilidad, valores por omisión, reglas y un diagrama interactivo de relaciones generado con Archify. URL esperada de GitHub Pages: <https://240545-web.github.io/Practicas_BDN_240545/>.
+[Abrir el diccionario de Práctica 04 en GitHub Pages](https://240545-web.github.io/Practicas_BDN_240545/Practica04/diccionario_datos.html).
+
+Archivo: [`Practica04/diccionario_datos.html`](Practica04/diccionario_datos.html). Incluye el modelo base de 19 tablas y 144 columnas, el Atlas de 26 + 3 tablas de auditoría, 15,000 productos en seeds y 0 campos inventados. Pages publica desde la rama `Practica04`.
 
 Prompt utilizado: “Realiza un diccionario de datos detallado para el modelo `db_test` de este repositorio. Revisa los scripts SQL como fuente de verdad, documenta tablas, columnas, tipos, nulabilidad, valores predeterminados, claves, restricciones, relaciones y discrepancias entre variantes. Genera un diagrama de relaciones con Archify y prepara el sitio estático para publicarlo en GitHub Pages.”
 
